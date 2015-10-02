@@ -52,7 +52,7 @@ for (maxim in maxims) {
 	# 'X should not do A', etc
 	
 	# assess obligation
-	#TODO change to append to key: conditionID
+	#TODO change 
 	if (' must ' in action) {
 		if (!(' must not ' in action)) {
 			obliged = true;
