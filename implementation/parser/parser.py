@@ -1,3 +1,5 @@
+#TODO formal parser
+
 # a file to parse a list of potential maxims
 # as part of a project to verify their eligibility
 
@@ -87,3 +89,7 @@ for (maxim in maxims) {
 		permissions.append(action);
 	}
 }
+
+#TODO take the lists and convert them into facts
+
+
