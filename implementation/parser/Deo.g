@@ -1,41 +1,50 @@
 //////////////////////////////////////////////////////////////
 //
-// Specification of the Deo syntactic analyser.
+// specification of the Deo syntactic analyser:
+// -Deo syntax
+// -translation of Deo phrases to ASTs
 //
-// Developed 2015/2016 by Leisha Hussien (2020430H). 
+// Developed 2015/2016 by Leisha Hussien (2020430H).
+// Adapted from code written by David Watt (University of Glasgow).  
 //
 //////////////////////////////////////////////////////////////
 
-grammar Fun;
-
-// This specifies the Deo syntactic analyser.
-// In detail, it specifies the syntax of Fun and the 
-// translation of Deo phrases to ASTs.
+grammar Deo;
 
 options {
 	output = AST;
 	ASTLabelType = CommonTree;
 }
 
-tokens {        // special tokens for labeling AST nodes
+tokens {        //TODO special tokens for labeling AST nodes
 
 }
 
 //////// Constructs
 
 norm	
-	:	OB | PRO | PER
+	:	OB 								-> OB
+	| 	PRO 								-> PRO
+	| 	PER								-> PER
 	;
 
-op	:	AND | OR | NOT
+op	:	AND 								-> AND
+	| 	OR 								-> OR
+	| 	NOT 								-> NOT
+	| 	THEN								-> THEN
 
-simple_expr
-	:	(AGENT)* norm ACTION
+cond
+	:	AGENT								-> AGENT
+	| 	ACTION								-> ACTION
 	;
 
-complex_epr
-	:	IF (simple_expr)* THEN simple_expr (op simple_expr)*
-	|	simple_expr (op simple_expr)*
+rule	
+	:	LB AGENT norm ACTION RB						-> (AGENT norm ACTION)
+	;
+
+expr
+	:	IF LB cond (op cond)* RB THEN LB rule (op rule)* RB		-> (IF cond (op cond)* THEN rule (op rule)*)
+	|	LB rule (op rule)* RB						-> (rule (op rule)*)
 	;
 
 //////// Lexicon
@@ -49,8 +58,8 @@ NOT	:	'not';
 AND	:	'and';
 OR	:	'or';
 
-LPAR	:	'(' ;
-RPAR	:	')' ;
+LB	:	'(' ;
+RB	:	')' ;
 COLON	:	':' ;
 DOT	:	'.' ;
 

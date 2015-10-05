@@ -1,15 +1,15 @@
 //////////////////////////////////////////////////////////////
 //
-// Specification of the Deo contextual analyser.
+// specification of the Deo contextual analyser:
+// -scope checking
+// -type checking
 //
 // Developed 2015/2016 by Leisha Hussien (2020430H). 
+// Adapted from code written by David Watt (University of Glasgow). 
 //
 //////////////////////////////////////////////////////////////
 
 tree grammar DeoChecker;
-
-// This specifies the Fun contextual analyser,
-// which performs scope checking and type checking.
 
 options {
 	tokenVocab = Deo;
@@ -31,8 +31,7 @@ options {
 	// (sub)AST.
 		int line = ast.getLine(),
 		    column = ast.getCharPositionInLine() ;
-		System.err.println("line " + line + ":" + column
-		   + " " + message);
+		System.err.println("line " + line + ":" + column + " " + message);
 		errorCount++;
 	}
 
@@ -48,19 +47,17 @@ options {
 
 	private void predefine () {
 	// Add predefined procedures to the type table.
-		typeTable.put("read",
-		   new Type.Mapping(Type.VOID, Type.INT));
-		typeTable.put("write",
-		   new Type.Mapping(Type.INT, Type.VOID));
+		typeTable.put("read", new Type.Mapping(Type.VOID, Type.INT));
+		typeTable.put("write", new Type.Mapping(Type.INT, Type.VOID));
 	}
 
-	private void define (String id, Type type,
-	                     CommonTree decl) {
+	private void define (String id, Type type, CommonTree decl) {
 	// Add id with its type to the type table, checking 
 	// that id is not already declared in the same scope.
 		boolean ok = typeTable.put(id, type);
-		if (!ok)
+		if (!ok) {
 			reportError(id + " is redeclared", decl);
+		}
 	}
 
 	private Type retrieve (String id, CommonTree occ) {
@@ -116,10 +113,8 @@ options {
 	// Check that a unary operator's operand type matches 
 	// the operator's type. Return the type of the operator 
 	// application.
-		if (! (typeOp.domain instanceof Type.Primitive))
-			reportError(
-			   "unary operator should have 1 operand",
-			   op);
+		if (!(typeOp.domain instanceof Type.Primitive))
+			reportError("unary operator should have 1 operand", op);
 		else
 			checkType(typeOp.domain, typeArg, op);
 		return typeOp.range;
@@ -132,12 +127,9 @@ options {
 	// the operator's type. Return the type of the operator 
 	// application.
 		if (! (typeOp.domain instanceof Type.Pair))
-			reportError(
-			   "binary operator should have 2 operands",
-			   op);
+			reportError("binary operator should have 2 operands", op);
 		else {
-			Type.Pair pair =
-			   (Type.Pair)typeOp.domain;
+			Type.Pair pair = (Type.Pair)typeOp.domain;
 			checkType(pair.first, typeArg1, op);
 			checkType(pair.second, typeArg2, op);
 		}
@@ -146,163 +138,4 @@ options {
 
 }
 
-//////// Programs
-
-program
-	:	^(PROG
-				{ predefine(); }
-		  var_decl*
-		  proc_decl+
-		 )
-				{ Type tmain = retrieve("main", $PROG);
-				  checkType(tmain, MAINTYPE, $PROG);
-				}
-	;
-
-
-//////// Declarations
-
-proc_decl
-	:	^(PROC
-		  ID
-				{ typeTable.enterLocalScope();
-				}
-		  t=formal
-				{ Type proctype =
-				    new Type.Mapping(t, Type.VOID);
-				  define($ID.text, proctype, $PROC);
-				  // ... to enable recursion
-				}
-		  var_decl*
-		  com
-				{ typeTable.exitLocalScope();
-				  define($ID.text, proctype, $PROC);
-				}
-		 )
-	|	^(FUNC
-		  t1=type
-		  ID
-				{ typeTable.enterLocalScope();
-				}
-		  t2=formal
-				{ Type functype =
-				    new Type.Mapping(t2, t1);
-				  define($ID.text, functype, $FUNC);
-				  // ... to enable recursion
-				}
-		  var_decl*
-		  com
-		  t3=expr
-				{ typeTable.exitLocalScope();
-				  define($ID.text, functype, $FUNC);
-				  checkType(t1, t3, $FUNC);
-				}
-		 )
-	;
-
-formal			returns [Type type]
-	:	^(FORMAL t=type ID)
-				{ define($ID.text, t, $FORMAL);
-				  $type = t;
-				}
-	|	NOFORMAL
-				{ $type = Type.VOID; }
-	;
-
-var_decl
-	:	^(VAR t1=type ID t2=expr)
-				{ define($ID.text, t1, $VAR);
-				  checkType(t1, t2, $VAR);
-				}
-	;
-
-type				returns [Type type]
-	:	BOOL		{ $type = Type.BOOL; }
-	|	INT		{ $type = Type.INT; }
-	;
-
-//////// Commands
-
-com
-	:	^(ASSN ID t=expr)
-				{ Type tvar =
-				    retrieve($ID.text, $ASSN);
-				  checkType(tvar, t, $ASSN);
-				}
-	|	^(PROCCALL ID t=expr)
-				{ Type tres = checkCall(
-				    $ID.text, t, $PROCCALL);
-				  if (! tres.equiv(Type.VOID))
-				    reportError(
-				      "procedure should be void",
-				      $PROCCALL);
-				}
-	|	^(IF t=expr com)
-				{ checkType(Type.BOOL, t, $IF);
-				}
-	|	^(IFELSE t=expr com com)
-				{ checkType(Type.BOOL, t, $IFELSE);
-				}
-	|	^(WHILE t=expr com)
-				{ checkType(Type.BOOL, t, $WHILE);
-				}
-// extension start
-	|	^(FOR ID t=expr u=expr com)
-				{ define($ID.text, t, $FOR);
-				  checkType(Type.INT, t, $FOR);
-				  checkType(Type.INT, u, $FOR);
-				}
-	|	^(REPEAT com t=expr)
-				{ checkType(Type.BOOL, t, $REPEAT);
-				}
-// extension end
-	|	^(SEQ com*)
-	;
-
-//////// Expressions
-
-expr				returns [Type type]
-	:	FALSE
-				{ $type = Type.BOOL; }
-	|	TRUE
-				{ $type = Type.BOOL; }
-	|	NUM
-				{ $type = Type.INT; }
-	|	ID
-				{ $type = retrieve($ID.text, $ID);
-				}
-	|	^(FUNCCALL ID t=expr)
-				{ Type result = checkCall(
-				    $ID.text, t, $FUNCCALL);
-				  if (result.equiv(Type.VOID))
-				    reportError(
-					 "procedure should be non-void",
-				      $FUNCCALL);
-				  $type = result;
-				}
-	|	^(EQ t1=expr t2=expr)
-				{ $type = checkBinary(
-				    COMPTYPE, t1, t2, $EQ); }
-	|	^(LT t1=expr t2=expr)
-				{ $type = checkBinary(
-				    COMPTYPE, t1, t2, $LT); }
-	|	^(GT t1=expr t2=expr)
-				{ $type = checkBinary(
-				    COMPTYPE, t1, t2, $GT); }
-	|	^(PLUS t1=expr t2=expr)
-				{ $type = checkBinary(
-				    ARITHTYPE, t1, t2, $PLUS); }
-	|	^(MINUS t1=expr t2=expr)
-				{ $type = checkBinary(
-				    ARITHTYPE, t1, t2, $MINUS); }
-	|	^(TIMES t1=expr t2=expr)
-				{ $type = checkBinary(
-				    ARITHTYPE, t1, t2, $TIMES); }
-	|	^(DIV t1=expr t2=expr)
-				{ $type = checkBinary(
-				     ARITHTYPE, t1, t2, $DIV); }
-	|	^(NOT t=expr)
-				{ $type = checkUnary(NOTTYPE, t, $NOT); }
-	|	NOACTUAL
-				{ $type = Type.VOID; }
-	;
+//TODO Constructs
