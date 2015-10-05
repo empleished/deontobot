@@ -8,7 +8,6 @@
 //
 //////////////////////////////////////////////////////////////
 
-
 tree grammar DeoEncoder;
 
 // This specifies the Deo -> SVM code generator.
@@ -18,11 +17,9 @@ options {
 	ASTLabelType = CommonTree;
 }
 
-
 // Auxiliary variables and methods
 
 @members {
-
 	private SVM obj = new SVM();
 
 	private int globalvaraddr = 0;
@@ -34,13 +31,9 @@ options {
 
 	private void predefine () {
 	// Add predefined procedures to the address table.
-		addrTable.put("read",
-		   new Address(SVM.READOFFSET, Address.CODE));
-		addrTable.put("write",
-		   new Address(SVM.WRITEOFFSET, Address.CODE));
+		addrTable.put("read", new Address(SVM.READOFFSET, Address.CODE));
+		addrTable.put("write", new Address(SVM.WRITEOFFSET, Address.CODE));
 	}
-
 }
-
 
 //TODO Constructs

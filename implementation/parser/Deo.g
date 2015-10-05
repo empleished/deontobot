@@ -39,7 +39,7 @@ cond
 	;
 
 rule	
-	:	LB AGENT norm ACTION RB						-> (AGENT norm ACTION)
+	:	norm LB AGENT ACTION RB						-> (norm AGENT ACTION)
 	;
 
 expr
@@ -52,21 +52,18 @@ expr
 OB	:	'should';
 PRO	:	'should not';
 PER	:	'may';
+
 IF	:	'if';
 THEN	:	'then';
 NOT	:	'not';
 AND	:	'and';
 OR	:	'or';
 
-LB	:	'(' ;
-RB	:	')' ;
-COLON	:	':' ;
-DOT	:	'.' ;
+LB	:	'(';
+RB	:	')';
 
-NUM	:	DIGIT+ ;
-
-ACTION	:	LETTER (LETTER | NUM | SPACE)* ;
-AGENT	:	LETTER (LETTER | NUM | SPACE)* ;
+ACTION	:	LETTER (LETTER | DIGIT | SPACE)*;
+AGENT	:	LETTER (LETTER | DIGIT | SPACE)*;
 
 SPACE	:	(' ' | '\t')+             ;
 EOL	:	'\r'? '\n'                ;
