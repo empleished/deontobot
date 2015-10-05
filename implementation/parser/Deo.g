@@ -23,6 +23,14 @@ tokens {        //TODO special tokens for labeling AST nodes
 	RULE;
 }
 
+//////// Programs
+
+prog	:	decl+ EOF							-> (PROG decl+)
+
+//////// Declarations
+
+decl	:	expr+								-> (DECL expr+)
+
 //////// Constructs
 
 norm	
