@@ -17,7 +17,10 @@ options {
 }
 
 tokens {        //TODO special tokens for labeling AST nodes
-
+	IF;
+	THEN;
+	EXPR;
+	RULE;
 }
 
 //////// Constructs
@@ -39,12 +42,12 @@ cond
 	;
 
 rule	
-	:	norm LB AGENT ACTION RB						-> (norm AGENT ACTION)
+	:	norm LB AGENT ACTION RB						-> (RULE norm AGENT ACTION)
 	;
 
 expr
-	:	IF LB cond (op cond)* RB THEN LB rule (op rule)* RB		-> (IF cond (op cond)* THEN rule (op rule)*)
-	|	LB rule (op rule)* RB						-> (rule (op rule)*)
+	:	IF (LB cond (op cond)*)* RB THEN (LB rule (op rule)*)* RB	-> (IF (cond (op cond)*)* THEN (rule (op rule)*)*)
+	|	(LB rule (op rule)*)* RB					-> (EXPR (rule (op rule)*)*)
 	;
 
 //////// Lexicon

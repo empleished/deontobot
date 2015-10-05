@@ -16,11 +16,9 @@ options {
 	ASTLabelType = CommonTree;
 }
 
-
 //////// Auxiliary variables and methods
 
 @members {
-
 	// Contextual errors
 
 	private int errorCount = 0;
@@ -123,7 +121,31 @@ options {
 
 		return typeOp.range;
 	}
-
 }
 
 //TODO Constructs
+
+norm	
+	:	OB
+	| 	PRO
+	| 	PER
+	;
+
+op	:	AND
+	| 	OR
+	| 	NOT
+	| 	THEN
+
+cond
+	:	AGENT
+	| 	ACTION
+	;
+
+rule	
+	:	^(RULE norm AGENT ACTION)
+	;
+
+expr
+	:	^(IF (cond (op cond)*)* THEN (rule (op rule)*)*)
+	|	^(EXPR (rule (op rule)*)*)
+	;
