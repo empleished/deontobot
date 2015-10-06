@@ -11,7 +11,7 @@
 
 grammar Deo;
 
-// hi
+// hi there
 
 options {
 	output = AST;
