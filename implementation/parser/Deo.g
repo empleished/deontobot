@@ -45,12 +45,12 @@ op	:	AND 								-> AND
 	| 	THEN								-> THEN
 
 cond
-	:	AGENT								-> AGENT
-	| 	ACTION								-> ACTION
+	:	ACTION								-> ACTION
+	| 	STATE								-> STATE
 	;
 
 rule	
-	:	norm LB AGENT ACTION RB						-> (RULE norm AGENT ACTION)
+	:	norm LB ACTION RB						-> (RULE norm AGENT ACTION)
 	;
 
 expr
@@ -74,7 +74,7 @@ LB	:	'(';
 RB	:	')';
 
 ACTION	:	LETTER (LETTER | DIGIT | SPACE)*;
-AGENT	:	LETTER (LETTER | DIGIT | SPACE)*;
+STATE	:	LETTER (LETTER | DIGIT | SPACE)*;
 
 SPACE	:	(' ' | '\t')+             ;
 EOL	:	'\r'? '\n'                ;
