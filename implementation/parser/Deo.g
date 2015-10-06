@@ -76,10 +76,9 @@ RB	:	')';
 ACTION	:	LETTER (LETTER | DIGIT | SPACE)*;
 STATE	:	LETTER (LETTER | DIGIT | SPACE)*;
 
-SPACE	:	(' ' | '\t')+             ;
-EOL	:	'\r'? '\n'                ;
-COMMENT :	'#' ~('\r' | '\n')*
-		  '\r'? '\n'              ;
+SPACE	:	(' ' | '\t')+;
+EOL	:	'\r'? '\n';
+COMMENT :	'#' ~('\r' | '\n')* '\r'? '\n';
 
-fragment LETTER : 'a'..'z' | 'A'..'Z' ;
-fragment DIGIT  : '0'..'9' ;
+fragment LETTER : 'a'..'z' | 'A'..'Z';
+fragment DIGIT  : '0'..'9';
