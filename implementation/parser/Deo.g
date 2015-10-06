@@ -11,8 +11,6 @@
 
 grammar Deo;
 
-// hi there
-
 options {
 	output = AST;
 	ASTLabelType = CommonTree;
