@@ -26,10 +26,12 @@ tokens {        //TODO special tokens for labeling AST nodes
 //////// Programs
 
 prog	:	decl+ EOF							-> (PROG decl+)
+	;
 
 //////// Declarations
 
 decl	:	expr+								-> (DECL expr+)
+	;
 
 //////// Constructs
 
@@ -45,8 +47,8 @@ op	:	AND 								-> AND
 	| 	THEN								-> THEN
 
 cond
-	:	ACTION								-> ACTION
-	| 	STATE								-> STATE
+	:	CON ACTION							-> (CON ACTION)
+	| 	CON STATE							-> (CON STATE)
 	;
 
 rule	
@@ -60,9 +62,11 @@ expr
 
 //////// Lexicon
 
-OB	:	'should';
-PRO	:	'should not';
-PER	:	'may';
+OB	:	'it is obliged';
+PRO	:	'it is prohibited';
+PER	:	'it is permitted';
+
+CON	: 	'it is the case that';
 
 IF	:	'if';
 THEN	:	'then';
@@ -75,6 +79,7 @@ RB	:	')';
 
 ACTION	:	LETTER (LETTER | DIGIT | SPACE)*;
 STATE	:	LETTER (LETTER | DIGIT | SPACE)*;
+ID	:	LETTER (LETTER | DIGIT | '_')*;
 
 SPACE	:	(' ' | '\t')+;
 EOL	:	'\r'? '\n';
