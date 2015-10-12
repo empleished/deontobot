@@ -1,12 +1,3 @@
-TO TEST: 
-
--AND
--OR
--IF...THEN
--NOT
-
---------------------------
-
 TESTS (ADAPTED FROM http://www.dcs.gla.ac.uk/ethics/)
 
 if 
@@ -14,29 +5,31 @@ P:	involves participation of other people
 or
 Q:	involves data relating to other people
 then
-R:	obliged to complete ethics checklist form
+OB(R:)	obliged to complete ethics checklist form
 
 if
-¬P: 	(not) involves participation of other people
+¬P: 	not involves participation of other people
 then
-¬R:	(not) obliged to complete ethics checklist form
+¬OB(R:)	not obliged to complete ethics checklist form
 
 if
 P: 	involves participation of other people
 and
 R: 	complete ethics checklist form
+and
+T: 	complies with points on form
 then	
-¬S:	(not) obliged to apply for ethical approval
+¬S:	not obliged to apply for ethical approval
 and
-U: 	obliged to use appropriate introduction and debriefing scripts
+OB(U:) 	obliged to use appropriate introduction and debriefing scripts
 and
-V: 	obliged to include these with signed ethics checklist form as part of report
+OB(V:) 	obliged to include these with signed ethics checklist form as part of report
 
 if 
 P: 	involves participation of other people
 and
 R: 	complete ethics checklist form
 and 
-T: 	does not comply with 1+ points on form
+¬T: 	not complies with points on form
 then
-S: 	obliged to apply for ethical approval
+OB(S:) 	obliged to apply for ethical approval
