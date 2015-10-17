@@ -1,13 +1,3 @@
-//////////////////////////////////////////////////////////////
-//
-// specification of the Deo syntactic analyser:
-// -Deo syntax
-// -translation of Deo phrases to ASTs
-//
-// Developed 2015/2016 by Leisha Hussien. 
-//
-//////////////////////////////////////////////////////////////
-
 grammar Deo;
 
 options {
@@ -26,14 +16,12 @@ tokens {        //TODO special tokens for labeling AST nodes
 	EXIST;
 }
 
-//////// Programs
+// PARSER RULES //
 
 prog	:	var_decl+ rule_decl+ EOF   					-> ^(PROG 
 											var_decl*
 											rule_decl+)
 	;
-
-//////// Declarations
 
 rule_decl	
 	:	expr+								-> (RULE expr+)
@@ -43,48 +31,46 @@ var_decl
 	:	ID ASSN fact							-> (VAR ID fact)
 	;
 
-//////// Constructs
-
 norm	
-	:	OB 								-> OB
-	| 	PRO 								-> PRO
-	| 	PER								-> PER
+	:	OB 								
+	| 	PRO 								
+	| 	PER								
 	;
 
-fact	:	ACTION								-> ACTION
-	|	STATE								-> STATE
-	|	AGENT								-> AGENT
+fact	:	ACTION								
+	|	STATE								
+	|	AGENT								
 	;
 
-op	:	AND 								-> AND
-	| 	OR 								-> OR
-	| 	NOT 								-> NOT
-	| 	THEN								-> THEN
-	|	IF								-> IF
-	|	IFF								-> IFF
+op	:	AND 								
+	| 	OR 								
+	| 	NOT 								
+	| 	THEN								
+	|	IF								
+	|	IFF								
 	;
 
 axiom	
 	:	norm LB ACTION RB						-> (AXIOM norm AGENT ACTION)
 	;
 
-existential
+existent
 	:	ALL 
 	|	EXISTS
 	;
 
 expr
-	:	existential (LB AGENT)* RB 
+	:	existent (LB AGENT)* RB 
 		(LB IF (LB fact (op fact)*)* RB 
 		THEN (LB axiom (op axiom)*)* RB)* RB				-> (EXPR EXIST AGENT IF FACT THEN AXIOM)
-	|	existential (LB AGENT)* RB 
+	|	existent (LB AGENT)* RB 
 		(LB IFF (LB fact (op fact)*)* RB 				-> (EXPR EXIST AGENT IFF FACT THEN AXIOM)
 		THEN (LB axiom (op axiom)*)* RB)* RB					
-	|	existential (LB AGENT)* RB 
+	|	existent (LB AGENT)* RB 
 		(LB axiom (op axiom)*)* RB					-> (EXPR EXIST AGENT AXIOM)
 	;
 
-//////// Lexicon
+// LEXER RULES //
 
 OB	:	'it is obliged';
 PRO	:	'it is prohibited';
