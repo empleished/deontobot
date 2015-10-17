@@ -4,33 +4,43 @@
 // -Deo syntax
 // -translation of Deo phrases to ASTs
 //
-// Developed 2015/2016 by Leisha Hussien (2020430H).
-// Adapted from code written by David Watt (University of Glasgow).  
+// Developed 2015/2016 by Leisha Hussien. 
 //
 //////////////////////////////////////////////////////////////
 
 grammar Deo;
 
 options {
+	language = Python;
 	output = AST;
 	ASTLabelType = CommonTree;
 }
 
 tokens {        //TODO special tokens for labeling AST nodes
 	IF;
+	IFF;
 	THEN;
 	EXPR;
+	FACT;
 	RULE;
+	EXIST;
 }
 
 //////// Programs
 
-prog	:	decl+ EOF							-> (PROG decl+)
+prog	:	var_decl+ rule_decl+ EOF   					-> ^(PROG 
+											var_decl*
+											rule_decl+)
 	;
 
 //////// Declarations
 
-decl	:	expr+								-> (DECL expr+)
+rule_decl	
+	:	expr+								-> (RULE expr+)
+	;
+
+var_decl
+	:	ID ASSN fact							-> (VAR ID fact)
 	;
 
 //////// Constructs
@@ -41,23 +51,37 @@ norm
 	| 	PER								-> PER
 	;
 
+fact	:	ACTION								-> ACTION
+	|	STATE								-> STATE
+	|	AGENT								-> AGENT
+	;
+
 op	:	AND 								-> AND
 	| 	OR 								-> OR
 	| 	NOT 								-> NOT
 	| 	THEN								-> THEN
-
-cond
-	:	CON ACTION							-> (CON ACTION)
-	| 	CON STATE							-> (CON STATE)
+	|	IF								-> IF
+	|	IFF								-> IFF
 	;
 
-rule	
-	:	norm LB ACTION RB						-> (RULE norm AGENT ACTION)
+axiom	
+	:	norm LB ACTION RB						-> (AXIOM norm AGENT ACTION)
+	;
+
+existential
+	:	ALL 
+	|	EXISTS
 	;
 
 expr
-	:	IF (LB cond (op cond)*)* RB THEN (LB rule (op rule)*)* RB	-> (IF (cond (op cond)*)* THEN (rule (op rule)*)*)
-	|	(LB rule (op rule)*)* RB					-> (EXPR (rule (op rule)*)*)
+	:	existential (LB AGENT)* RB 
+		(LB IF (LB fact (op fact)*)* RB 
+		THEN (LB axiom (op axiom)*)* RB)* RB				-> (EXPR EXIST AGENT IF FACT THEN AXIOM)
+	|	existential (LB AGENT)* RB 
+		(LB IFF (LB fact (op fact)*)* RB 				-> (EXPR EXIST AGENT IFF FACT THEN AXIOM)
+		THEN (LB axiom (op axiom)*)* RB)* RB					
+	|	existential (LB AGENT)* RB 
+		(LB axiom (op axiom)*)* RB					-> (EXPR EXIST AGENT AXIOM)
 	;
 
 //////// Lexicon
@@ -66,19 +90,22 @@ OB	:	'it is obliged';
 PRO	:	'it is prohibited';
 PER	:	'it is permitted';
 
-CON	: 	'it is the case that';
-
 IF	:	'if';
+IFF	:	'if and only if';
 THEN	:	'then';
 NOT	:	'not';
 AND	:	'and';
 OR	:	'or';
+
+ALL	:	'for all';	
+EXISTS	:	'there exists';
 
 LB	:	'(';
 RB	:	')';
 
 ACTION	:	LETTER (LETTER | DIGIT | SPACE)*;
 STATE	:	LETTER (LETTER | DIGIT | SPACE)*;
+AGENT 	:	LETTER (LETTER | DIGIT | SPACE)*;
 ID	:	LETTER (LETTER | DIGIT | '_')*;
 
 SPACE	:	(' ' | '\t')+;
