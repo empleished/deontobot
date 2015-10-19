@@ -1,0 +1,45 @@
+error(100): Deo.g:28:2: syntax error: antlr: Deo.g:28:2: unexpected token: ;
+error(100): Deo.g:31:2: syntax error: antlr: Deo.g:31:2: unexpected token: :
+error(100): Deo.g:31:23: syntax error: antlr: Deo.g:31:23: expecting SEMI, found '->'
+error(100): Deo.g:31:31: syntax error: antlr: Deo.g:31:31: unexpected token: ID
+error(100): Deo.g:31:38: syntax error: antlr: Deo.g:31:38: unexpected token: )
+error(100): Deo.g:55:2: syntax error: antlr: Deo.g:55:2: unexpected token: ;
+error(100): Deo.g:58:2: syntax error: antlr: Deo.g:58:2: unexpected token: :
+error(100): Deo.g:66:2: syntax error: antlr: Deo.g:66:2: unexpected token: |
+error(100): Deo.g:67:40: syntax error: antlr: Deo.g:67:40: expecting RPAREN, found '->'
+error(100): Deo.g:68:29: syntax error: antlr: Deo.g:68:29: expecting SEMI, found ')'
+error(100): Deo.g:68:34: syntax error: antlr: Deo.g:68:34: unexpected token: )
+error(100): Deo.g:69:2: syntax error: antlr: Deo.g:69:2: unexpected token: |
+error(100): Deo.g:69:13: syntax error: antlr: Deo.g:69:13: unexpected token: (
+error(100): Deo.g:69:17: syntax error: antlr: Deo.g:69:17: unexpected token: AGENT
+error(100): Deo.g:70:3: syntax error: antlr: Deo.g:70:3: unexpected token: (
+error(100): Deo.g:70:7: syntax error: antlr: Deo.g:70:7: unexpected token: axiom
+error(100): Deo.g:70:17: syntax error: antlr: Deo.g:70:17: unexpected token: axiom
+error(100): Deo.g:70:34: syntax error: antlr: Deo.g:70:34: unexpected token: ->
+error(100): Deo.g:70:43: syntax error: antlr: Deo.g:70:43: unexpected token: EXIST
+error(100): Deo.g:70:55: syntax error: antlr: Deo.g:70:55: unexpected token: AXIOM
+error(106): Deo.g:21:8: reference to undefined rule: var_decl
+error(106): Deo.g:21:18: reference to undefined rule: rule_decl
+fooleish@Baymax:~$ java -classpath "antlr-3.1.2.jar" org.antlr.Tool *.g > antlrErrors.txt
+error(100): Deo.g:28:2: syntax error: antlr: Deo.g:28:2: unexpected token: ;
+error(100): Deo.g:31:2: syntax error: antlr: Deo.g:31:2: unexpected token: :
+error(100): Deo.g:31:23: syntax error: antlr: Deo.g:31:23: expecting SEMI, found '->'
+error(100): Deo.g:31:31: syntax error: antlr: Deo.g:31:31: unexpected token: ID
+error(100): Deo.g:31:38: syntax error: antlr: Deo.g:31:38: unexpected token: )
+error(100): Deo.g:55:2: syntax error: antlr: Deo.g:55:2: unexpected token: ;
+error(100): Deo.g:58:2: syntax error: antlr: Deo.g:58:2: unexpected token: :
+error(100): Deo.g:66:2: syntax error: antlr: Deo.g:66:2: unexpected token: |
+error(100): Deo.g:67:40: syntax error: antlr: Deo.g:67:40: expecting RPAREN, found '->'
+error(100): Deo.g:68:29: syntax error: antlr: Deo.g:68:29: expecting SEMI, found ')'
+error(100): Deo.g:68:34: syntax error: antlr: Deo.g:68:34: unexpected token: )
+error(100): Deo.g:69:2: syntax error: antlr: Deo.g:69:2: unexpected token: |
+error(100): Deo.g:69:13: syntax error: antlr: Deo.g:69:13: unexpected token: (
+error(100): Deo.g:69:17: syntax error: antlr: Deo.g:69:17: unexpected token: AGENT
+error(100): Deo.g:70:3: syntax error: antlr: Deo.g:70:3: unexpected token: (
+error(100): Deo.g:70:7: syntax error: antlr: Deo.g:70:7: unexpected token: axiom
+error(100): Deo.g:70:17: syntax error: antlr: Deo.g:70:17: unexpected token: axiom
+error(100): Deo.g:70:34: syntax error: antlr: Deo.g:70:34: unexpected token: ->
+error(100): Deo.g:70:43: syntax error: antlr: Deo.g:70:43: unexpected token: EXIST
+error(100): Deo.g:70:55: syntax error: antlr: Deo.g:70:55: unexpected token: AXIOM
+error(106): Deo.g:21:8: reference to undefined rule: var_decl
+error(106): Deo.g:21:18: reference to undefined rule: rule_decl
