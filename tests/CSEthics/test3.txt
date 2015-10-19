@@ -1,0 +1,8 @@
+if 
+P: 	involves participation of other people
+and
+R: 	complete ethics checklist form
+and 
+¬T: 	not complies with points on form
+then
+OB(S:) 	obliged to apply for ethical approval

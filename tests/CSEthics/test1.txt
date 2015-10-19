@@ -1,0 +1,6 @@
+if 
+P:	involves participation of other people
+or
+Q:	involves data relating to other people
+then
+OB(R:)	obliged to complete ethics checklist form
