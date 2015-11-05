@@ -51,18 +51,34 @@ A formalisation of deontic logic to represent the obligations, prohibitions and 
 \pagenumbering{arabic}
 
 \section{Background and Motivation}
-Deontic logic is a logic of duty, which formalises conceptions of what should and should not be done. These conceptions can include obligations, prohibitions, permissions, omissions, oughts and optionals. 
+Deontic logic is a logic of duty, which formalises normative concepts of what should and should not be done. These conceptions can include obligations, prohibitions and permissions, as well as legal notions such as claims, powers, immunities and liberties, though what is considered under the remit of deontic logic depends largely on what form of deontic logic is in use. For my purposes, I will largely be concerned with obligations, prohibitions and permissions, as I feel they are the most relevant to the project I am pursuing. 
 %Briefly explain what deontic logic is, why I'd want to do what I'm doing. 
 
 \section{Objectives and Achievements}
 %What did I set out to achieve and what have I achieved. 
 
 \section{Structure}
+I will now set out the history of deontic logic, as well as current and potential applications of deontic logic, and then I will examine existing tool support for the issue I have presented. I will then explain the design and implementation of my software, broken down into the lexical specification of the flavour of deontic logic I am working with and the proof strategy for a set of rules. I will then evaluate the success of what I have achieved against what I initially set out to achieve. Once this is complete, I will present my conclusions about what the work I have done shows, and also suggest potential avenues of future work. 
 %What's coming next in the dissertation. 
 
 \chapter{Literature Review}
 
 \section{History of Deontic Logic}
+Deontic logic, as I have already explained, is a logic of duty. Duties can be understood in a Kantian sense, wherein the justification of actions or becomings that are expected of agents is grounded in a respect for the laws which agents are bound to\citep{sep-kant-moral}. These laws can be anything from the moral law which can be said to govern all humans, to the legislation local to certain countries that applies only to their citizens, to the expected behaviour of an employee within a company under that company's code of ethics. 
+
+Deontic logic contains the usual formal logic operators, such as negations, biconditionals, conjunctions and disjunctions. It can then incorporate many concepts, but here I will focus on obligations, prohibitions and permissions. Obligations are those things which agents are required to perform or become, prohibitions are those things which agents are forbidden from performing or becoming, and permissions are those things which agents are neither required to nor forbidden from performing or becoming. In other words, obligations are things we should do, prohibitions are things we should not do and permissions are things we are allowed to do. 
+
+Deontic logic is thought to have first emerged in the fourteenth century, but it was not formalised until the twentieth century when there was a huge shift towards formalising symbolic logic more generally. 
+
+\subsection{Types of Deontic Logic}
+%I think SDL And DDL are the most relevant, though I could also include non-monotonic and dynamic?
+\subsubsection{Standard Deontic Logic}
+Standard deontic logic is a monadic logic which extends propositional logic. If O represents obligation, the concepts can be formalised as follows: if A is some obligation, O(A); if A is some prohibition, O(¬A); if A is some permission, ¬O(A) & ¬O(¬A). 
+
+Standard deontic logic faces the contrary-to-duties problem. It's not implausible that it could be forbidden that C, but in the case of C, it could still be expected that A. The classic example is the gentle murderer; murder is forbidden, but if an agent is going to commit murder, they are obliged to do it gently. Standard deontic logic could represent these cases as follows: O¬(C) & C -> O(A), but this is paradoxical and not a satisfactory representation of contrary-to-duties obligations. 
+
+\subsubsection{Dyadic Deontic}
+Dyadic deontic logic introduces a context, as a way to respond to the contrary-to-duties problem. If A is an obligation that only applies given a context C, O(A | C) and so following. This allows for seemingly contradictory statements such as O¬(C) & O(A | C) to coexist without conflict. 
 %Explain what deontic logic is, what it means to be obliged, prohibited, permitted, etc. Outline various types of deontic logic. Talk about the history/development of deontic logic. 
 
 \section{Applications of Deontic Logic}
