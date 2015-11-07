@@ -63,12 +63,12 @@ I will now set out the history of deontic logic, as well as current and potentia
 
 \chapter{Literature Review}
 
-\section{History of Deontic Logic}
+\section{History of Deontic Logic}%talk about the development
 Deontic logic, as I have already explained, is a logic of duty. Duties can be understood in a Kantian sense, wherein the justification of actions or becomings that are expected of agents is grounded in a respect for the laws which agents are bound to\cite{sep-kant-moral}. These laws can be anything from the moral law which can be said to govern all humans, to the legislation local to certain countries that applies only to their citizens, to the expected behaviour of an employee within a company under that company's code of ethics. 
 
 Deontic logic contains the usual formal logic operators, such as negations, biconditionals, conjunctions and disjunctions. It can then incorporate many concepts, but here I will focus on obligations, prohibitions and permissions. Obligations are those things which agents are required to perform or become, prohibitions are those things which agents are forbidden from performing or becoming, and permissions are those things which agents are neither required to nor forbidden from performing or becoming. In other words, obligations are things we should do, prohibitions are things we should not do and permissions are things we are allowed to do. 
 
-Deontic logic is thought to have first emerged in the fourteenth century, but it was not formalised until the twentieth century. 
+Deontic logic is thought to have first emerged in the fourteenth century, but it was not formalised until the twentieth century\cite{sep-logic-deontic}. 
 
 \subsection{Types of Deontic Logic}
 
@@ -82,13 +82,16 @@ Dyadic deontic logic introduces a context as a way to respond to the contrary-to
 
 \subsubsection{Non-Monotonic Deontic Logic}
 Non-monotonic deontic logic introduces consistency\cite{Powers}. 
-%Explain what deontic logic is, what it means to be obliged, prohibited, permitted, etc. Outline various types of deontic logic. Talk about the history/development of deontic logic. 
 
-\section{Applications of Deontic Logic}
-%Places it is already being used/could be used. Look for CS examples as well as others. 
+\section{Applications of Deontic Logic}%Places it is already being used/could be used. Look for CS examples as well as others. 
+Deontic logic lends itself well to applications within law, due to the aforementioned grounding in a respect for laws. One way to cache this out is to characterise the law as a system of norms\cite{law-jonessergot}, which can then be represented with deontic expressions. 
 
-\section{Functionality}
-%Things which already exist which kind of do what I'm doing - explain why they aren't sufficient and what I'm doing differently. 
+Applications within Computer Science can be categorised as follows\cite{meyer93applications}: fault-tolerant computer systems, normative user behaviour, policy specification, normative organisation behaviour and normative integrity constraints. 
+
+\section{Existing Functionality}%Things which already exist which kind of do what I'm doing - explain why they aren't sufficient and what I'm doing differently. 
+One tool which has been developed to operationalise deontic logic is KED\cite{KED}, a deontic theorem prover implemented in Haskell.
+
+Another tool, ESPLEX, formalises legislation in a deontic way in the field of agricultural tenancies\cite{ESPLEX}. 
 
 \chapter{Design}
 
@@ -99,10 +102,8 @@ Non-monotonic deontic logic introduces consistency\cite{Powers}.
 \chapter{Implementation}
 
 \section{Lexical Specification}
-%How all the pieces of the logic and situational features are represented. 
 
 \section{Proof Strategy}
-%How I make sure the rules actually make sense. 
 
 \chapter{Evaluation}
 
@@ -115,16 +116,6 @@ Non-monotonic deontic logic introduces consistency\cite{Powers}.
 \section{Conclusions}
 
 \section{Future Work}
-
-% ** HOW TO INSERT FIGURES **
-%\vspace{-7mm}
-%\begin{figure}
-%\centering
-%\includegraphics[height=9.2cm,width=13.2cm]{uroboros.pdf}
-%\vspace{-30mm}
-%\caption{An alternative hierarchy of the algorithms.}1
-%\label{uroborus}
-%\end{figure}
 
 %%%%%%%%%%%%%%%%
 %              %
