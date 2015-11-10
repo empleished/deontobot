@@ -51,7 +51,7 @@ A formalisation of deontic logic to represent the obligations, prohibitions and 
 \pagenumbering{arabic}
 
 \section{Background and Motivation}%Briefly explain what deontic logic is, why I'd want to do what I'm doing. 
-Deontic logic is a logic of duty, which formalises normative concepts of what should and should not be done. These conceptions can include obligations, prohibitions and permissions, as well as legal notions such as claims, powers, immunities and liberties, though what is considered under the remit of deontic logic depends largely on what form of deontic logic is in use. For my purposes, I will largely be concerned with obligations, prohibitions and permissions, as I feel they are the most relevant to the project I am pursuing.
+Deontic logic is a logic of duty, which formalises normative concepts of what should and should not be done. These conceptions can include obligations, prohibitions and permissions, as well as the Hohfeldian incidents\cite{Hohfeld} of claims, powers, immunities and liberties, though what is considered under the remit of deontic logic depends largely on what form of deontic logic is in use. For my purposes, I will largely be concerned with obligations, prohibitions and permissions, as I feel they are the most relevant to the project I am pursuing.
 
 \section{Objectives and Achievements} %What did I set out to achieve and what have I achieved. 
 
@@ -65,15 +65,17 @@ Deontic logic, as I have already explained, is a logic of duty. Duties can be un
 
 Deontic logic contains the usual formal logic operators, such as negations, biconditionals, conjunctions and disjunctions. It can then incorporate many concepts, but here I will focus on obligations, prohibitions and permissions. Obligations are those things which agents are required to do, prohibitions are those things which agents are forbidden from doing, and permissions are those things which agents are neither required to do nor forbidden from doing. In other words, obligations are things we should do, prohibitions are things we should not do and permissions are things we are allowed to do. 
 
-\section{Types of Deontic Logic}%EXPAND THESE - INCLUDE EXAMPLES
+In a set of deontic maxims, every maxim must be consistent with the rest of the set\cite{Powers}. %should I talk about Kant and the categorical imperative
 
-\subsection{Standard Deontic Logic}%explain that once you've shown that A, you can jump straight to O(A)
-Standard deontic logic is a monadic logic which extends propositional logic. If O represents obligation, the concepts can be formalised as follows: if A is some obligation, then O(A); if A is some prohibition, then O(¬A); if A is some permission, then ¬O(A) \& ¬O(¬A). For example, if there is a general prohibition on murder, and the action of murder is represented by A, this can be represented as O(¬A). Once A has been proven to be true, nothing more needs to be done to show that O(A) holds. 
+\section{Types of Deontic Logic}
+
+\subsection{Standard Deontic Logic}
+Standard deontic logic is a monadic logic which extends propositional logic. If O represents obligation, the concepts can be formalised as follows: if A is some obligation, then O(A); if A is some prohibition, then O(¬A); if A is some permission, then ¬O(A) \& ¬O(¬A). For example, if there is a general prohibition on murder, and the action of murder is represented by A, this can be represented as O(¬A). Nothing more needs to be done to show that O(A) holds once A is proven to be true. 
 
 Standard deontic logic faces the contrary-to-duties problem. It is not implausible that it could be forbidden that C, but in the case of C, it could still be expected that A. The classic example is the gentle murderer; murder is forbidden, but if an agent is going to commit murder, they are obliged to do it in a way that causes the least amount of suffering. Standard deontic logic could represent these cases as follows: if there is a general prohibition on murder and the action of murder is represented by C, but if an agent is committing murder they are obliged to murder gently and this can be represented by O(A), then this can be represented as O(¬C) \& C \( \to \) O(A). However, this is paradoxical, as C and ¬C cannot be true at the same time. There are ways to answer this objection within standard deontic logic, but it is also not a satisfactory representation of what is happening with contrary-to-duties obligations. It seems like the case of a duty being violated is something stronger than a condition. 
 
-\subsection{Dyadic Deontic Logic}%explain what is meant by a context - ideal and non-ideal worlds
-Dyadic deontic logic introduces a context as a way to respond to the contrary-to-duties problem. 
+\subsection{Dyadic Deontic Logic}
+Dyadic deontic logic introduces a context as a way to respond to the contrary-to-duties problem. %explain what is meant by a context - ideal and non-ideal worlds
 
 If A is an obligation that only applies given a context C, O(A \textbar C) and so following. This allows for seemingly contradictory statements such as O(¬C) \& O(A \textbar C) to coexist without conflict. For example, if there is a general prohibition on murder, and the action of murder is represented by C, but if in the context where an agent is committing murder they are obliged to kill gently and this can be represented by O(A), then O(¬C) \& O(A \textbar C).
 
@@ -88,11 +90,15 @@ Predicate deontic logic\cite{predicate} introduces quantifiers, which allow for 
 \section{Applications of Deontic Logic}
 Deontic logic lends itself well to applications within law, due to the aforementioned grounding in a respect for laws. One way to implement this is to characterise the law as a system of norms\cite{law-jonessergot}, which can then be represented with deontic expressions. 
 
-ESPLEX formalises legislation in a deontic way in the field of agricultural tenancies\cite{ESPLEX}, and is implemented in Prolog. It first produces a normalised version of a legal text, splitting the sentences into a series of conditions (IF statements) and consequences (THEN statements). From this, it produces a reduced normalised version, which produces prescriptions (obligations, prohibitions and permissions), procedural rules for these prescriptions and conditions for the prescriptions being held. These are then translated into rules to be stored in the Prolog knowledge base. The knowledge base can be searched either by searching the rules or by searching the network. 
+ESPLEX formalises legislation in a deontic way in the field of agricultural tenancies\cite{ESPLEX}, and is implemented in Prolog. It first produces a normalised version of a legal text, splitting the sentences into a series of conditions (IF statements) and consequences (THEN statements). From this, it produces a reduced normalised version, which produces prescriptions (obligations, prohibitions and permissions), procedural rules for these prescriptions and conditions for the prescriptions being held. These are then translated into rules to be stored in the Prolog knowledge base. The knowledge base can be searched either by searching the rules or by searching the network.
 
-A similar program, TAXMAN, models concepts within the legal area that applies to corporate reorganisation\cite{TAXMAN}. It stores the facts of such a reorganisation and uses formalised definitions of the legislation to determine whether or not it can be considered a tax-free transaction. 
+TAXMAN models concepts within the legal area that applies to corporate reorganisation\cite{TAXMAN}. It stores the facts of such a reorganisation and uses formalised definitions of the legislation to determine whether or not it can be considered a tax-free transaction. 
 
 Applications within Computer Science can be categorised as follows\cite{meyer93applications}: fault-tolerant computer systems, normative user behaviour, policy specification, normative organisation behaviour and normative integrity constraints. %EXPAND THIS
+
+One application within policy specification is system availability\cite{brunel04deontic}. After extending the logic with temporal operators, so it can be said that some obligation, A, needs to be done before a certain time, k, this obligation can be formally represented. From this, simple availability policies can be defined, and then checked for consistency. Violation of is also easy to verify, as it can be checked whether the system is in accordance with all of the defined rules. 
+
+Within integrity constraints, one application is the specification of information systems\cite{infosystems}, particularly with respect to soft constraints. Dyadic deontic logic, with its ideal and non-ideal worlds, can neatly describe what is going on when there is some constraint of a system that ideally should not be violated, and what should be done if it is. 
 
 \section{Existing Functionality}%Things which already exist which kind of do what I'm doing - explain why they aren't sufficient and what I'm doing differently. 
 One tool which has been explicitly developed to operationalise deontic logic is KED\cite{KED}, a deontic theorem prover implemented in Haskell. It works with standard deontic logic, and its proof strategy follows these steps: define the labels which represent the worlds and paths, unify the labels for the relevant worlds, use the properties of transitivity and symmetry to reduce the set of labels, generally unify the set of labels, and finally make use of rules of inference, such as modus ponens, to prove by contradiction that the theorem is correct. 
@@ -120,6 +126,7 @@ One tool which has been explicitly developed to operationalise deontic logic is 
 \section{Conclusions}
 
 \section{Future Work}
+%Hohfeldian incidents - formalise rights
 
 %%%%%%%%%%%%%%%%
 %              %
