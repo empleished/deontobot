@@ -2,9 +2,7 @@
 
 \documentclass{l4proj}
 
-%
-% put any packages here
-%
+\usepackage[autostyle]{csquotes}
 
 \begin{document}
 \title{Deontic Logic Prover}
@@ -65,7 +63,11 @@ Deontic logic, as I have already explained, is a logic of duty. Duties can be un
 
 Deontic logic contains the usual formal logic operators, such as negations, biconditionals, conjunctions and disjunctions. It can then incorporate many concepts, but here I will focus on obligations, prohibitions and permissions. Obligations are those things which agents are required to do, prohibitions are those things which agents are forbidden from doing, and permissions are those things which agents are neither required to do nor forbidden from doing. In other words, obligations are things we should do, prohibitions are things we should not do and permissions are things we are allowed to do. 
 
-In a set of deontic maxims, every maxim must be consistent with the rest of the set\cite{Powers}. %should I talk about Kant and the categorical imperative
+Deontic logic says nothing about the content of these maxims, broadly speaking; where this comes from is determined by deontological theories, which can then be assessed for adequacy on their own terms. Indeed, in certain contexts, many deontological theories do not seem applicable. It makes no sense to talk of things like the rational will dictating the maxims to be accepted when these maxims concern database integrity, for example. However, there is a clearer story to be told when dealing with codes of ethics. Following Kant\cite{groundwork}: 
+
+\blockquote{it can lie nowhere else than in the principle of the will, regardless of the ends that can be effected by such action; for the will stands halfway between its a priori principle, which is formal, and its a posteriori incentive, which is material, as it were at a crossroads, and since it must after all be determined by something, it will have to be determined by the formal principle of willing as such when an action is done from duty, as every material principle has been taken away from it. the third proposition, as the conclusion from both previous ones, i would express as follows: duty is the necessity of an action from respect for the law. For the object as the effect of the action i have in mind i can indeed have inclination, but never respect, precisely because it is merely an effect and not activity of a will. Likewise, i cannot have respect for inclination as such, whether it is mine or that of another; i can at most in the first case approve of it, in the second at times love it myself, i.e. view it as favourable to my own advantage. only what is connected with my will merely as ground, never as effect, what does not serve my inclination, but outweighs it, or at least excludes it entirely from calculations when we make a choice, hence the mere law by itself, can be an object of respect and thus a command.}
+
+This is often described as the autonomy formula. From this, we can derive an approach to validating sets of deontic maxims. One convincing approach is ensuring that every maxim must be consistent with the rest of the set, and that the set must form a coherent system of maxims\cite{Powers}. 
 
 \section{Types of Deontic Logic}
 
@@ -77,13 +79,12 @@ Standard deontic logic faces the contrary-to-duties problem. It is not implausib
 \subsection{Non-Monotonic Deontic Logic}%explain what consistency is - talk about defeasibility
 Non-monotonic deontic logic introduces consistency\cite{Powers}. This is useful both for dealing with conflicting obligations and for handling conditional obligations\cite{Horty}. Following Reiter's symbolisation of default logic\cite{Reiter}, if A is an obligation, and C is some condition that A must be consistent with in order to hold, \( \frac{C : O(A)}{O(A)} \). This also neatly handles the contrary-to-duties problem; if there is a general prohibition on murder, and the action of murder is represented by C, but if in the context where an agent is committing murder they are obliged to kill gently and this can be represented by O(A), then \( \frac{C : O(A)}{O(A)} \). The justification is the same as the conclusion, and is true only in the case of their being no defeater facts which would make it false. 
 
-
 Dyadic deontic logic is a non-monotonic logic which introduces a context as a way to respond to the contrary-to-duties problem. Rather than there being simply an ideal world, where duties are fulfilled, and a non-ideal world, where they are not, there can be more or less ideal worlds depending on the number of obligations that are fulfilled. In dyadic deontic logic, if A is an obligation that only applies given a context C, O(A \textbar C) and so following. This allows for seemingly contradictory statements such as O(\( \neg \)C) \& O(A \textbar C) to coexist without conflict. For example, if there is a general prohibition on murder, and the action of murder is represented by C, but if in the context where an agent is committing murder they are obliged to kill gently and this can be represented by O(A), then O(\( \neg \)C) \& O(A \textbar C). 
 
 However, despite effectively capturing an important aspect of reasoning, non-monotonic logic fails a first-order logic requirement for semi-decidability of set membership. It cannot guarantee whether a maxim is forbidden or obliged, even when it is in fact one of the two, which is problematic for a formalised system. 
 
 \subsection{Predicate Deontic Logic}
-Predicate deontic logic\cite{predicate} introduces quantifiers, which allow for specification of what statements actually refer to. Statements can range over all members of a group, (at least) one member of a group, no members of a group or not all members of a group. If x is some agent and A is some obligation incumbent upon all of x, \( \forall{x(O(A))} \). For example, the general prohibition on murder, (A), which applies to all rational beings, (x), can be represented as \( \forall{x(O( \neg A))} \). To show the distinction, if all citizens (x) are obliged not to murder, but officers of the law (y) are permitted to murder in certain cases, this can be represented as \( \forall{x(O( \neg A))} \) \& \( \forall{y( \neg O( \neg A) \& \neg O(A)} \). These are not contradictory maxims in predicate logic. 
+Predicate deontic logic\cite{predicate} introduces quantifiers, which allow for specification of what statements actually refer to. Statements can range over all members of a group, (at least) one member of a group, no members of a group or not all members of a group. If x is some agent and A is some obligation incumbent upon all of x, \( \forall{x(O(A))} \). For example, the general prohibition on murder, (A), which applies to all rational beings, (x), can be represented as \( \forall{x(O( \neg A))} \). To show the distinction, if all citizens (x) are obliged not to murder, but officers of the law (y) are permitted to murder in certain cases, this can be represented as \( \forall{x(O( \neg A))} \) \& \( \forall{y( \neg O( \neg A) \& \neg O(A)} \). These are not contradictory maxims in predicate logic, so it allows for much more complex sets of rules. 
 
 \section{Applications of Deontic Logic}
 Deontic logic lends itself well to applications within law, due to the aforementioned grounding in a respect for laws. One way to implement this is to characterise the law as a system of norms\cite{law-jonessergot}, which can then be represented with deontic expressions. 
