@@ -49,7 +49,7 @@ op	:	AND
 	;
 
 axiom	
-	:	norm LB ACTION RB -> (AXIOM norm AGENT ACTION)
+	:	norm LB ACTION RB				-> (AXIOM norm AGENT ACTION)
 	;
 
 existent
