@@ -13,7 +13,9 @@ tokens {        //TODO special tokens for labeling AST nodes
 	EXPR;
 	FACT;
 	RULE;
-	EXIST;
+	AXIOM;
+	PROG;
+	VAR;
 }
 
 // PARSER RULES //
@@ -22,11 +24,11 @@ prog	:	var_decl+ rule_decl+ EOF   			-> ^(PROG var_decl* rule_decl+)
 	;
 
 rule_decl	
-	:	expr+						-> (RULE expr+) 
+	:	expr+						-> ^(RULE expr+) 
 	;
 
 var_decl
-	:	ID ASSN fact					-> (VAR ID fact)
+	:	ID ASSN fact					-> ^(VAR ID fact)
 	;
 
 norm	
@@ -49,23 +51,18 @@ op	:	AND
 	;
 
 axiom	
-	:	norm LB ACTION RB				-> (AXIOM norm AGENT ACTION)
-	;
-
-existent
-	:	ALL 
-	|	EXISTS
+	:	norm LB ACTION RB				-> ^(AXIOM norm AGENT ACTION)
 	;
 
 expr
-	:	existent (LB AGENT)* RB (LB 
+	:	(LB AGENT)* RB (LB 
 		IF (LB fact (op fact)*)* RB 
-		THEN (LB axiom (op axiom)*)* RB)* RB 		-> (EXPR EXIST AGENT IF FACT THEN AXIOM axiom)
-	|	existent (LB AGENT)* RB (LB 
+		THEN (LB axiom (op axiom)*)* RB)* RB 		-> ^(EXPR AGENT IF FACT THEN AXIOM axiom)
+	|	(LB AGENT)* RB (LB 
 		IFF (LB fact (op fact)*)* RB 
-		THEN (LB axiom (op axiom)*)* RB)* RB 		-> (EXPR EXIST AGENT IFF FACT THEN AXIOM axiom)	
-	|	existent (LB AGENT)* RB (LB 
-		axiom (op axiom)*)* RB 				-> (EXPR EXIST AGENT AXIOM axiom)
+		THEN (LB axiom (op axiom)*)* RB)* RB 		-> ^(EXPR AGENT IFF FACT THEN AXIOM axiom)	
+	|	(LB AGENT)* RB (LB 
+		axiom (op axiom)*)* RB 				-> ^(EXPR AGENT AXIOM axiom)
 	;
 
 // LEXER RULES //
@@ -81,11 +78,10 @@ NOT	:	'not';
 AND	:	'and';
 OR	:	'or';
 
-ALL	:	'for all';	
-EXISTS	:	'there exists';
-
 LB	:	'(';
 RB	:	')';
+
+ASSN	: 	'=';
 
 ACTION	:	LETTER (LETTER | DIGIT | SPACE)*;
 STATE	:	LETTER (LETTER | DIGIT | SPACE)*;
