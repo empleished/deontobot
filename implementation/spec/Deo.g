@@ -38,8 +38,7 @@ norm
 	;
 
 fact	:	ACTION								
-	|	STATE								
-	|	AGENT								
+	|	STATE														
 	;
 
 op	:	AND 								
@@ -51,18 +50,15 @@ op	:	AND
 	;
 
 axiom	
-	:	norm LB ACTION RB				-> ^(AXIOM norm AGENT ACTION)
+	:	norm LB ACTION RB				-> ^(AXIOM norm ACTION)
 	;
 
 expr
-	:	(LB AGENT)* RB (LB 
-		IF (LB fact (op fact)*)* RB 
-		THEN (LB axiom (op axiom)*)* RB)* RB 		-> ^(EXPR AGENT IF FACT THEN AXIOM axiom)
-	|	(LB AGENT)* RB (LB 
-		IFF (LB fact (op fact)*)* RB 
-		THEN (LB axiom (op axiom)*)* RB)* RB 		-> ^(EXPR AGENT IFF FACT THEN AXIOM axiom)	
-	|	(LB AGENT)* RB (LB 
-		axiom (op axiom)*)* RB 				-> ^(EXPR AGENT AXIOM axiom)
+	:	(LB IF (LB fact (op fact)*)* RB 
+		THEN (LB axiom (op axiom)*)* RB)* RB 		-> ^(EXPR IF FACT THEN AXIOM)
+	|	(LB IFF (LB fact (op fact)*)* RB 
+		THEN (LB axiom (op axiom)*)* RB)* RB 		-> ^(EXPR IFF FACT THEN AXIOM)	
+	|	(LB axiom (op axiom)*)* RB 				-> ^(EXPR AXIOM)
 	;
 
 // LEXER RULES //
@@ -85,7 +81,6 @@ ASSN	: 	'=';
 
 ACTION	:	LETTER (LETTER | DIGIT | SPACE)*;
 STATE	:	LETTER (LETTER | DIGIT | SPACE)*;
-AGENT 	:	LETTER (LETTER | DIGIT | SPACE)*;
 ID	:	LETTER (LETTER | DIGIT | '_')*;
 
 SPACE	:	(' ' | '\t')+;

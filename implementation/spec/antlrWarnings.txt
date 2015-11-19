@@ -1,8 +1,8 @@
-warning(200): Deo.g:27:4: Decision can match input such as "LB" using multiple alternatives: 1, 2
-As a result, alternative(s) 2 were disabled for that input
 warning(200): Deo.g:27:4: Decision can match input such as "RB" using multiple alternatives: 1, 2
 As a result, alternative(s) 2 were disabled for that input
-warning(200): Deo.g:58:2: Decision can match input such as "LB AGENT RB LB IF" using multiple alternatives: 1, 2, 3
-As a result, alternative(s) 3,2 were disabled for that input
-error(208): Deo.g:88:1: The following token definitions can never be matched because prior tokens match the same input: STATE,AGENT
+warning(200): Deo.g:27:4: Decision can match input such as "LB" using multiple alternatives: 1, 2
+As a result, alternative(s) 2 were disabled for that input
+warning(200): Deo.g:57:2: Decision can match input such as "LB IF" using multiple alternatives: 1, 2, 3
+As a result, alternative(s) 2,3 were disabled for that input
+error(208): Deo.g:83:1: The following token definitions can never be matched because prior tokens match the same input: STATE
 
