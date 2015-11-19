@@ -37,8 +37,7 @@ norm
 	| 	PER								
 	;
 
-fact	:	ACTION								
-	|	STATE														
+fact	:	ACTION														
 	;
 
 op	:	AND 								
@@ -54,11 +53,11 @@ axiom
 	;
 
 expr
-	:	(LB IF (LB fact (op fact)*)* RB 
-		THEN (LB axiom (op axiom)*)* RB)* RB 		-> ^(EXPR IF FACT THEN AXIOM)
-	|	(LB IFF (LB fact (op fact)*)* RB 
-		THEN (LB axiom (op axiom)*)* RB)* RB 		-> ^(EXPR IFF FACT THEN AXIOM)	
-	|	(LB axiom (op axiom)*)* RB 				-> ^(EXPR AXIOM)
+	:	LB IF (LB fact (op fact)* RB)
+		THEN (LB axiom (op axiom)* RB) RB 		-> ^(EXPR IF FACT THEN AXIOM)
+	|	LB IFF (LB fact (op fact)* RB) 
+		THEN (LB axiom (op axiom)* RB) RB 		-> ^(EXPR IFF FACT THEN AXIOM)	
+	|	LB axiom (op axiom)* RB 				-> ^(EXPR AXIOM)
 	;
 
 // LEXER RULES //
@@ -80,7 +79,6 @@ RB	:	')';
 ASSN	: 	'=';
 
 ACTION	:	LETTER (LETTER | DIGIT | SPACE)*;
-STATE	:	LETTER (LETTER | DIGIT | SPACE)*;
 ID	:	LETTER (LETTER | DIGIT | '_')*;
 
 SPACE	:	(' ' | '\t')+;

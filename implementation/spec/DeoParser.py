@@ -1,4 +1,4 @@
-# $ANTLR 3.1.2 Deo.g 2015-11-19 08:38:31
+# $ANTLR 3.1.2 Deo.g 2015-11-19 08:56:19
 
 import sys
 from antlr3 import *
@@ -14,15 +14,14 @@ HIDDEN = BaseRecognizer.HIDDEN
 # token types
 IFF=5
 ASSN=14
-STATE=19
 RULE=9
-RB=24
+RB=23
 PER=17
-LETTER=25
-NOT=22
-AND=20
+LETTER=24
+NOT=21
+AND=19
 ID=13
-SPACE=27
+SPACE=26
 EOF=-1
 PRO=16
 ACTION=18
@@ -30,22 +29,22 @@ OB=15
 IF=4
 AXIOM=10
 PROG=11
-EOL=28
+EOL=27
 EXPR=7
 THEN=6
-OR=21
-LB=23
+OR=20
+LB=22
 VAR=12
-DIGIT=26
-COMMENT=29
+DIGIT=25
+COMMENT=28
 FACT=8
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>", 
     "IF", "IFF", "THEN", "EXPR", "FACT", "RULE", "AXIOM", "PROG", "VAR", 
-    "ID", "ASSN", "OB", "PRO", "PER", "ACTION", "STATE", "AND", "OR", "NOT", 
-    "LB", "RB", "LETTER", "DIGIT", "SPACE", "EOL", "COMMENT"
+    "ID", "ASSN", "OB", "PRO", "PER", "ACTION", "AND", "OR", "NOT", "LB", 
+    "RB", "LETTER", "DIGIT", "SPACE", "EOL", "COMMENT"
 ]
 
 
@@ -152,7 +151,7 @@ class DeoParser(Parser):
                     alt2 = 2
                     LA2_0 = self.input.LA(1)
 
-                    if ((LB <= LA2_0 <= RB)) :
+                    if (LA2_0 == LB) :
                         alt2 = 1
 
 
@@ -278,8 +277,6 @@ class DeoParser(Parser):
                     LA3_0 = self.input.LA(1)
 
                     if (LA3_0 == LB) :
-                        alt3 = 1
-                    elif (LA3_0 == RB) :
                         alt3 = 1
 
 
@@ -407,7 +404,7 @@ class DeoParser(Parser):
                 stream_fact.add(fact7.tree)
 
                 # AST Rewrite
-                # elements: ID, fact
+                # elements: fact, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -530,7 +527,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "fact"
-    # Deo.g:40:1: fact : ( ACTION | STATE );
+    # Deo.g:40:1: fact : ACTION ;
     def fact(self, ):
 
         retval = self.fact_return()
@@ -538,27 +535,21 @@ class DeoParser(Parser):
 
         root_0 = None
 
-        set9 = None
+        ACTION9 = None
 
-        set9_tree = None
+        ACTION9_tree = None
 
         try:
             try:
-                # Deo.g:40:6: ( ACTION | STATE )
-                # Deo.g:
+                # Deo.g:40:6: ( ACTION )
+                # Deo.g:40:8: ACTION
                 pass 
                 root_0 = self._adaptor.nil()
 
-                set9 = self.input.LT(1)
-                if (ACTION <= self.input.LA(1) <= STATE):
-                    self.input.consume()
-                    self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set9))
-                    self._state.errorRecovery = False
+                ACTION9=self.match(self.input, ACTION, self.FOLLOW_ACTION_in_fact230)
 
-                else:
-                    mse = MismatchedSetException(None, self.input)
-                    raise mse
-
+                ACTION9_tree = self._adaptor.createWithPayload(ACTION9)
+                self._adaptor.addChild(root_0, ACTION9_tree)
 
 
 
@@ -592,7 +583,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "op"
-    # Deo.g:44:1: op : ( AND | OR | NOT | THEN | IF | IFF );
+    # Deo.g:43:1: op : ( AND | OR | NOT | THEN | IF | IFF );
     def op(self, ):
 
         retval = self.op_return()
@@ -606,7 +597,7 @@ class DeoParser(Parser):
 
         try:
             try:
-                # Deo.g:44:4: ( AND | OR | NOT | THEN | IF | IFF )
+                # Deo.g:43:4: ( AND | OR | NOT | THEN | IF | IFF )
                 # Deo.g:
                 pass 
                 root_0 = self._adaptor.nil()
@@ -654,7 +645,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "axiom"
-    # Deo.g:52:1: axiom : norm LB ACTION RB -> ^( AXIOM norm ACTION ) ;
+    # Deo.g:51:1: axiom : norm LB ACTION RB -> ^( AXIOM norm ACTION ) ;
     def axiom(self, ):
 
         retval = self.axiom_return()
@@ -677,19 +668,19 @@ class DeoParser(Parser):
         stream_norm = RewriteRuleSubtreeStream(self._adaptor, "rule norm")
         try:
             try:
-                # Deo.g:53:2: ( norm LB ACTION RB -> ^( AXIOM norm ACTION ) )
-                # Deo.g:53:4: norm LB ACTION RB
+                # Deo.g:52:2: ( norm LB ACTION RB -> ^( AXIOM norm ACTION ) )
+                # Deo.g:52:4: norm LB ACTION RB
                 pass 
-                self._state.following.append(self.FOLLOW_norm_in_axiom358)
+                self._state.following.append(self.FOLLOW_norm_in_axiom345)
                 norm11 = self.norm()
 
                 self._state.following.pop()
                 stream_norm.add(norm11.tree)
-                LB12=self.match(self.input, LB, self.FOLLOW_LB_in_axiom360) 
+                LB12=self.match(self.input, LB, self.FOLLOW_LB_in_axiom347) 
                 stream_LB.add(LB12)
-                ACTION13=self.match(self.input, ACTION, self.FOLLOW_ACTION_in_axiom362) 
+                ACTION13=self.match(self.input, ACTION, self.FOLLOW_ACTION_in_axiom349) 
                 stream_ACTION.add(ACTION13)
-                RB14=self.match(self.input, RB, self.FOLLOW_RB_in_axiom364) 
+                RB14=self.match(self.input, RB, self.FOLLOW_RB_in_axiom351) 
                 stream_RB.add(RB14)
 
                 # AST Rewrite
@@ -709,8 +700,8 @@ class DeoParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 53:25: -> ^( AXIOM norm ACTION )
-                # Deo.g:53:28: ^( AXIOM norm ACTION )
+                # 52:25: -> ^( AXIOM norm ACTION )
+                # Deo.g:52:28: ^( AXIOM norm ACTION )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(self._adaptor.createFromType(AXIOM, "AXIOM"), root_1)
 
@@ -754,7 +745,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "expr"
-    # Deo.g:56:1: expr : ( ( LB IF ( LB fact ( op fact )* )* RB THEN ( LB axiom ( op axiom )* )* RB )* RB -> ^( EXPR IF FACT THEN AXIOM ) | ( LB IFF ( LB fact ( op fact )* )* RB THEN ( LB axiom ( op axiom )* )* RB )* RB -> ^( EXPR IFF FACT THEN AXIOM ) | ( LB axiom ( op axiom )* )* RB -> ^( EXPR AXIOM ) );
+    # Deo.g:55:1: expr : ( LB IF ( LB fact ( op fact )* RB ) THEN ( LB axiom ( op axiom )* RB ) RB -> ^( EXPR IF FACT THEN AXIOM ) | LB IFF ( LB fact ( op fact )* RB ) THEN ( LB axiom ( op axiom )* RB ) RB -> ^( EXPR IFF FACT THEN AXIOM ) | LB axiom ( op axiom )* RB -> ^( EXPR AXIOM ) );
     def expr(self, ):
 
         retval = self.expr_return()
@@ -839,172 +830,128 @@ class DeoParser(Parser):
         stream_axiom = RewriteRuleSubtreeStream(self._adaptor, "rule axiom")
         try:
             try:
-                # Deo.g:57:2: ( ( LB IF ( LB fact ( op fact )* )* RB THEN ( LB axiom ( op axiom )* )* RB )* RB -> ^( EXPR IF FACT THEN AXIOM ) | ( LB IFF ( LB fact ( op fact )* )* RB THEN ( LB axiom ( op axiom )* )* RB )* RB -> ^( EXPR IFF FACT THEN AXIOM ) | ( LB axiom ( op axiom )* )* RB -> ^( EXPR AXIOM ) )
-                alt16 = 3
-                LA16_0 = self.input.LA(1)
+                # Deo.g:56:2: ( LB IF ( LB fact ( op fact )* RB ) THEN ( LB axiom ( op axiom )* RB ) RB -> ^( EXPR IF FACT THEN AXIOM ) | LB IFF ( LB fact ( op fact )* RB ) THEN ( LB axiom ( op axiom )* RB ) RB -> ^( EXPR IFF FACT THEN AXIOM ) | LB axiom ( op axiom )* RB -> ^( EXPR AXIOM ) )
+                alt9 = 3
+                LA9_0 = self.input.LA(1)
 
-                if (LA16_0 == LB) :
-                    LA16 = self.input.LA(2)
-                    if LA16 == IF:
-                        alt16 = 1
-                    elif LA16 == IFF:
-                        alt16 = 2
-                    elif LA16 == OB or LA16 == PRO or LA16 == PER:
-                        alt16 = 3
+                if (LA9_0 == LB) :
+                    LA9 = self.input.LA(2)
+                    if LA9 == IF:
+                        alt9 = 1
+                    elif LA9 == IFF:
+                        alt9 = 2
+                    elif LA9 == OB or LA9 == PRO or LA9 == PER:
+                        alt9 = 3
                     else:
-                        nvae = NoViableAltException("", 16, 1, self.input)
+                        nvae = NoViableAltException("", 9, 1, self.input)
 
                         raise nvae
 
-                elif (LA16_0 == RB) :
-                    alt16 = 1
                 else:
-                    nvae = NoViableAltException("", 16, 0, self.input)
+                    nvae = NoViableAltException("", 9, 0, self.input)
 
                     raise nvae
 
-                if alt16 == 1:
-                    # Deo.g:57:4: ( LB IF ( LB fact ( op fact )* )* RB THEN ( LB axiom ( op axiom )* )* RB )* RB
+                if alt9 == 1:
+                    # Deo.g:56:4: LB IF ( LB fact ( op fact )* RB ) THEN ( LB axiom ( op axiom )* RB ) RB
                     pass 
-                    # Deo.g:57:4: ( LB IF ( LB fact ( op fact )* )* RB THEN ( LB axiom ( op axiom )* )* RB )*
-                    while True: #loop8
-                        alt8 = 2
-                        LA8_0 = self.input.LA(1)
+                    LB15=self.match(self.input, LB, self.FOLLOW_LB_in_expr375) 
+                    stream_LB.add(LB15)
+                    IF16=self.match(self.input, IF, self.FOLLOW_IF_in_expr377) 
+                    stream_IF.add(IF16)
+                    # Deo.g:56:10: ( LB fact ( op fact )* RB )
+                    # Deo.g:56:11: LB fact ( op fact )* RB
+                    pass 
+                    LB17=self.match(self.input, LB, self.FOLLOW_LB_in_expr380) 
+                    stream_LB.add(LB17)
+                    self._state.following.append(self.FOLLOW_fact_in_expr382)
+                    fact18 = self.fact()
 
-                        if (LA8_0 == LB) :
-                            alt8 = 1
+                    self._state.following.pop()
+                    stream_fact.add(fact18.tree)
+                    # Deo.g:56:19: ( op fact )*
+                    while True: #loop4
+                        alt4 = 2
+                        LA4_0 = self.input.LA(1)
+
+                        if ((IF <= LA4_0 <= THEN) or (AND <= LA4_0 <= NOT)) :
+                            alt4 = 1
 
 
-                        if alt8 == 1:
-                            # Deo.g:57:5: LB IF ( LB fact ( op fact )* )* RB THEN ( LB axiom ( op axiom )* )* RB
+                        if alt4 == 1:
+                            # Deo.g:56:20: op fact
                             pass 
-                            LB15=self.match(self.input, LB, self.FOLLOW_LB_in_expr389) 
-                            stream_LB.add(LB15)
-                            IF16=self.match(self.input, IF, self.FOLLOW_IF_in_expr391) 
-                            stream_IF.add(IF16)
-                            # Deo.g:57:11: ( LB fact ( op fact )* )*
-                            while True: #loop5
-                                alt5 = 2
-                                LA5_0 = self.input.LA(1)
+                            self._state.following.append(self.FOLLOW_op_in_expr385)
+                            op19 = self.op()
 
-                                if (LA5_0 == LB) :
-                                    alt5 = 1
+                            self._state.following.pop()
+                            stream_op.add(op19.tree)
+                            self._state.following.append(self.FOLLOW_fact_in_expr387)
+                            fact20 = self.fact()
 
-
-                                if alt5 == 1:
-                                    # Deo.g:57:12: LB fact ( op fact )*
-                                    pass 
-                                    LB17=self.match(self.input, LB, self.FOLLOW_LB_in_expr394) 
-                                    stream_LB.add(LB17)
-                                    self._state.following.append(self.FOLLOW_fact_in_expr396)
-                                    fact18 = self.fact()
-
-                                    self._state.following.pop()
-                                    stream_fact.add(fact18.tree)
-                                    # Deo.g:57:20: ( op fact )*
-                                    while True: #loop4
-                                        alt4 = 2
-                                        LA4_0 = self.input.LA(1)
-
-                                        if ((IF <= LA4_0 <= THEN) or (AND <= LA4_0 <= NOT)) :
-                                            alt4 = 1
-
-
-                                        if alt4 == 1:
-                                            # Deo.g:57:21: op fact
-                                            pass 
-                                            self._state.following.append(self.FOLLOW_op_in_expr399)
-                                            op19 = self.op()
-
-                                            self._state.following.pop()
-                                            stream_op.add(op19.tree)
-                                            self._state.following.append(self.FOLLOW_fact_in_expr401)
-                                            fact20 = self.fact()
-
-                                            self._state.following.pop()
-                                            stream_fact.add(fact20.tree)
-
-
-                                        else:
-                                            break #loop4
-
-
-
-
-                                else:
-                                    break #loop5
-
-
-                            RB21=self.match(self.input, RB, self.FOLLOW_RB_in_expr407) 
-                            stream_RB.add(RB21)
-                            THEN22=self.match(self.input, THEN, self.FOLLOW_THEN_in_expr412) 
-                            stream_THEN.add(THEN22)
-                            # Deo.g:58:8: ( LB axiom ( op axiom )* )*
-                            while True: #loop7
-                                alt7 = 2
-                                LA7_0 = self.input.LA(1)
-
-                                if (LA7_0 == LB) :
-                                    alt7 = 1
-
-
-                                if alt7 == 1:
-                                    # Deo.g:58:9: LB axiom ( op axiom )*
-                                    pass 
-                                    LB23=self.match(self.input, LB, self.FOLLOW_LB_in_expr415) 
-                                    stream_LB.add(LB23)
-                                    self._state.following.append(self.FOLLOW_axiom_in_expr417)
-                                    axiom24 = self.axiom()
-
-                                    self._state.following.pop()
-                                    stream_axiom.add(axiom24.tree)
-                                    # Deo.g:58:18: ( op axiom )*
-                                    while True: #loop6
-                                        alt6 = 2
-                                        LA6_0 = self.input.LA(1)
-
-                                        if ((IF <= LA6_0 <= THEN) or (AND <= LA6_0 <= NOT)) :
-                                            alt6 = 1
-
-
-                                        if alt6 == 1:
-                                            # Deo.g:58:19: op axiom
-                                            pass 
-                                            self._state.following.append(self.FOLLOW_op_in_expr420)
-                                            op25 = self.op()
-
-                                            self._state.following.pop()
-                                            stream_op.add(op25.tree)
-                                            self._state.following.append(self.FOLLOW_axiom_in_expr422)
-                                            axiom26 = self.axiom()
-
-                                            self._state.following.pop()
-                                            stream_axiom.add(axiom26.tree)
-
-
-                                        else:
-                                            break #loop6
-
-
-
-
-                                else:
-                                    break #loop7
-
-
-                            RB27=self.match(self.input, RB, self.FOLLOW_RB_in_expr428) 
-                            stream_RB.add(RB27)
+                            self._state.following.pop()
+                            stream_fact.add(fact20.tree)
 
 
                         else:
-                            break #loop8
+                            break #loop4
 
 
-                    RB28=self.match(self.input, RB, self.FOLLOW_RB_in_expr432) 
+                    RB21=self.match(self.input, RB, self.FOLLOW_RB_in_expr391) 
+                    stream_RB.add(RB21)
+
+
+
+                    THEN22=self.match(self.input, THEN, self.FOLLOW_THEN_in_expr396) 
+                    stream_THEN.add(THEN22)
+                    # Deo.g:57:8: ( LB axiom ( op axiom )* RB )
+                    # Deo.g:57:9: LB axiom ( op axiom )* RB
+                    pass 
+                    LB23=self.match(self.input, LB, self.FOLLOW_LB_in_expr399) 
+                    stream_LB.add(LB23)
+                    self._state.following.append(self.FOLLOW_axiom_in_expr401)
+                    axiom24 = self.axiom()
+
+                    self._state.following.pop()
+                    stream_axiom.add(axiom24.tree)
+                    # Deo.g:57:18: ( op axiom )*
+                    while True: #loop5
+                        alt5 = 2
+                        LA5_0 = self.input.LA(1)
+
+                        if ((IF <= LA5_0 <= THEN) or (AND <= LA5_0 <= NOT)) :
+                            alt5 = 1
+
+
+                        if alt5 == 1:
+                            # Deo.g:57:19: op axiom
+                            pass 
+                            self._state.following.append(self.FOLLOW_op_in_expr404)
+                            op25 = self.op()
+
+                            self._state.following.pop()
+                            stream_op.add(op25.tree)
+                            self._state.following.append(self.FOLLOW_axiom_in_expr406)
+                            axiom26 = self.axiom()
+
+                            self._state.following.pop()
+                            stream_axiom.add(axiom26.tree)
+
+
+                        else:
+                            break #loop5
+
+
+                    RB27=self.match(self.input, RB, self.FOLLOW_RB_in_expr410) 
+                    stream_RB.add(RB27)
+
+
+
+                    RB28=self.match(self.input, RB, self.FOLLOW_RB_in_expr413) 
                     stream_RB.add(RB28)
 
                     # AST Rewrite
-                    # elements: THEN, IF
+                    # elements: IF, THEN
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1020,8 +967,8 @@ class DeoParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 58:42: -> ^( EXPR IF FACT THEN AXIOM )
-                    # Deo.g:58:45: ^( EXPR IF FACT THEN AXIOM )
+                    # 57:39: -> ^( EXPR IF FACT THEN AXIOM )
+                    # Deo.g:57:42: ^( EXPR IF FACT THEN AXIOM )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(self._adaptor.createFromType(EXPR, "EXPR"), root_1)
 
@@ -1037,148 +984,106 @@ class DeoParser(Parser):
                     retval.tree = root_0
 
 
-                elif alt16 == 2:
-                    # Deo.g:59:4: ( LB IFF ( LB fact ( op fact )* )* RB THEN ( LB axiom ( op axiom )* )* RB )* RB
+                elif alt9 == 2:
+                    # Deo.g:58:4: LB IFF ( LB fact ( op fact )* RB ) THEN ( LB axiom ( op axiom )* RB ) RB
                     pass 
-                    # Deo.g:59:4: ( LB IFF ( LB fact ( op fact )* )* RB THEN ( LB axiom ( op axiom )* )* RB )*
-                    while True: #loop13
-                        alt13 = 2
-                        LA13_0 = self.input.LA(1)
+                    LB29=self.match(self.input, LB, self.FOLLOW_LB_in_expr434) 
+                    stream_LB.add(LB29)
+                    IFF30=self.match(self.input, IFF, self.FOLLOW_IFF_in_expr436) 
+                    stream_IFF.add(IFF30)
+                    # Deo.g:58:11: ( LB fact ( op fact )* RB )
+                    # Deo.g:58:12: LB fact ( op fact )* RB
+                    pass 
+                    LB31=self.match(self.input, LB, self.FOLLOW_LB_in_expr439) 
+                    stream_LB.add(LB31)
+                    self._state.following.append(self.FOLLOW_fact_in_expr441)
+                    fact32 = self.fact()
 
-                        if (LA13_0 == LB) :
-                            alt13 = 1
+                    self._state.following.pop()
+                    stream_fact.add(fact32.tree)
+                    # Deo.g:58:20: ( op fact )*
+                    while True: #loop6
+                        alt6 = 2
+                        LA6_0 = self.input.LA(1)
+
+                        if ((IF <= LA6_0 <= THEN) or (AND <= LA6_0 <= NOT)) :
+                            alt6 = 1
 
 
-                        if alt13 == 1:
-                            # Deo.g:59:5: LB IFF ( LB fact ( op fact )* )* RB THEN ( LB axiom ( op axiom )* )* RB
+                        if alt6 == 1:
+                            # Deo.g:58:21: op fact
                             pass 
-                            LB29=self.match(self.input, LB, self.FOLLOW_LB_in_expr454) 
-                            stream_LB.add(LB29)
-                            IFF30=self.match(self.input, IFF, self.FOLLOW_IFF_in_expr456) 
-                            stream_IFF.add(IFF30)
-                            # Deo.g:59:12: ( LB fact ( op fact )* )*
-                            while True: #loop10
-                                alt10 = 2
-                                LA10_0 = self.input.LA(1)
+                            self._state.following.append(self.FOLLOW_op_in_expr444)
+                            op33 = self.op()
 
-                                if (LA10_0 == LB) :
-                                    alt10 = 1
+                            self._state.following.pop()
+                            stream_op.add(op33.tree)
+                            self._state.following.append(self.FOLLOW_fact_in_expr446)
+                            fact34 = self.fact()
 
-
-                                if alt10 == 1:
-                                    # Deo.g:59:13: LB fact ( op fact )*
-                                    pass 
-                                    LB31=self.match(self.input, LB, self.FOLLOW_LB_in_expr459) 
-                                    stream_LB.add(LB31)
-                                    self._state.following.append(self.FOLLOW_fact_in_expr461)
-                                    fact32 = self.fact()
-
-                                    self._state.following.pop()
-                                    stream_fact.add(fact32.tree)
-                                    # Deo.g:59:21: ( op fact )*
-                                    while True: #loop9
-                                        alt9 = 2
-                                        LA9_0 = self.input.LA(1)
-
-                                        if ((IF <= LA9_0 <= THEN) or (AND <= LA9_0 <= NOT)) :
-                                            alt9 = 1
-
-
-                                        if alt9 == 1:
-                                            # Deo.g:59:22: op fact
-                                            pass 
-                                            self._state.following.append(self.FOLLOW_op_in_expr464)
-                                            op33 = self.op()
-
-                                            self._state.following.pop()
-                                            stream_op.add(op33.tree)
-                                            self._state.following.append(self.FOLLOW_fact_in_expr466)
-                                            fact34 = self.fact()
-
-                                            self._state.following.pop()
-                                            stream_fact.add(fact34.tree)
-
-
-                                        else:
-                                            break #loop9
-
-
-
-
-                                else:
-                                    break #loop10
-
-
-                            RB35=self.match(self.input, RB, self.FOLLOW_RB_in_expr472) 
-                            stream_RB.add(RB35)
-                            THEN36=self.match(self.input, THEN, self.FOLLOW_THEN_in_expr477) 
-                            stream_THEN.add(THEN36)
-                            # Deo.g:60:8: ( LB axiom ( op axiom )* )*
-                            while True: #loop12
-                                alt12 = 2
-                                LA12_0 = self.input.LA(1)
-
-                                if (LA12_0 == LB) :
-                                    alt12 = 1
-
-
-                                if alt12 == 1:
-                                    # Deo.g:60:9: LB axiom ( op axiom )*
-                                    pass 
-                                    LB37=self.match(self.input, LB, self.FOLLOW_LB_in_expr480) 
-                                    stream_LB.add(LB37)
-                                    self._state.following.append(self.FOLLOW_axiom_in_expr482)
-                                    axiom38 = self.axiom()
-
-                                    self._state.following.pop()
-                                    stream_axiom.add(axiom38.tree)
-                                    # Deo.g:60:18: ( op axiom )*
-                                    while True: #loop11
-                                        alt11 = 2
-                                        LA11_0 = self.input.LA(1)
-
-                                        if ((IF <= LA11_0 <= THEN) or (AND <= LA11_0 <= NOT)) :
-                                            alt11 = 1
-
-
-                                        if alt11 == 1:
-                                            # Deo.g:60:19: op axiom
-                                            pass 
-                                            self._state.following.append(self.FOLLOW_op_in_expr485)
-                                            op39 = self.op()
-
-                                            self._state.following.pop()
-                                            stream_op.add(op39.tree)
-                                            self._state.following.append(self.FOLLOW_axiom_in_expr487)
-                                            axiom40 = self.axiom()
-
-                                            self._state.following.pop()
-                                            stream_axiom.add(axiom40.tree)
-
-
-                                        else:
-                                            break #loop11
-
-
-
-
-                                else:
-                                    break #loop12
-
-
-                            RB41=self.match(self.input, RB, self.FOLLOW_RB_in_expr493) 
-                            stream_RB.add(RB41)
+                            self._state.following.pop()
+                            stream_fact.add(fact34.tree)
 
 
                         else:
-                            break #loop13
+                            break #loop6
 
 
-                    RB42=self.match(self.input, RB, self.FOLLOW_RB_in_expr497) 
+                    RB35=self.match(self.input, RB, self.FOLLOW_RB_in_expr450) 
+                    stream_RB.add(RB35)
+
+
+
+                    THEN36=self.match(self.input, THEN, self.FOLLOW_THEN_in_expr456) 
+                    stream_THEN.add(THEN36)
+                    # Deo.g:59:8: ( LB axiom ( op axiom )* RB )
+                    # Deo.g:59:9: LB axiom ( op axiom )* RB
+                    pass 
+                    LB37=self.match(self.input, LB, self.FOLLOW_LB_in_expr459) 
+                    stream_LB.add(LB37)
+                    self._state.following.append(self.FOLLOW_axiom_in_expr461)
+                    axiom38 = self.axiom()
+
+                    self._state.following.pop()
+                    stream_axiom.add(axiom38.tree)
+                    # Deo.g:59:18: ( op axiom )*
+                    while True: #loop7
+                        alt7 = 2
+                        LA7_0 = self.input.LA(1)
+
+                        if ((IF <= LA7_0 <= THEN) or (AND <= LA7_0 <= NOT)) :
+                            alt7 = 1
+
+
+                        if alt7 == 1:
+                            # Deo.g:59:19: op axiom
+                            pass 
+                            self._state.following.append(self.FOLLOW_op_in_expr464)
+                            op39 = self.op()
+
+                            self._state.following.pop()
+                            stream_op.add(op39.tree)
+                            self._state.following.append(self.FOLLOW_axiom_in_expr466)
+                            axiom40 = self.axiom()
+
+                            self._state.following.pop()
+                            stream_axiom.add(axiom40.tree)
+
+
+                        else:
+                            break #loop7
+
+
+                    RB41=self.match(self.input, RB, self.FOLLOW_RB_in_expr470) 
+                    stream_RB.add(RB41)
+
+
+
+                    RB42=self.match(self.input, RB, self.FOLLOW_RB_in_expr473) 
                     stream_RB.add(RB42)
 
                     # AST Rewrite
-                    # elements: THEN, IFF
+                    # elements: IFF, THEN
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1194,8 +1099,8 @@ class DeoParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 60:42: -> ^( EXPR IFF FACT THEN AXIOM )
-                    # Deo.g:60:45: ^( EXPR IFF FACT THEN AXIOM )
+                    # 59:39: -> ^( EXPR IFF FACT THEN AXIOM )
+                    # Deo.g:59:42: ^( EXPR IFF FACT THEN AXIOM )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(self._adaptor.createFromType(EXPR, "EXPR"), root_1)
 
@@ -1211,63 +1116,45 @@ class DeoParser(Parser):
                     retval.tree = root_0
 
 
-                elif alt16 == 3:
-                    # Deo.g:61:4: ( LB axiom ( op axiom )* )* RB
+                elif alt9 == 3:
+                    # Deo.g:60:4: LB axiom ( op axiom )* RB
                     pass 
-                    # Deo.g:61:4: ( LB axiom ( op axiom )* )*
-                    while True: #loop15
-                        alt15 = 2
-                        LA15_0 = self.input.LA(1)
+                    LB43=self.match(self.input, LB, self.FOLLOW_LB_in_expr495) 
+                    stream_LB.add(LB43)
+                    self._state.following.append(self.FOLLOW_axiom_in_expr497)
+                    axiom44 = self.axiom()
 
-                        if (LA15_0 == LB) :
-                            alt15 = 1
+                    self._state.following.pop()
+                    stream_axiom.add(axiom44.tree)
+                    # Deo.g:60:13: ( op axiom )*
+                    while True: #loop8
+                        alt8 = 2
+                        LA8_0 = self.input.LA(1)
+
+                        if ((IF <= LA8_0 <= THEN) or (AND <= LA8_0 <= NOT)) :
+                            alt8 = 1
 
 
-                        if alt15 == 1:
-                            # Deo.g:61:5: LB axiom ( op axiom )*
+                        if alt8 == 1:
+                            # Deo.g:60:14: op axiom
                             pass 
-                            LB43=self.match(self.input, LB, self.FOLLOW_LB_in_expr520) 
-                            stream_LB.add(LB43)
-                            self._state.following.append(self.FOLLOW_axiom_in_expr522)
-                            axiom44 = self.axiom()
+                            self._state.following.append(self.FOLLOW_op_in_expr500)
+                            op45 = self.op()
 
                             self._state.following.pop()
-                            stream_axiom.add(axiom44.tree)
-                            # Deo.g:61:14: ( op axiom )*
-                            while True: #loop14
-                                alt14 = 2
-                                LA14_0 = self.input.LA(1)
+                            stream_op.add(op45.tree)
+                            self._state.following.append(self.FOLLOW_axiom_in_expr502)
+                            axiom46 = self.axiom()
 
-                                if ((IF <= LA14_0 <= THEN) or (AND <= LA14_0 <= NOT)) :
-                                    alt14 = 1
-
-
-                                if alt14 == 1:
-                                    # Deo.g:61:15: op axiom
-                                    pass 
-                                    self._state.following.append(self.FOLLOW_op_in_expr525)
-                                    op45 = self.op()
-
-                                    self._state.following.pop()
-                                    stream_op.add(op45.tree)
-                                    self._state.following.append(self.FOLLOW_axiom_in_expr527)
-                                    axiom46 = self.axiom()
-
-                                    self._state.following.pop()
-                                    stream_axiom.add(axiom46.tree)
-
-
-                                else:
-                                    break #loop14
-
-
+                            self._state.following.pop()
+                            stream_axiom.add(axiom46.tree)
 
 
                         else:
-                            break #loop15
+                            break #loop8
 
 
-                    RB47=self.match(self.input, RB, self.FOLLOW_RB_in_expr533) 
+                    RB47=self.match(self.input, RB, self.FOLLOW_RB_in_expr506) 
                     stream_RB.add(RB47)
 
                     # AST Rewrite
@@ -1287,8 +1174,8 @@ class DeoParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 61:35: -> ^( EXPR AXIOM )
-                    # Deo.g:61:38: ^( EXPR AXIOM )
+                    # 60:32: -> ^( EXPR AXIOM )
+                    # Deo.g:60:35: ^( EXPR AXIOM )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(self._adaptor.createFromType(EXPR, "EXPR"), root_1)
 
@@ -1326,53 +1213,53 @@ class DeoParser(Parser):
 
  
 
-    FOLLOW_var_decl_in_prog90 = frozenset([13, 23, 24])
-    FOLLOW_rule_decl_in_prog93 = frozenset([23, 24])
+    FOLLOW_var_decl_in_prog90 = frozenset([13, 22])
+    FOLLOW_rule_decl_in_prog93 = frozenset([22])
     FOLLOW_EOF_in_prog96 = frozenset([1])
-    FOLLOW_expr_in_rule_decl125 = frozenset([1, 23, 24])
+    FOLLOW_expr_in_rule_decl125 = frozenset([1, 22])
     FOLLOW_ID_in_var_decl152 = frozenset([14])
-    FOLLOW_ASSN_in_var_decl154 = frozenset([18, 19])
+    FOLLOW_ASSN_in_var_decl154 = frozenset([18])
     FOLLOW_fact_in_var_decl156 = frozenset([1])
     FOLLOW_set_in_norm0 = frozenset([1])
-    FOLLOW_set_in_fact0 = frozenset([1])
+    FOLLOW_ACTION_in_fact230 = frozenset([1])
     FOLLOW_set_in_op0 = frozenset([1])
-    FOLLOW_norm_in_axiom358 = frozenset([23])
-    FOLLOW_LB_in_axiom360 = frozenset([18])
-    FOLLOW_ACTION_in_axiom362 = frozenset([24])
-    FOLLOW_RB_in_axiom364 = frozenset([1])
-    FOLLOW_LB_in_expr389 = frozenset([4])
-    FOLLOW_IF_in_expr391 = frozenset([23, 24])
-    FOLLOW_LB_in_expr394 = frozenset([18, 19])
-    FOLLOW_fact_in_expr396 = frozenset([4, 5, 6, 20, 21, 22, 23, 24])
-    FOLLOW_op_in_expr399 = frozenset([18, 19])
-    FOLLOW_fact_in_expr401 = frozenset([4, 5, 6, 20, 21, 22, 23, 24])
-    FOLLOW_RB_in_expr407 = frozenset([6])
-    FOLLOW_THEN_in_expr412 = frozenset([23, 24])
-    FOLLOW_LB_in_expr415 = frozenset([15, 16, 17])
-    FOLLOW_axiom_in_expr417 = frozenset([4, 5, 6, 20, 21, 22, 23, 24])
-    FOLLOW_op_in_expr420 = frozenset([15, 16, 17])
-    FOLLOW_axiom_in_expr422 = frozenset([4, 5, 6, 20, 21, 22, 23, 24])
-    FOLLOW_RB_in_expr428 = frozenset([23, 24])
-    FOLLOW_RB_in_expr432 = frozenset([1])
-    FOLLOW_LB_in_expr454 = frozenset([5])
-    FOLLOW_IFF_in_expr456 = frozenset([23, 24])
-    FOLLOW_LB_in_expr459 = frozenset([18, 19])
-    FOLLOW_fact_in_expr461 = frozenset([4, 5, 6, 20, 21, 22, 23, 24])
-    FOLLOW_op_in_expr464 = frozenset([18, 19])
-    FOLLOW_fact_in_expr466 = frozenset([4, 5, 6, 20, 21, 22, 23, 24])
-    FOLLOW_RB_in_expr472 = frozenset([6])
-    FOLLOW_THEN_in_expr477 = frozenset([23, 24])
-    FOLLOW_LB_in_expr480 = frozenset([15, 16, 17])
-    FOLLOW_axiom_in_expr482 = frozenset([4, 5, 6, 20, 21, 22, 23, 24])
-    FOLLOW_op_in_expr485 = frozenset([15, 16, 17])
-    FOLLOW_axiom_in_expr487 = frozenset([4, 5, 6, 20, 21, 22, 23, 24])
-    FOLLOW_RB_in_expr493 = frozenset([23, 24])
-    FOLLOW_RB_in_expr497 = frozenset([1])
-    FOLLOW_LB_in_expr520 = frozenset([15, 16, 17])
-    FOLLOW_axiom_in_expr522 = frozenset([4, 5, 6, 20, 21, 22, 23, 24])
-    FOLLOW_op_in_expr525 = frozenset([15, 16, 17])
-    FOLLOW_axiom_in_expr527 = frozenset([4, 5, 6, 20, 21, 22, 23, 24])
-    FOLLOW_RB_in_expr533 = frozenset([1])
+    FOLLOW_norm_in_axiom345 = frozenset([22])
+    FOLLOW_LB_in_axiom347 = frozenset([18])
+    FOLLOW_ACTION_in_axiom349 = frozenset([23])
+    FOLLOW_RB_in_axiom351 = frozenset([1])
+    FOLLOW_LB_in_expr375 = frozenset([4])
+    FOLLOW_IF_in_expr377 = frozenset([22])
+    FOLLOW_LB_in_expr380 = frozenset([18])
+    FOLLOW_fact_in_expr382 = frozenset([4, 5, 6, 19, 20, 21, 23])
+    FOLLOW_op_in_expr385 = frozenset([18])
+    FOLLOW_fact_in_expr387 = frozenset([4, 5, 6, 19, 20, 21, 23])
+    FOLLOW_RB_in_expr391 = frozenset([6])
+    FOLLOW_THEN_in_expr396 = frozenset([22])
+    FOLLOW_LB_in_expr399 = frozenset([15, 16, 17])
+    FOLLOW_axiom_in_expr401 = frozenset([4, 5, 6, 19, 20, 21, 23])
+    FOLLOW_op_in_expr404 = frozenset([15, 16, 17])
+    FOLLOW_axiom_in_expr406 = frozenset([4, 5, 6, 19, 20, 21, 23])
+    FOLLOW_RB_in_expr410 = frozenset([23])
+    FOLLOW_RB_in_expr413 = frozenset([1])
+    FOLLOW_LB_in_expr434 = frozenset([5])
+    FOLLOW_IFF_in_expr436 = frozenset([22])
+    FOLLOW_LB_in_expr439 = frozenset([18])
+    FOLLOW_fact_in_expr441 = frozenset([4, 5, 6, 19, 20, 21, 23])
+    FOLLOW_op_in_expr444 = frozenset([18])
+    FOLLOW_fact_in_expr446 = frozenset([4, 5, 6, 19, 20, 21, 23])
+    FOLLOW_RB_in_expr450 = frozenset([6])
+    FOLLOW_THEN_in_expr456 = frozenset([22])
+    FOLLOW_LB_in_expr459 = frozenset([15, 16, 17])
+    FOLLOW_axiom_in_expr461 = frozenset([4, 5, 6, 19, 20, 21, 23])
+    FOLLOW_op_in_expr464 = frozenset([15, 16, 17])
+    FOLLOW_axiom_in_expr466 = frozenset([4, 5, 6, 19, 20, 21, 23])
+    FOLLOW_RB_in_expr470 = frozenset([23])
+    FOLLOW_RB_in_expr473 = frozenset([1])
+    FOLLOW_LB_in_expr495 = frozenset([15, 16, 17])
+    FOLLOW_axiom_in_expr497 = frozenset([4, 5, 6, 19, 20, 21, 23])
+    FOLLOW_op_in_expr500 = frozenset([15, 16, 17])
+    FOLLOW_axiom_in_expr502 = frozenset([4, 5, 6, 19, 20, 21, 23])
+    FOLLOW_RB_in_expr506 = frozenset([1])
 
 
 

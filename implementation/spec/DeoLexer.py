@@ -1,4 +1,4 @@
-# $ANTLR 3.1.2 Deo.g 2015-11-19 08:38:31
+# $ANTLR 3.1.2 Deo.g 2015-11-19 08:56:20
 
 import sys
 from antlr3 import *
@@ -11,30 +11,29 @@ HIDDEN = BaseRecognizer.HIDDEN
 # token types
 IFF=5
 ASSN=14
-STATE=19
 RULE=9
-RB=24
+RB=23
 PER=17
-LETTER=25
-NOT=22
-AND=20
+LETTER=24
+NOT=21
+AND=19
 ID=13
 EOF=-1
-SPACE=27
+SPACE=26
 PRO=16
 ACTION=18
 OB=15
-AXIOM=10
 IF=4
+AXIOM=10
 PROG=11
 EXPR=7
-EOL=28
+EOL=27
 THEN=6
-OR=21
-LB=23
+OR=20
+LB=22
 VAR=12
-DIGIT=26
-COMMENT=29
+DIGIT=25
+COMMENT=28
 FACT=8
 
 
@@ -49,15 +48,15 @@ class DeoLexer(Lexer):
             state = RecognizerSharedState()
         Lexer.__init__(self, input, state)
 
-        self.dfa8 = self.DFA8(
-            self, 8,
-            eot = self.DFA8_eot,
-            eof = self.DFA8_eof,
-            min = self.DFA8_min,
-            max = self.DFA8_max,
-            accept = self.DFA8_accept,
-            special = self.DFA8_special,
-            transition = self.DFA8_transition
+        self.dfa7 = self.DFA7(
+            self, 7,
+            eot = self.DFA7_eot,
+            eof = self.DFA7_eof,
+            min = self.DFA7_min,
+            max = self.DFA7_max,
+            accept = self.DFA7_accept,
+            special = self.DFA7_special,
+            transition = self.DFA7_transition
             )
 
 
@@ -72,8 +71,8 @@ class DeoLexer(Lexer):
             _type = OB
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:66:4: ( 'it is obliged' )
-            # Deo.g:66:6: 'it is obliged'
+            # Deo.g:65:4: ( 'it is obliged' )
+            # Deo.g:65:6: 'it is obliged'
             pass 
             self.match("it is obliged")
 
@@ -97,8 +96,8 @@ class DeoLexer(Lexer):
             _type = PRO
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:67:5: ( 'it is prohibited' )
-            # Deo.g:67:7: 'it is prohibited'
+            # Deo.g:66:5: ( 'it is prohibited' )
+            # Deo.g:66:7: 'it is prohibited'
             pass 
             self.match("it is prohibited")
 
@@ -122,8 +121,8 @@ class DeoLexer(Lexer):
             _type = PER
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:68:5: ( 'it is permitted' )
-            # Deo.g:68:7: 'it is permitted'
+            # Deo.g:67:5: ( 'it is permitted' )
+            # Deo.g:67:7: 'it is permitted'
             pass 
             self.match("it is permitted")
 
@@ -147,8 +146,8 @@ class DeoLexer(Lexer):
             _type = IF
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:70:4: ( 'if' )
-            # Deo.g:70:6: 'if'
+            # Deo.g:69:4: ( 'if' )
+            # Deo.g:69:6: 'if'
             pass 
             self.match("if")
 
@@ -172,8 +171,8 @@ class DeoLexer(Lexer):
             _type = IFF
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:71:5: ( 'if and only if' )
-            # Deo.g:71:7: 'if and only if'
+            # Deo.g:70:5: ( 'if and only if' )
+            # Deo.g:70:7: 'if and only if'
             pass 
             self.match("if and only if")
 
@@ -197,8 +196,8 @@ class DeoLexer(Lexer):
             _type = THEN
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:72:6: ( 'then' )
-            # Deo.g:72:8: 'then'
+            # Deo.g:71:6: ( 'then' )
+            # Deo.g:71:8: 'then'
             pass 
             self.match("then")
 
@@ -222,8 +221,8 @@ class DeoLexer(Lexer):
             _type = NOT
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:73:5: ( 'not' )
-            # Deo.g:73:7: 'not'
+            # Deo.g:72:5: ( 'not' )
+            # Deo.g:72:7: 'not'
             pass 
             self.match("not")
 
@@ -247,8 +246,8 @@ class DeoLexer(Lexer):
             _type = AND
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:74:5: ( 'and' )
-            # Deo.g:74:7: 'and'
+            # Deo.g:73:5: ( 'and' )
+            # Deo.g:73:7: 'and'
             pass 
             self.match("and")
 
@@ -272,8 +271,8 @@ class DeoLexer(Lexer):
             _type = OR
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:75:4: ( 'or' )
-            # Deo.g:75:6: 'or'
+            # Deo.g:74:4: ( 'or' )
+            # Deo.g:74:6: 'or'
             pass 
             self.match("or")
 
@@ -297,8 +296,8 @@ class DeoLexer(Lexer):
             _type = LB
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:77:4: ( '(' )
-            # Deo.g:77:6: '('
+            # Deo.g:76:4: ( '(' )
+            # Deo.g:76:6: '('
             pass 
             self.match(40)
 
@@ -322,8 +321,8 @@ class DeoLexer(Lexer):
             _type = RB
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:78:4: ( ')' )
-            # Deo.g:78:6: ')'
+            # Deo.g:77:4: ( ')' )
+            # Deo.g:77:6: ')'
             pass 
             self.match(41)
 
@@ -347,8 +346,8 @@ class DeoLexer(Lexer):
             _type = ASSN
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:80:6: ( '=' )
-            # Deo.g:80:9: '='
+            # Deo.g:79:6: ( '=' )
+            # Deo.g:79:9: '='
             pass 
             self.match(61)
 
@@ -372,11 +371,11 @@ class DeoLexer(Lexer):
             _type = ACTION
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:82:8: ( LETTER ( LETTER | DIGIT | SPACE )* )
-            # Deo.g:82:10: LETTER ( LETTER | DIGIT | SPACE )*
+            # Deo.g:81:8: ( LETTER ( LETTER | DIGIT | SPACE )* )
+            # Deo.g:81:10: LETTER ( LETTER | DIGIT | SPACE )*
             pass 
             self.mLETTER()
-            # Deo.g:82:17: ( LETTER | DIGIT | SPACE )*
+            # Deo.g:81:17: ( LETTER | DIGIT | SPACE )*
             while True: #loop1
                 alt1 = 4
                 LA1 = self.input.LA(1)
@@ -388,19 +387,19 @@ class DeoLexer(Lexer):
                     alt1 = 3
 
                 if alt1 == 1:
-                    # Deo.g:82:18: LETTER
+                    # Deo.g:81:18: LETTER
                     pass 
                     self.mLETTER()
 
 
                 elif alt1 == 2:
-                    # Deo.g:82:27: DIGIT
+                    # Deo.g:81:27: DIGIT
                     pass 
                     self.mDIGIT()
 
 
                 elif alt1 == 3:
-                    # Deo.g:82:35: SPACE
+                    # Deo.g:81:35: SPACE
                     pass 
                     self.mSPACE()
 
@@ -423,64 +422,6 @@ class DeoLexer(Lexer):
 
 
 
-    # $ANTLR start "STATE"
-    def mSTATE(self, ):
-
-        try:
-            _type = STATE
-            _channel = DEFAULT_CHANNEL
-
-            # Deo.g:83:7: ( LETTER ( LETTER | DIGIT | SPACE )* )
-            # Deo.g:83:9: LETTER ( LETTER | DIGIT | SPACE )*
-            pass 
-            self.mLETTER()
-            # Deo.g:83:16: ( LETTER | DIGIT | SPACE )*
-            while True: #loop2
-                alt2 = 4
-                LA2 = self.input.LA(1)
-                if LA2 == 65 or LA2 == 66 or LA2 == 67 or LA2 == 68 or LA2 == 69 or LA2 == 70 or LA2 == 71 or LA2 == 72 or LA2 == 73 or LA2 == 74 or LA2 == 75 or LA2 == 76 or LA2 == 77 or LA2 == 78 or LA2 == 79 or LA2 == 80 or LA2 == 81 or LA2 == 82 or LA2 == 83 or LA2 == 84 or LA2 == 85 or LA2 == 86 or LA2 == 87 or LA2 == 88 or LA2 == 89 or LA2 == 90 or LA2 == 97 or LA2 == 98 or LA2 == 99 or LA2 == 100 or LA2 == 101 or LA2 == 102 or LA2 == 103 or LA2 == 104 or LA2 == 105 or LA2 == 106 or LA2 == 107 or LA2 == 108 or LA2 == 109 or LA2 == 110 or LA2 == 111 or LA2 == 112 or LA2 == 113 or LA2 == 114 or LA2 == 115 or LA2 == 116 or LA2 == 117 or LA2 == 118 or LA2 == 119 or LA2 == 120 or LA2 == 121 or LA2 == 122:
-                    alt2 = 1
-                elif LA2 == 48 or LA2 == 49 or LA2 == 50 or LA2 == 51 or LA2 == 52 or LA2 == 53 or LA2 == 54 or LA2 == 55 or LA2 == 56 or LA2 == 57:
-                    alt2 = 2
-                elif LA2 == 9 or LA2 == 32:
-                    alt2 = 3
-
-                if alt2 == 1:
-                    # Deo.g:83:17: LETTER
-                    pass 
-                    self.mLETTER()
-
-
-                elif alt2 == 2:
-                    # Deo.g:83:26: DIGIT
-                    pass 
-                    self.mDIGIT()
-
-
-                elif alt2 == 3:
-                    # Deo.g:83:34: SPACE
-                    pass 
-                    self.mSPACE()
-
-
-                else:
-                    break #loop2
-
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-
-        finally:
-
-            pass
-
-    # $ANTLR end "STATE"
-
-
-
     # $ANTLR start "ID"
     def mID(self, ):
 
@@ -488,20 +429,20 @@ class DeoLexer(Lexer):
             _type = ID
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:84:4: ( LETTER ( LETTER | DIGIT | '_' )* )
-            # Deo.g:84:6: LETTER ( LETTER | DIGIT | '_' )*
+            # Deo.g:82:4: ( LETTER ( LETTER | DIGIT | '_' )* )
+            # Deo.g:82:6: LETTER ( LETTER | DIGIT | '_' )*
             pass 
             self.mLETTER()
-            # Deo.g:84:13: ( LETTER | DIGIT | '_' )*
-            while True: #loop3
-                alt3 = 2
-                LA3_0 = self.input.LA(1)
+            # Deo.g:82:13: ( LETTER | DIGIT | '_' )*
+            while True: #loop2
+                alt2 = 2
+                LA2_0 = self.input.LA(1)
 
-                if ((48 <= LA3_0 <= 57) or (65 <= LA3_0 <= 90) or LA3_0 == 95 or (97 <= LA3_0 <= 122)) :
-                    alt3 = 1
+                if ((48 <= LA2_0 <= 57) or (65 <= LA2_0 <= 90) or LA2_0 == 95 or (97 <= LA2_0 <= 122)) :
+                    alt2 = 1
 
 
-                if alt3 == 1:
+                if alt2 == 1:
                     # Deo.g:
                     pass 
                     if (48 <= self.input.LA(1) <= 57) or (65 <= self.input.LA(1) <= 90) or self.input.LA(1) == 95 or (97 <= self.input.LA(1) <= 122):
@@ -514,7 +455,7 @@ class DeoLexer(Lexer):
 
 
                 else:
-                    break #loop3
+                    break #loop2
 
 
 
@@ -538,20 +479,20 @@ class DeoLexer(Lexer):
             _type = SPACE
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:86:7: ( ( ' ' | '\\t' )+ )
-            # Deo.g:86:9: ( ' ' | '\\t' )+
+            # Deo.g:84:7: ( ( ' ' | '\\t' )+ )
+            # Deo.g:84:9: ( ' ' | '\\t' )+
             pass 
-            # Deo.g:86:9: ( ' ' | '\\t' )+
-            cnt4 = 0
-            while True: #loop4
-                alt4 = 2
-                LA4_0 = self.input.LA(1)
+            # Deo.g:84:9: ( ' ' | '\\t' )+
+            cnt3 = 0
+            while True: #loop3
+                alt3 = 2
+                LA3_0 = self.input.LA(1)
 
-                if (LA4_0 == 9 or LA4_0 == 32) :
-                    alt4 = 1
+                if (LA3_0 == 9 or LA3_0 == 32) :
+                    alt3 = 1
 
 
-                if alt4 == 1:
+                if alt3 == 1:
                     # Deo.g:
                     pass 
                     if self.input.LA(1) == 9 or self.input.LA(1) == 32:
@@ -564,13 +505,13 @@ class DeoLexer(Lexer):
 
 
                 else:
-                    if cnt4 >= 1:
-                        break #loop4
+                    if cnt3 >= 1:
+                        break #loop3
 
-                    eee = EarlyExitException(4, self.input)
+                    eee = EarlyExitException(3, self.input)
                     raise eee
 
-                cnt4 += 1
+                cnt3 += 1
 
 
 
@@ -594,17 +535,17 @@ class DeoLexer(Lexer):
             _type = EOL
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:87:5: ( ( '\\r' )? '\\n' )
-            # Deo.g:87:7: ( '\\r' )? '\\n'
+            # Deo.g:85:5: ( ( '\\r' )? '\\n' )
+            # Deo.g:85:7: ( '\\r' )? '\\n'
             pass 
-            # Deo.g:87:7: ( '\\r' )?
-            alt5 = 2
-            LA5_0 = self.input.LA(1)
+            # Deo.g:85:7: ( '\\r' )?
+            alt4 = 2
+            LA4_0 = self.input.LA(1)
 
-            if (LA5_0 == 13) :
-                alt5 = 1
-            if alt5 == 1:
-                # Deo.g:87:7: '\\r'
+            if (LA4_0 == 13) :
+                alt4 = 1
+            if alt4 == 1:
+                # Deo.g:85:7: '\\r'
                 pass 
                 self.match(13)
 
@@ -632,21 +573,21 @@ class DeoLexer(Lexer):
             _type = COMMENT
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:88:9: ( '#' (~ ( '\\r' | '\\n' ) )* ( '\\r' )? '\\n' )
-            # Deo.g:88:11: '#' (~ ( '\\r' | '\\n' ) )* ( '\\r' )? '\\n'
+            # Deo.g:86:9: ( '#' (~ ( '\\r' | '\\n' ) )* ( '\\r' )? '\\n' )
+            # Deo.g:86:11: '#' (~ ( '\\r' | '\\n' ) )* ( '\\r' )? '\\n'
             pass 
             self.match(35)
-            # Deo.g:88:15: (~ ( '\\r' | '\\n' ) )*
-            while True: #loop6
-                alt6 = 2
-                LA6_0 = self.input.LA(1)
+            # Deo.g:86:15: (~ ( '\\r' | '\\n' ) )*
+            while True: #loop5
+                alt5 = 2
+                LA5_0 = self.input.LA(1)
 
-                if ((0 <= LA6_0 <= 9) or (11 <= LA6_0 <= 12) or (14 <= LA6_0 <= 65535)) :
-                    alt6 = 1
+                if ((0 <= LA5_0 <= 9) or (11 <= LA5_0 <= 12) or (14 <= LA5_0 <= 65535)) :
+                    alt5 = 1
 
 
-                if alt6 == 1:
-                    # Deo.g:88:15: ~ ( '\\r' | '\\n' )
+                if alt5 == 1:
+                    # Deo.g:86:15: ~ ( '\\r' | '\\n' )
                     pass 
                     if (0 <= self.input.LA(1) <= 9) or (11 <= self.input.LA(1) <= 12) or (14 <= self.input.LA(1) <= 65535):
                         self.input.consume()
@@ -658,17 +599,17 @@ class DeoLexer(Lexer):
 
 
                 else:
-                    break #loop6
+                    break #loop5
 
 
-            # Deo.g:88:31: ( '\\r' )?
-            alt7 = 2
-            LA7_0 = self.input.LA(1)
+            # Deo.g:86:31: ( '\\r' )?
+            alt6 = 2
+            LA6_0 = self.input.LA(1)
 
-            if (LA7_0 == 13) :
-                alt7 = 1
-            if alt7 == 1:
-                # Deo.g:88:31: '\\r'
+            if (LA6_0 == 13) :
+                alt6 = 1
+            if alt6 == 1:
+                # Deo.g:86:31: '\\r'
                 pass 
                 self.match(13)
 
@@ -693,7 +634,7 @@ class DeoLexer(Lexer):
     def mLETTER(self, ):
 
         try:
-            # Deo.g:90:17: ( 'a' .. 'z' | 'A' .. 'Z' )
+            # Deo.g:88:17: ( 'a' .. 'z' | 'A' .. 'Z' )
             # Deo.g:
             pass 
             if (65 <= self.input.LA(1) <= 90) or (97 <= self.input.LA(1) <= 122):
@@ -719,8 +660,8 @@ class DeoLexer(Lexer):
     def mDIGIT(self, ):
 
         try:
-            # Deo.g:91:17: ( '0' .. '9' )
-            # Deo.g:91:19: '0' .. '9'
+            # Deo.g:89:17: ( '0' .. '9' )
+            # Deo.g:89:19: '0' .. '9'
             pass 
             self.matchRange(48, 57)
 
@@ -736,113 +677,107 @@ class DeoLexer(Lexer):
 
 
     def mTokens(self):
-        # Deo.g:1:8: ( OB | PRO | PER | IF | IFF | THEN | NOT | AND | OR | LB | RB | ASSN | ACTION | STATE | ID | SPACE | EOL | COMMENT )
-        alt8 = 18
-        alt8 = self.dfa8.predict(self.input)
-        if alt8 == 1:
+        # Deo.g:1:8: ( OB | PRO | PER | IF | IFF | THEN | NOT | AND | OR | LB | RB | ASSN | ACTION | ID | SPACE | EOL | COMMENT )
+        alt7 = 17
+        alt7 = self.dfa7.predict(self.input)
+        if alt7 == 1:
             # Deo.g:1:10: OB
             pass 
             self.mOB()
 
 
-        elif alt8 == 2:
+        elif alt7 == 2:
             # Deo.g:1:13: PRO
             pass 
             self.mPRO()
 
 
-        elif alt8 == 3:
+        elif alt7 == 3:
             # Deo.g:1:17: PER
             pass 
             self.mPER()
 
 
-        elif alt8 == 4:
+        elif alt7 == 4:
             # Deo.g:1:21: IF
             pass 
             self.mIF()
 
 
-        elif alt8 == 5:
+        elif alt7 == 5:
             # Deo.g:1:24: IFF
             pass 
             self.mIFF()
 
 
-        elif alt8 == 6:
+        elif alt7 == 6:
             # Deo.g:1:28: THEN
             pass 
             self.mTHEN()
 
 
-        elif alt8 == 7:
+        elif alt7 == 7:
             # Deo.g:1:33: NOT
             pass 
             self.mNOT()
 
 
-        elif alt8 == 8:
+        elif alt7 == 8:
             # Deo.g:1:37: AND
             pass 
             self.mAND()
 
 
-        elif alt8 == 9:
+        elif alt7 == 9:
             # Deo.g:1:41: OR
             pass 
             self.mOR()
 
 
-        elif alt8 == 10:
+        elif alt7 == 10:
             # Deo.g:1:44: LB
             pass 
             self.mLB()
 
 
-        elif alt8 == 11:
+        elif alt7 == 11:
             # Deo.g:1:47: RB
             pass 
             self.mRB()
 
 
-        elif alt8 == 12:
+        elif alt7 == 12:
             # Deo.g:1:50: ASSN
             pass 
             self.mASSN()
 
 
-        elif alt8 == 13:
+        elif alt7 == 13:
             # Deo.g:1:55: ACTION
             pass 
             self.mACTION()
 
 
-        elif alt8 == 14:
-            # Deo.g:1:62: STATE
-            pass 
-            self.mSTATE()
-
-
-        elif alt8 == 15:
-            # Deo.g:1:68: ID
+        elif alt7 == 14:
+            # Deo.g:1:62: ID
             pass 
             self.mID()
 
 
-        elif alt8 == 16:
-            # Deo.g:1:71: SPACE
+        elif alt7 == 15:
+            # Deo.g:1:65: SPACE
             pass 
             self.mSPACE()
 
 
-        elif alt8 == 17:
-            # Deo.g:1:77: EOL
+        elif alt7 == 16:
+            # Deo.g:1:71: EOL
             pass 
             self.mEOL()
 
 
-        elif alt8 == 18:
-            # Deo.g:1:81: COMMENT
+        elif alt7 == 17:
+            # Deo.g:1:75: COMMENT
             pass 
             self.mCOMMENT()
 
@@ -852,192 +787,152 @@ class DeoLexer(Lexer):
 
 
 
-    # lookup tables for DFA #8
+    # lookup tables for DFA #7
 
-    DFA8_eot = DFA.unpack(
-        u"\1\uffff\5\17\3\uffff\1\17\3\uffff\1\17\1\32\1\uffff\2\17\1\uffff"
-        u"\4\17\1\40\2\17\1\uffff\3\17\1\44\1\45\1\uffff\2\17\1\50\2\uffff"
-        u"\2\17\1\uffff\31\17\1\106\3\17\1\uffff\2\17\1\114\1\17\1\116\1"
-        u"\uffff\1\117\2\uffff"
+    DFA7_eot = DFA.unpack(
+        u"\1\uffff\5\17\3\uffff\1\17\3\uffff\1\17\1\31\1\uffff\2\17\1\uffff"
+        u"\3\17\1\35\2\17\1\uffff\1\17\1\41\1\42\1\uffff\2\17\1\45\2\uffff"
+        u"\2\17\1\uffff\31\17\1\103\3\17\1\uffff\2\17\1\111\1\17\1\113\1"
+        u"\uffff\1\114\2\uffff"
         )
 
-    DFA8_eof = DFA.unpack(
-        u"\120\uffff"
+    DFA7_eof = DFA.unpack(
+        u"\115\uffff"
         )
 
-    DFA8_min = DFA.unpack(
-        u"\6\11\3\uffff\1\11\3\uffff\2\11\1\uffff\2\11\1\uffff\7\11\1\uffff"
-        u"\5\11\1\uffff\3\11\2\uffff\2\11\1\uffff\35\11\1\uffff\5\11\1\uffff"
-        u"\1\11\2\uffff"
+    DFA7_min = DFA.unpack(
+        u"\1\11\5\60\3\uffff\1\60\3\uffff\1\40\1\11\1\uffff\2\60\1\uffff"
+        u"\3\60\1\11\1\151\1\141\1\uffff\1\60\2\11\1\uffff\1\163\1\156\1"
+        u"\11\2\uffff\1\40\1\144\1\uffff\1\157\1\40\1\142\1\145\1\157\1\154"
+        u"\1\157\1\162\1\156\1\151\1\150\1\155\1\154\1\147\2\151\1\171\1"
+        u"\145\1\142\1\164\1\40\1\144\1\151\1\164\1\151\1\11\1\164\1\145"
+        u"\1\146\1\uffff\1\145\1\144\1\11\1\144\1\11\1\uffff\1\11\2\uffff"
         )
 
-    DFA8_max = DFA.unpack(
-        u"\6\172\3\uffff\1\172\3\uffff\2\172\1\uffff\2\172\1\uffff\7\172"
-        u"\1\uffff\5\172\1\uffff\3\172\2\uffff\2\172\1\uffff\35\172\1\uffff"
-        u"\5\172\1\uffff\1\172\2\uffff"
+    DFA7_max = DFA.unpack(
+        u"\6\172\3\uffff\1\172\3\uffff\2\172\1\uffff\2\172\1\uffff\4\172"
+        u"\1\151\1\141\1\uffff\3\172\1\uffff\1\163\1\156\1\172\2\uffff\1"
+        u"\40\1\144\1\uffff\1\160\1\40\1\142\1\162\1\157\1\154\1\157\1\162"
+        u"\1\156\1\151\1\150\1\155\1\154\1\147\2\151\1\171\1\145\1\142\1"
+        u"\164\1\40\1\144\1\151\1\164\1\151\1\172\1\164\1\145\1\146\1\uffff"
+        u"\1\145\1\144\1\172\1\144\1\172\1\uffff\1\172\2\uffff"
         )
 
-    DFA8_accept = DFA.unpack(
-        u"\6\uffff\1\12\1\13\1\14\1\uffff\1\20\1\21\1\22\2\uffff\1\15\2\uffff"
-        u"\1\17\7\uffff\1\4\5\uffff\1\11\3\uffff\1\7\1\10\2\uffff\1\6\35"
+    DFA7_accept = DFA.unpack(
+        u"\6\uffff\1\12\1\13\1\14\1\uffff\1\17\1\20\1\21\2\uffff\1\15\2\uffff"
+        u"\1\16\6\uffff\1\4\3\uffff\1\11\3\uffff\1\7\1\10\2\uffff\1\6\35"
         u"\uffff\1\1\5\uffff\1\5\1\uffff\1\3\1\2"
         )
 
-    DFA8_special = DFA.unpack(
-        u"\120\uffff"
+    DFA7_special = DFA.unpack(
+        u"\115\uffff"
         )
 
             
-    DFA8_transition = [
+    DFA7_transition = [
         DFA.unpack(u"\1\12\1\13\2\uffff\1\13\22\uffff\1\12\2\uffff\1\14\4"
         u"\uffff\1\6\1\7\23\uffff\1\10\3\uffff\32\11\6\uffff\1\4\7\11\1\1"
         u"\4\11\1\3\1\5\4\11\1\2\6\11"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\5\20\1\16\15\20\1\15\6\20"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\7\20\1\24\22\20"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\16\20\1\25\13\20"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\15\20\1\26\14\20"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\21\20\1\27\10\20"),
+        DFA.unpack(u"\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff\5\20\1\16"
+        u"\15\20\1\15\6\20"),
+        DFA.unpack(u"\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff\7\20\1\23"
+        u"\22\20"),
+        DFA.unpack(u"\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff\16\20\1\24"
+        u"\13\20"),
+        DFA.unpack(u"\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff\15\20\1\25"
+        u"\14\20"),
+        DFA.unpack(u"\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff\21\20\1\26"
+        u"\10\20"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u""),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
+        DFA.unpack(u"\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff\32\20"),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\27\17\uffff\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff"
+        u"\32\20"),
+        DFA.unpack(u"\1\17\26\uffff\1\30\17\uffff\12\21\7\uffff\32\20\4"
+        u"\uffff\1\22\1\uffff\32\20"),
+        DFA.unpack(u""),
+        DFA.unpack(u"\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff\32\20"),
+        DFA.unpack(u"\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff\32\20"),
+        DFA.unpack(u""),
+        DFA.unpack(u"\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff\4\20\1\32"
+        u"\25\20"),
+        DFA.unpack(u"\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff\23\20\1\33"
+        u"\6\20"),
+        DFA.unpack(u"\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff\3\20\1\34"
+        u"\26\20"),
+        DFA.unpack(u"\1\17\26\uffff\1\17\17\uffff\12\21\7\uffff\32\20\4"
+        u"\uffff\1\22\1\uffff\32\20"),
+        DFA.unpack(u"\1\36"),
+        DFA.unpack(u"\1\37"),
+        DFA.unpack(u""),
+        DFA.unpack(u"\12\21\7\uffff\32\20\4\uffff\1\22\1\uffff\15\20\1\40"
+        u"\14\20"),
+        DFA.unpack(u"\1\17\26\uffff\1\17\17\uffff\12\21\7\uffff\32\20\4"
+        u"\uffff\1\22\1\uffff\32\20"),
+        DFA.unpack(u"\1\17\26\uffff\1\17\17\uffff\12\21\7\uffff\32\20\4"
+        u"\uffff\1\22\1\uffff\32\20"),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\43"),
+        DFA.unpack(u"\1\44"),
+        DFA.unpack(u"\1\17\26\uffff\1\17\17\uffff\12\21\7\uffff\32\20\4"
         u"\uffff\1\22\1\uffff\32\20"),
         DFA.unpack(u""),
         DFA.unpack(u""),
+        DFA.unpack(u"\1\46"),
+        DFA.unpack(u"\1\47"),
         DFA.unpack(u""),
-        DFA.unpack(u"\1\23\26\uffff\1\30\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\32\20"),
-        DFA.unpack(u"\1\23\26\uffff\1\31\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\32\20"),
+        DFA.unpack(u"\1\50\1\51"),
+        DFA.unpack(u"\1\52"),
+        DFA.unpack(u"\1\53"),
+        DFA.unpack(u"\1\55\14\uffff\1\54"),
+        DFA.unpack(u"\1\56"),
+        DFA.unpack(u"\1\57"),
+        DFA.unpack(u"\1\60"),
+        DFA.unpack(u"\1\61"),
+        DFA.unpack(u"\1\62"),
+        DFA.unpack(u"\1\63"),
+        DFA.unpack(u"\1\64"),
+        DFA.unpack(u"\1\65"),
+        DFA.unpack(u"\1\66"),
+        DFA.unpack(u"\1\67"),
+        DFA.unpack(u"\1\70"),
+        DFA.unpack(u"\1\71"),
+        DFA.unpack(u"\1\72"),
+        DFA.unpack(u"\1\73"),
+        DFA.unpack(u"\1\74"),
+        DFA.unpack(u"\1\75"),
+        DFA.unpack(u"\1\76"),
+        DFA.unpack(u"\1\77"),
+        DFA.unpack(u"\1\100"),
+        DFA.unpack(u"\1\101"),
+        DFA.unpack(u"\1\102"),
+        DFA.unpack(u"\1\17\26\uffff\1\17\17\uffff\12\17\7\uffff\32\17\6"
+        u"\uffff\32\17"),
+        DFA.unpack(u"\1\104"),
+        DFA.unpack(u"\1\105"),
+        DFA.unpack(u"\1\106"),
         DFA.unpack(u""),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\32\20"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\32\20"),
+        DFA.unpack(u"\1\107"),
+        DFA.unpack(u"\1\110"),
+        DFA.unpack(u"\1\17\26\uffff\1\17\17\uffff\12\17\7\uffff\32\17\6"
+        u"\uffff\32\17"),
+        DFA.unpack(u"\1\112"),
+        DFA.unpack(u"\1\17\26\uffff\1\17\17\uffff\12\17\7\uffff\32\17\6"
+        u"\uffff\32\17"),
         DFA.unpack(u""),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\32\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\4\20\1\35\25\20"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\23\20\1\36\6\20"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\3\20\1\37\26\20"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\32\20"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\10\33\1\41\21\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\1\42\31\33"),
-        DFA.unpack(u""),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\32\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\32\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\15\20\1\43\14\20"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\32\20"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\32\20"),
-        DFA.unpack(u""),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\22\33\1\46\7\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\15\33\1\47\14\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\21\7\uffff\32\20\4"
-        u"\uffff\1\22\1\uffff\32\20"),
-        DFA.unpack(u""),
-        DFA.unpack(u""),
-        DFA.unpack(u"\1\23\26\uffff\1\51\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\32\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\3\33\1\52\26\33"),
-        DFA.unpack(u""),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\16\33\1\53\1\54\12\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\55\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\32\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\1\33\1\56\30\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\4\33\1\60\14\33\1\57\10\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\16\33\1\61\13\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\13\33\1\62\16\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\16\33\1\63\13\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\21\33\1\64\10\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\15\33\1\65\14\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\10\33\1\66\21\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\7\33\1\67\22\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\14\33\1\70\15\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\13\33\1\71\16\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\6\33\1\72\23\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\10\33\1\73\21\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\10\33\1\74\21\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\30\33\1\75\1\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\4\33\1\76\25\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\1\33\1\77\30\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\23\33\1\100\6\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\101\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\32\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\3\33\1\102\26\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\10\33\1\103\21\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\23\33\1\104\6\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\10\33\1\105\21\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\32\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\23\33\1\107\6\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\4\33\1\110\25\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\5\33\1\111\24\33"),
-        DFA.unpack(u""),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\4\33\1\112\25\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\3\33\1\113\26\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\32\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\3\33\1\115\26\33"),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\32\33"),
-        DFA.unpack(u""),
-        DFA.unpack(u"\1\23\26\uffff\1\23\17\uffff\12\34\7\uffff\32\33\6"
-        u"\uffff\32\33"),
+        DFA.unpack(u"\1\17\26\uffff\1\17\17\uffff\12\17\7\uffff\32\17\6"
+        u"\uffff\32\17"),
         DFA.unpack(u""),
         DFA.unpack(u"")
     ]
 
-    # class definition for DFA #8
+    # class definition for DFA #7
 
-    DFA8 = DFA
+    DFA7 = DFA
  
 
 
