@@ -1,0 +1,19 @@
+<ivy-module version="2.0">
+
+	<info
+		organisation="uk.ac.glasgow"
+		module="Deontobot"
+	/>
+
+	<dependencies>
+
+		<dependency
+			org="antlr"
+			name="antlr"
+			conf="default"
+			rev="3.1.2"
+		/>
+
+	</dependencies>
+
+</ivy-module>

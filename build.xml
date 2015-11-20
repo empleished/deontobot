@@ -1,0 +1,92 @@
+<?xml 
+	version="1.0" 
+	encoding="UTF-8" 
+	standalone="no"?>
+
+<project
+	name="Deontobot"
+	basedir="."
+	xmlns:ivy="antlib:org.apache.ivy.ant"
+	default="build"
+>
+
+	<path id="project.classpath">
+	
+		<pathelement location="bin" />
+
+		<fileset dir="lib" />
+
+	</path>
+
+	<property name="install.dir" value="" />
+
+	<property name="exec.dir" value="" />
+
+	<target
+		name="clean"
+		description="deletes all intermediary files"
+	>
+
+		<delete dir="bin" />
+
+	</target>
+
+	<target 
+		name="cleanall"
+		description="deletes all files not included in the distribution archive"
+		depends="clean"
+	>
+
+		<delete dir="lib" />
+		<delete dir="implementation/spec" includes="*.jar" />
+		<ivy:cleancache />
+
+	</target>
+
+	<target
+		name="init"
+		description="initialises distribution in preparation for code compilation and documentation"
+	>
+
+		<mkdir dir="bin" />
+
+	</target>
+
+	<target 
+		name="resolve"
+		description="retrieves necessary dependencies for this project"
+	>
+
+		<ivy:retrieve />
+
+	</target>
+
+	<target
+		name="run"
+		depends="compile"
+		description="invokes the application from the default entry point"
+	>
+
+		<python 
+			classname=""
+			fork="yes"
+			classpathref="project.classpath"
+		/>
+
+	</target>
+
+	<target
+		name="specTest"
+		description="invokes the test cases for the specification"
+	>
+
+	</target>
+
+	<target 
+		name="build"
+		description="builds the project"
+	/>
+
+	</target>
+
+</project>
