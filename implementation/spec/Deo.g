@@ -53,11 +53,11 @@ axiom
 	;
 
 expr
-	:	LB IF (LB fact (op fact)* RB)
-		THEN (LB axiom (op axiom)* RB) RB 		-> ^(EXPR IF FACT THEN AXIOM)
-	|	LB IFF (LB fact (op fact)* RB) 
-		THEN (LB axiom (op axiom)* RB) RB 		-> ^(EXPR IFF FACT THEN AXIOM)	
-	|	LB axiom (op axiom)* RB 				-> ^(EXPR AXIOM)
+	:	IF (LB fact (op fact)* RB)
+		THEN (LB axiom (op axiom)* RB)	 		-> ^(EXPR IF FACT THEN AXIOM)
+	|	IFF (LB fact (op fact)* RB) 
+		THEN (LB axiom (op axiom)* RB)	 		-> ^(EXPR IFF FACT THEN AXIOM)	
+	|	axiom (op axiom)* 				-> ^(EXPR AXIOM)
 	;
 
 // LEXER RULES //
@@ -76,7 +76,7 @@ OR	:	'or';
 LB	:	'(';
 RB	:	')';
 
-ASSN	: 	'=';
+ASSN	: 	':';
 
 ACTION	:	LETTER (LETTER | DIGIT | SPACE)*;
 ID	:	LETTER (LETTER | DIGIT | '_')*;
