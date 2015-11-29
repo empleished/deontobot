@@ -14,6 +14,7 @@ tokens {        //TODO special tokens for labeling AST nodes
 	FACT;
 	RULE;
 	AXIOM;
+	COND;
 	PROG;
 	VAR;
 }
@@ -37,7 +38,7 @@ norm
 	| 	PER								
 	;
 
-fact	:	ACTION														
+fact	:	LB ACTION RB														
 	;
 
 op	:	AND 								
@@ -49,25 +50,31 @@ op	:	AND
 	;
 
 axiom	
-	:	norm LB ACTION RB				-> ^(AXIOM norm ACTION)
+	:	LB (norm LB ACTION RB) RB			-> ^(AXIOM norm ACTION)
+	;
+
+comp_axiom	:	axiom (op axiom)*
+	;
+	
+cond	:	fact (op fact)*
 	;
 
 expr
-	:	IF (LB fact (op fact)* RB)
-		THEN (LB axiom (op axiom)* RB)	 		-> ^(EXPR IF FACT THEN AXIOM)
-	|	IFF (LB fact (op fact)* RB) 
-		THEN (LB axiom (op axiom)* RB)	 		-> ^(EXPR IFF FACT THEN AXIOM)	
-	|	axiom (op axiom)* 				-> ^(EXPR AXIOM)
+	:	IF (LB cond RB)
+		THEN (LB comp_axiom RB)	 		-> ^(EXPR IF COND THEN AXIOM)
+	|	(LB cond RB) 
+		IFF (LB comp_axiom RB)	 			-> ^(EXPR IFF FACT THEN AXIOM)	
+	|	comp_axiom					-> ^(EXPR AXIOM)
 	;
 
 // LEXER RULES //
 
-OB	:	'it is obliged';
-PRO	:	'it is prohibited';
-PER	:	'it is permitted';
+OB	:	'OB';
+PRO	:	'PRO';
+PER	:	'PER';
 
 IF	:	'if';
-IFF	:	'if and only if';
+IFF	:	'iff';
 THEN	:	'then';
 NOT	:	'not';
 AND	:	'and';
@@ -82,8 +89,8 @@ ACTION	:	LETTER (LETTER | DIGIT | SPACE)*;
 ID	:	LETTER (LETTER | DIGIT | '_')*;
 
 SPACE	:	(' ' | '\t')+;
-EOL	:	'\r'? '\n';
-COMMENT :	'#' ~('\r' | '\n')* '\r'? '\n';
+EOF	: 	'.';
+COMMENT 	:	'#' ~('\r' | '\n')* '\r'? '\n';
 
-fragment LETTER : 'a'..'z' | 'A'..'Z';
-fragment DIGIT  : '0'..'9';
+fragment LETTER 	: 	'a'..'z' | 'A'..'Z';
+fragment DIGIT  	: 	'0'..'9';
