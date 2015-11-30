@@ -1,3 +1,10 @@
+if (A and B) then B;
+if (A and B) then A;
+
+Per A then not OB ( not A)
+
+(A:Atom, B:Atom): OB (A then B) then (OB A then OB B)
+
 P: involve participation of other people
 Q: involve data relating to other people
 R: complete ethics checklist form
@@ -8,4 +15,21 @@ V: include introduction and debriefing scripts with signed ethics checklist form
 
 if (P or Q) then (OB(R))
 if (P and R and T) then (¬OB(S) and OB(U) and OB(V))
-if (P and R and ¬T) then (OB(S))
+if (P and R and not T) then (OB(S))
+
+#Example:
+
+Dataset of known facts:
+Per A
+
+Goal: not OB not A
+
+grind(dataset, goal, rules);
+
+database_of_facts();
+
+# A:Atom, B:Atom -> Per A then not OB ( not A)
+def permitted_implies_not_prohibited(self, formula):
+    if formula.head == "Per"
+    return not OB (not formula.expr)
+
