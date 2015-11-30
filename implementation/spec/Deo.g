@@ -59,11 +59,13 @@ comp_axiom	:	axiom (op axiom)*
 cond	:	fact (op fact)*
 	;
 
+// 
+
 expr
 	:	IF (LB cond RB)
-		THEN (LB comp_axiom RB)	 		-> ^(EXPR IF COND THEN AXIOM)
-	|	(LB cond RB) 
-		IFF (LB comp_axiom RB)	 			-> ^(EXPR IFF FACT THEN AXIOM)	
+		THEN (LB comp_axiom RB)	 			-> ^(EXPR IF COND THEN AXIOM)
+	|	(LB comp_axiom RB) 
+		IFF (LB cond RB)	 			-> ^(EXPR IFF FACT THEN AXIOM)	
 	|	comp_axiom					-> ^(EXPR AXIOM)
 	;
 
