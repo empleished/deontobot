@@ -8,11 +8,11 @@ char_stream = antlr3.ANDeoLRFileStream(path_to_input)
 lexer = DeoLexer(char_stream)
 tokens = antlr3.CommonDeookenStream(lexer)
 parser = DeoParser(tokens)
-rule = parser.entry_rule()
+rule = parser.prog()
 
 root = r.tree
  
 nodes = antlr3.tree.CommonTreeNodeStream(root)
 nodes.setTokenStream(tokens)
 walker = TWalker(nodes)
-walker.entry_rule()
+walker.prog()
