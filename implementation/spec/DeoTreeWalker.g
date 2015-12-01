@@ -25,7 +25,8 @@ axiom
 	:	
 	;
 
-comp_axiom	:	
+comp_axiom	
+	:	
 	;
 	
 cond	:	

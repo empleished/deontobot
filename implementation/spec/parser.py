@@ -3,10 +3,10 @@ from DeoLexer import DeoLexer
 from DeoParser import DeoParser
 from DeoTreeWalker import DeoTreeWalker
 
-char_stream = antlr3.ANDeoLRFileStream(path_to_input)
- 
+char_stream = antlr3.ANTLRFileStream(path_to_input)
+
 lexer = DeoLexer(char_stream)
-tokens = antlr3.CommonDeookenStream(lexer)
+tokens = antlr3.CommonTokenStream(lexer)
 parser = DeoParser(tokens)
 rule = parser.prog()
 

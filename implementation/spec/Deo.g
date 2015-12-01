@@ -38,7 +38,7 @@ norm
 	| 	PER								
 	;
 
-fact	:	LB ACTION RB														
+fact	:	ATOM														
 	;
 
 op	:	AND 								
@@ -50,20 +50,21 @@ op	:	AND
 	;
 
 axiom	
-	:	LB (norm LB ACTION RB) RB			-> ^(AXIOM norm ACTION)
+	:	LB (norm LB fact RB) RB	
 	;
 
-comp_axiom	:	axiom (op axiom)*
+comp_axiom	
+	:	LB axiom RB				
+	|	axiom+
 	;
 	
-cond	:	fact (op fact)*
+cond	:	LB fact RB
+	|	LB fact (op fact)* RB
 	;
 
 expr
-	:	IF (LB cond RB)
-		THEN (LB comp_axiom RB)	 			-> ^(EXPR IF COND THEN AXIOM)
-	|	(LB comp_axiom RB) 
-		IFF (LB cond RB)	 			-> ^(EXPR IFF FACT THEN AXIOM)	
+	:	IF cond THEN comp_axiom		 		-> ^(EXPR IF COND THEN AXIOM)
+	|	comp_axiom IFF cond		 		-> ^(EXPR IFF FACT THEN AXIOM)	
 	|	comp_axiom					-> ^(EXPR AXIOM)
 	;
 
@@ -85,7 +86,7 @@ RB	:	')';
 
 ASSN	: 	':';
 
-ACTION	:	LETTER (LETTER | DIGIT | SPACE)*;
+ATOM	:	LETTER (LETTER | DIGIT | SPACE)*;
 ID	:	LETTER (LETTER | DIGIT | '_')*;
 
 SPACE	:	(' ' | '\t')+;
