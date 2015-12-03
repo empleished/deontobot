@@ -1,3 +1,4 @@
+grammar Deo;
 class DeoTreeWalker extends TreeParser;
 
 prog	:	
