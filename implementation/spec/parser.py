@@ -14,5 +14,5 @@ root = r.tree
  
 nodes = antlr3.tree.CommonTreeNodeStream(root)
 nodes.setTokenStream(tokens)
-walker = TWalker(nodes)
+walker = DeoWalker(nodes)
 walker.prog()
