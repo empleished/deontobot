@@ -6,6 +6,7 @@
 
 # thoughts:
 # -is it worth stripping out the rules and putting them in a separate tree rather than directly modifying the AST
+# -is there an easier way of running the simplifying rules than running them repeatedly until the tree doesn't change
 
 # convert prohibitions and permissions to obligations:
 # - PRO(C)->OB(¬C)
