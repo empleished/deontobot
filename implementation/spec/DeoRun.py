@@ -1,3 +1,5 @@
+# USELESS FILE???
+
 import antlr3
 from DeoLexer import DeoLexer
 from DeoParser import DeoParser
