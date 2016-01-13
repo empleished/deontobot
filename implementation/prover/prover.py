@@ -1,7 +1,11 @@
 # NOTES:
+
 # useful documentation: 
 # https://greentreesnakes.readthedocs.org/en/latest/manipulating.html
 # https://bitbucket.org/takluyver/greentreesnakes/src/default/astpp.py?fileviewer=file-view-default
+
+# thoughts:
+# -is it worth stripping out the rules and putting them in a separate tree rather than directly modifying the AST
 
 # convert prohibitions and permissions to obligations:
 # - PRO(C)->OB(¬C)
@@ -69,7 +73,7 @@ def proofRules(atom, tree):
 	tree = decomposingConjunction(atom, tree)
 	return tree
 
-def main:
+def main():
 	tree = convertProhibition(tree)
 	tree = convertPermission(tree)
 	listOfAtoms = stripOutAtoms(tree)
