@@ -44,38 +44,49 @@ def ruleStrategy(statement, tree, ruleString):
 	return found
 
 # logical rules
+	
+def doubleNegation(statement, tree):
+# P is equivalent to ¬¬P 
+# ¬¬P is equivalent to P 
+	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+
+	return found
 
 def modusPonens(statement, tree): 
+# if P and P -> Q then Q
 	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
 
 	return found
 	
 def modusTollens(statement, tree):
+# if ¬Q and P -> Q then ¬P
 	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
 
 	return found
 	
 def disjunctiveSyllogism(statement, tree):
+# if ¬P and (P or Q) then Q
 	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
 
 	return found
 	
 def deMorgansLaw(statement, tree):
+# ¬(P or Q) is equivalent to ¬P and ¬Q
+# ¬P and ¬Q is equivalent to ¬(P or Q)
+# ¬(P and Q) is equivalent to ¬P or ¬Q
+# ¬P or ¬Q is equivalent to ¬(P and Q)
 	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
 
 	return found
 	
 def ruleOfSyllogism(statement, tree):
-	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
-
-	return found
-	
-def doubleNegation(statement, tree):
+# if (P -> Q) and (Q -> R) then P -> R
 	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
 
 	return found
 	
 def decomposingConjunction(statement, tree):
+# if (P and Q) then P, Q
 	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
 
 	return found
