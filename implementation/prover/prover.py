@@ -4,10 +4,6 @@
 # https://greentreesnakes.readthedocs.org/en/latest/manipulating.html
 # https://bitbucket.org/takluyver/greentreesnakes/src/default/astpp.py?fileviewer=file-view-default
 
-# thoughts:
-# -is it worth stripping out the rules and putting them in a separate tree rather than directly modifying the AST
-# -is there an easier way of running the simplifying rules than running them repeatedly until the tree doesn't change
-
 # convert prohibitions and permissions to obligations:
 # - PRO(C)->OB(¬C)
 # - PER(C)->¬OB(C) AND ¬OB(¬C)
@@ -32,52 +28,97 @@ def convertPermission(tree):
 # -> add new nodes to tree
 	return tree
 
+def transform(statement, rule):
+	return statement
+
+def search(statement, tree):
+	found = false;
+
+	return found
+
+def ruleStrategy(statement, tree, ruleString):
+	ruleTree = ast.parse(ruleString);
+	transformedStatement = transform(statement, ruleTree); 
+	found = search(transformedStatement, tree);
+
+	return found
+
 # logical rules
 
-def modusPonens(atom, tree): 
-	return tree
-	
-def modusTollens(atom, tree):
-	return tree
-	
-def disjunctiveSyllogism(atom, tree):
-	return tree
-	
-def deMorgansLaw(atom, tree):
-	return tree
-	
-def ruleOfSyllogism(atom, tree):
-	return tree
-	
-def doubleNegation(atom, tree):
-	return tree
-	
-def decomposingConjunction(atom, tree):
-	return tree
-	
-def stripOutAtoms(tree):
-	listOfAtoms = []
-# search nodes for node.getChild == ":"
-# collect node
-# add node to listOfAtoms
-	return listOfAtoms
+def modusPonens(statement, tree): 
+	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
 
-# run logical rules on tree, atom by atom, to simplify
+	return found
 	
-def proofRules(atom, tree):
-	tree = modusPonens(atom, tree)
-	tree = modusTollens(atom, tree)
-	tree = disjunctiveSyllogism(atom, tree)
-	tree = deMorgansLaw(atom, tree)
-	tree = ruleOfSyllogism(atom, tree)
-	tree = doubleNegation(atom, tree)
-	tree = decomposingConjunction(atom, tree)
-	return tree
+def modusTollens(statement, tree):
+	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
 
-def main():
+	return found
+	
+def disjunctiveSyllogism(statement, tree):
+	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+
+	return found
+	
+def deMorgansLaw(statement, tree):
+	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+
+	return found
+	
+def ruleOfSyllogism(statement, tree):
+	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+
+	return found
+	
+def doubleNegation(statement, tree):
+	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+
+	return found
+	
+def decomposingConjunction(statement, tree):
+	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+
+	return found
+
+# run logical rules on tree
+	
+def proofRules(statement, tree):
+	proven = false;
+
+	if (!proven):
+		proven = modusPonens(statement, tree)
+
+		if (!proven): 
+			proven = modusTollens(statement, tree)
+
+			if (!proven): 
+				proven = disjunctiveSyllogism(statement, tree)
+
+				if (!proven): 
+					proven = deMorgansLaw(statement, tree)
+
+					if (!proven): 
+						proven = ruleOfSyllogism(statement, tree)
+
+						if (!proven): 
+							proven = doubleNegation(statement, tree)
+
+							if (!proven): 
+								proven = decomposingConjunction(statement, tree)
+	return proven
+
+def main(argv):
+	if len(argv) == 1:
+		print "no statement to prove provided"
+		return
+
+	statementToProve = argv[1]
+
 	tree = convertProhibition(tree)
 	tree = convertPermission(tree)
-	listOfAtoms = stripOutAtoms(tree)
 
-	for atom in listOfAtoms:
-		tree = proofRules(atom, tree)
+	statementTree = ast.parse(statementToProve) 
+	proven = proofRules(statementTree, tree)
+
+if __name__ == "__main__":
+	main(sys.argv)
