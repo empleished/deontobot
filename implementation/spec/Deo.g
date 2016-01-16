@@ -22,7 +22,7 @@ tokens {        //TODO special tokens for labeling AST nodes
 
 // PARSER RULES //
 
-prog	:	fact_decl+ rule_decl+ EOF   			-> ^(PROG fact_decl* rule_decl+)
+prog	:	fact_decl+ rule_decl+ EOF   			-> ^(PROG fact_decl+ rule_decl+)
 	;
 
 rule_decl	
@@ -68,9 +68,9 @@ comp_cond
 	;
 
 expr	:
-	:	IF comp_cond THEN comp_axiom EOL	 	-> ^(EXPR IF COND THEN AXIOM)
-//	|	comp_axiom IFF cond EOL		 		-> ^(EXPR IFF FACT THEN AXIOM)	
-	|	comp_axiom EOL					-> ^(EXPR AXIOM)
+	:	IF comp_cond THEN comp_axiom EOL	 	-> ^(EXPR IF COND comp_cond THEN AXIOM comp_axiom)
+//	|	comp_axiom IFF cond EOL		 		-> ^(EXPR IFF FACT fact THEN AXIOM comp_axiom)	
+	|	comp_axiom EOL					-> ^(EXPR AXIOM comp_axiom)
 	;
 
 // LEXER RULES //
