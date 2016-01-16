@@ -29,9 +29,16 @@ def convertPermission(tree):
 	return tree
 
 def transform(statement, rule):
-	return statement
+# for P in rule
+# replace P with statement
+	transformedStatement = ""
+	
+	return transformedStatement
 
 def search(statement, tree):
+# look through tree for first part of statement 
+# if found move onto its child and the second part of statement
+# and so following
 	found = false;
 
 	return found
@@ -100,7 +107,7 @@ def deMorgansLaw(statement, tree):
 def ruleOfSyllogism(statement, tree):
 # if (P -> Q) and (Q -> R) then P -> R
 	found = ruleStrategy(statement, tree, "if (if (P) then (Q)) and (if (Q) then (R)) then (if (P) then (R)");
-
+	
 	return found
 	
 def decomposingConjunction(statement, tree):
