@@ -60,13 +60,17 @@ comp_axiom
 	;
 	
 cond	:	LB fact RB
-	|	LB fact (op fact)+ RB
+	;
+	
+comp_cond
+	:	cond
+	|	LB cond (op cond)+ RB
 	;
 
 expr	:
-//	:	IF cond THEN comp_axiom EOL		 	-> ^(EXPR IF COND THEN AXIOM)
+	:	IF comp_cond THEN comp_axiom EOL	 	-> ^(EXPR IF COND THEN AXIOM)
 //	|	comp_axiom IFF cond EOL		 		-> ^(EXPR IFF FACT THEN AXIOM)	
-		comp_axiom EOL					-> ^(EXPR comp_axiom)
+	|	comp_axiom EOL					-> ^(EXPR comp_axiom)
 	;
 
 // LEXER RULES //
@@ -76,7 +80,7 @@ PRO	:	'PRO';
 PER	:	'PER';
 
 IF	:	'if';
-IFF	:	'iff';
+//IFF	:	'iff';
 THEN	:	'then';
 NOT	:	'not';
 AND	:	'and';
