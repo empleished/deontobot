@@ -70,7 +70,7 @@ comp_cond
 expr	:
 	:	IF comp_cond THEN comp_axiom EOL	 	-> ^(EXPR IF COND THEN AXIOM)
 //	|	comp_axiom IFF cond EOL		 		-> ^(EXPR IFF FACT THEN AXIOM)	
-	|	comp_axiom EOL					-> ^(EXPR comp_axiom)
+	|	comp_axiom EOL					-> ^(EXPR AXIOM)
 	;
 
 // LEXER RULES //
