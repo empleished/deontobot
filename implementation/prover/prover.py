@@ -48,25 +48,31 @@ def ruleStrategy(statement, tree, ruleString):
 def doubleNegation(statement, tree):
 # P is equivalent to ¬¬P 
 # ¬¬P is equivalent to P 
-	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+	found = false
+	
+	if !found:
+		found = ruleStrategy(statement, tree, "if (P) then (¬¬P)");
+		
+		if !found: 
+			found = ruleStrategy(statement, tree, "if (¬¬P) then (P)");
 
 	return found
 
 def modusPonens(statement, tree): 
 # if P and P -> Q then Q
-	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+	found = ruleStrategy(statement, tree, "if ((P) and (P -> Q)) then (Q)");
 
 	return found
 	
 def modusTollens(statement, tree):
 # if ¬Q and P -> Q then ¬P
-	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+	found = ruleStrategy(statement, tree, "if ((¬Q) and (P -> Q)) then (¬P)");
 
 	return found
 	
 def disjunctiveSyllogism(statement, tree):
 # if ¬P and (P or Q) then Q
-	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+	found = ruleStrategy(statement, tree, "if ((¬P) and (P or Q)) then (Q)");
 
 	return found
 	
@@ -75,19 +81,31 @@ def deMorgansLaw(statement, tree):
 # ¬P and ¬Q is equivalent to ¬(P or Q)
 # ¬(P and Q) is equivalent to ¬P or ¬Q
 # ¬P or ¬Q is equivalent to ¬(P and Q)
-	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+	found = false
+	
+	if !found: 
+		found = ruleStrategy(statement, tree, "if (¬(P or Q)) then ((¬P) and (¬Q))");
+		
+		if !found: 
+			found = ruleStrategy(statement, tree, "if ((¬P) and (¬Q)) then (¬(P or Q))");
+		
+			if !found: 
+				found = ruleStrategy(statement, tree, "if (¬(P and Q)) then ((¬P) or (¬Q))");
+		
+				if !found: 
+					found = ruleStrategy(statement, tree, "if ((¬P) or (¬Q)) then (¬(P and Q))");
 
 	return found
 	
 def ruleOfSyllogism(statement, tree):
 # if (P -> Q) and (Q -> R) then P -> R
-	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+	found = ruleStrategy(statement, tree, "if (if (P) then (Q)) and (if (Q) then (R)) then (if (P) then (R)");
 
 	return found
 	
 def decomposingConjunction(statement, tree):
 # if (P and Q) then P, Q
-	found = ruleStrategy(statement, tree, "** FILL THIS IN **");
+	found = ruleStrategy(statement, tree, "if ((P) and (Q)) then (P) and (Q)");
 
 	return found
 
