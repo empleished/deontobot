@@ -4,6 +4,11 @@
 # https://greentreesnakes.readthedocs.org/en/latest/manipulating.html
 # https://bitbucket.org/takluyver/greentreesnakes/src/default/astpp.py?fileviewer=file-view-default
 
+# useful pieces of code: 
+# for node in tree.body - for every node in the tree
+# self.generic_visit(node) - visit children of the node
+# node.body[-1] - gets the last node in a function's body
+
 # convert prohibitions and permissions to obligations:
 # - PRO(C)->OB(¬C)
 # - PER(C)->¬OB(C) AND ¬OB(¬C)
@@ -40,6 +45,17 @@ def search(statement, tree):
 # if found move onto its child and the second part of statement
 # and so following
 	found = false;
+	
+	# for treenode in tree 
+	# 	for statenode in statement
+	# 		if treenode = statenode then
+	# 			for treenodechild in treenode
+	# 				if treenodechild = statementchild
+	#					continue
+	#				else
+	#					break
+	#		else
+	#			continue
 
 	return found
 
