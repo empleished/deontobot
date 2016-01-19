@@ -76,7 +76,7 @@
 	</target>
 
 	<target
-		name="specTest"
+		name="test"
 		description="invokes the test cases for the specification"
 	>
 
