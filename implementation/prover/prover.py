@@ -37,6 +37,12 @@ def transform(statement, rule):
 # for P in rule
 # replace P with statement
 	transformedStatement = ""
+
+	for node in rule.body: 
+		if node == "P": 
+			transformedStatement.add(statement)
+		else: 
+			transformedStatement.add(node)
 	
 	return transformedStatement
 
