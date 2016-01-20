@@ -30,7 +30,7 @@ rule_decl
 	;
 
 fact_decl
-	:	fact+					-> ^(FACT fact+)
+	:	(ID ASSN fact EOL)+				-> ^((ID ASSN fact)+)
 	;
 
 norm	
@@ -39,15 +39,15 @@ norm
 	| 	PER								
 	;
 
-fact	:	ID ASSN ATOM EOL					-> ^(ATOM ID fact)
+fact	:	ATOM						-> ^(FACT fact)
 	;
 
-op	:	AND 								
-	| 	OR 								
-	| 	NOT 								
-	| 	THEN								
-	|	IF								
-	|	IFF								
+op	:	AND 
+	| 	OR 
+	| 	NOT 
+	| 	THEN
+	|	IF
+	|	IFF
 	;
 
 axiom	
@@ -55,7 +55,7 @@ axiom
 	;
 
 comp_axiom	
-	:	axiom	
+	:	axiom
 	|	axiom (op axiom)+
 	;
 	
@@ -91,10 +91,9 @@ RB	:	')';
 
 ASSN	: 	':';
 
-ATOM	:	LETTER (LETTER | DIGIT | SPACE)*;
+ATOM	:	LETTER (LETTER | DIGIT | ' ')*;
 ID	:	LETTER (LETTER | DIGIT | '_')*;
 
-SPACE	:	(' ' | '\t')+;
 EOF	: 	'#';
 EOL	:	'.';
 
