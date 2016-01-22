@@ -31,30 +31,6 @@
 # self.generic_visit(node) - visit children of the node
 # node.body[-1] - gets the last node in a function's body
 
-# convert prohibitions and permissions to obligations:
-# - PRO(C)->OB(¬C)
-# - PER(C)->¬OB(C) AND ¬OB(¬C)
-
-def convertProhibition(tree):
-# search tree for node == "PRO"
-# when pro node found
-# -> collect child nodes up til node == ";"
-# -> collect parent nodes up til node == ";"
-# -> remove nodes
-# -> create nodes == A -> OB(¬C)
-# -> add new nodes to tree
-	return tree
-	
-def convertPermission(tree):
-# search tree for node == "PER"
-# when pro node found
-# -> collect child nodes up til node == ";"
-# -> collect parent nodes up til node == ";"
-# -> remove nodes
-# -> create nodes == A -> ¬OB(¬C) AND A -> ¬OB(C)
-# -> add new nodes to tree
-	return tree
-
 def transform(statement, rule):
 # for P in rule
 # replace P with statement
@@ -161,30 +137,56 @@ def decomposingConjunction(statement, tree):
 	return found
 
 # run logical rules on tree
-	
-def proofRules(statement, tree):
-	proven = false;
 
+def isProven(facts, statement): 
+proven = false;
+
+for fact in facts: 
+if fact == statement:
+proven = true
+
+return proven
+	
+def proofRules(statement, facts, tree):
+	proven = false;
+statementTree = ast.parse(statement)
+
+for fact in facts: 
+for node in tree.body:
 	if (!proven):
-		proven = modusPonens(statement, tree)
+		newFacts = modusPonens(statement, node)
+facts = facts + newFacts
+proven = isProven(facts, statement)
 
 		if (!proven): 
-			proven = modusTollens(statement, tree)
+			newFacts = modusTollens(statement, node)
+facts = facts + newFacts
+proven = isProven(facts, statement)
 
 			if (!proven): 
-				proven = disjunctiveSyllogism(statement, tree)
+				newFacts = disjunctiveSyllogism(statement, node)
+facts = facts + newFacts
+proven = isProven(facts, statement)
 
 				if (!proven): 
-					proven = deMorgansLaw(statement, tree)
+					newFacts = deMorgansLaw(statement, node)
+facts = facts + newFacts
+proven = isProven(facts, statement)
 
 					if (!proven): 
-						proven = ruleOfSyllogism(statement, tree)
+						newFacts = ruleOfSyllogism(statement, node)
+facts = facts + newFacts
+proven = isProven(facts, statement)
 
 						if (!proven): 
-							proven = doubleNegation(statement, tree)
-
+							newFacts = doubleNegation(statement, node)
+facts = facts + newFacts
+proven = isProven(facts, statement)
 							if (!proven): 
-								proven = decomposingConjunction(statement, tree)
+							newFacts = decomposingConjunction(statement, node)
+facts = facts + newFacts
+proven = isProven(facts, statement)
+
 	return proven
 
 def main(argv):
@@ -193,12 +195,9 @@ def main(argv):
 		return
 
 	statementToProve = argv[1]
-
-	tree = convertProhibition(tree)
-	tree = convertPermission(tree)
-
-	statementTree = ast.parse(statementToProve) 
-	proven = proofRules(statementTree, tree)
+facts = argv[2]
+ 
+	proven = proofRules(statementToProve, facts, tree)
 
 if __name__ == "__main__":
 	main(sys.argv)
