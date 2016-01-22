@@ -31,57 +31,46 @@
 # self.generic_visit(node) - visit children of the node
 # node.body[-1] - gets the last node in a function's body
 
-def transform(statement, rule):
+def transform(fact, rule):
 # for P in rule
-# replace P with statement
+# replace P with fact
 	transformedStatement = ""
 
 	for node in rule.body: 
 		if node == "P": 
-			transformedStatement.add(statement)
+			transformedStatement.add(fact)
 		else: 
 			transformedStatement.add(node)
 	
 	return transformedStatement
 
-def search(statement, tree):
-# look through tree for first part of statement 
-# if found move onto its child and the second part of statement
-# and so following
-	found = false;
-	
-	# for treenode in tree 
-	# 	for statenode in statement
-	# 		if treenode = statenode then
-	# 			for treenodechild in treenode
-	# 				if treenodechild = statementchild
-	#					continue
-	#				else
-	#					break
-	#		else
-	#			continue
+def search(pattern, node):
+	facts = [];
 
-	return found
+if node matches pattern
+add to facts
 
-def ruleStrategy(statement, tree, ruleString):
+	return facts
+
+def ruleStrategy(fact, node, ruleString):
 	ruleTree = ast.parse(ruleString);
-	transformedStatement = transform(statement, ruleTree); 
-	found = search(transformedStatement, tree);
+	pattern = transform(fact, ruleTree); 
+	facts = search(pattern, node);
 
-	return found
+	return facts
 
 # logical rules
 	
 def doubleNegation(statement, tree):
 # P is equivalent to ¬¬P 
 # ¬¬P is equivalent to P 
-	found = false
+	facts = []
 	
 	if !found:
-		found = ruleStrategy(statement, tree, "if (P) then (¬¬P)");
+		facts = facts + ruleStrategy(fact, node, "if (P) then (¬¬P)");
 		
 		if !found: 
-			found = ruleStrategy(statement, tree, "if (¬¬P) then (P)");
+			facts = facts + ruleStrategy(fact, node, "if (¬¬P) then (P)");
 
 	return found
 
