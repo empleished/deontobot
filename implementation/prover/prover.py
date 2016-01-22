@@ -47,8 +47,8 @@ def transform(fact, rule):
 def search(pattern, node):
 	facts = [];
 
-if node matches pattern
-add to facts
+	if node == pattern
+		facts = facts + node
 
 	return facts
 
@@ -72,109 +72,110 @@ def doubleNegation(statement, tree):
 		if !found: 
 			facts = facts + ruleStrategy(fact, node, "if (¬¬P) then (P)");
 
-	return found
+	return facts
 
 def modusPonens(statement, tree): 
 # if P and P -> Q then Q
-	found = ruleStrategy(statement, tree, "if ((P) and (P -> Q)) then (Q)");
+	facts = ruleStrategy(fact, node, "if ((P) and (P -> Q)) then (Q)");
 
-	return found
+	return facts
 	
 def modusTollens(statement, tree):
 # if ¬Q and P -> Q then ¬P
-	found = ruleStrategy(statement, tree, "if ((¬Q) and (P -> Q)) then (¬P)");
+	facts = ruleStrategy(fact, node, "if ((¬Q) and (P -> Q)) then (¬P)");
 
-	return found
+	return facts
 	
 def disjunctiveSyllogism(statement, tree):
 # if ¬P and (P or Q) then Q
-	found = ruleStrategy(statement, tree, "if ((¬P) and (P or Q)) then (Q)");
+	facts = ruleStrategy(fact, node, "if ((¬P) and (P or Q)) then (Q)");
 
-	return found
+	return facts
 	
-def deMorgansLaw(statement, tree):
+def deMorgansLaw(fact, tree):
 # ¬(P or Q) is equivalent to ¬P and ¬Q
 # ¬P and ¬Q is equivalent to ¬(P or Q)
 # ¬(P and Q) is equivalent to ¬P or ¬Q
 # ¬P or ¬Q is equivalent to ¬(P and Q)
-	found = false
+	facts = []
 	
 	if !found: 
-		found = ruleStrategy(statement, tree, "if (¬(P or Q)) then ((¬P) and (¬Q))");
+		facts = facts + ruleStrategy(fact, node, "if (¬(P or Q)) then ((¬P) and (¬Q))");
 		
 		if !found: 
-			found = ruleStrategy(statement, tree, "if ((¬P) and (¬Q)) then (¬(P or Q))");
+			facts = facts + ruleStrategy(fact, node, "if ((¬P) and (¬Q)) then (¬(P or Q))");
 		
 			if !found: 
-				found = ruleStrategy(statement, tree, "if (¬(P and Q)) then ((¬P) or (¬Q))");
+				facts = facts + ruleStrategy(fact, node, "if (¬(P and Q)) then ((¬P) or (¬Q))");
 		
 				if !found: 
-					found = ruleStrategy(statement, tree, "if ((¬P) or (¬Q)) then (¬(P and Q))");
+					facts = facts + ruleStrategy(fact, node, "if ((¬P) or (¬Q)) then (¬(P and Q))");
 
-	return found
+	return facts
 	
 def ruleOfSyllogism(statement, tree):
 # if (P -> Q) and (Q -> R) then P -> R
-	found = ruleStrategy(statement, tree, "if (if (P) then (Q)) and (if (Q) then (R)) then (if (P) then (R)");
+	facts = ruleStrategy(fact, node, "if (if (P) then (Q)) and (if (Q) then (R)) then (if (P) then (R)");
 	
-	return found
+	return facts
 	
 def decomposingConjunction(statement, tree):
 # if (P and Q) then P, Q
-	found = ruleStrategy(statement, tree, "if ((P) and (Q)) then (P) and (Q)");
+	facts = ruleStrategy(fact, node, "if ((P) and (Q)) then (P) and (Q)");
 
-	return found
+	return facts
 
 # run logical rules on tree
 
 def isProven(facts, statement): 
-proven = false;
-
-for fact in facts: 
-if fact == statement:
-proven = true
-
-return proven
+	proven = false;
+	
+	for fact in facts: 
+		if fact == statement:
+			proven = true
+	
+	return proven
 	
 def proofRules(statement, facts, tree):
 	proven = false;
-statementTree = ast.parse(statement)
+	statementTree = ast.parse(statement)
 
-for fact in facts: 
-for node in tree.body:
-	if (!proven):
-		newFacts = modusPonens(statement, node)
-facts = facts + newFacts
-proven = isProven(facts, statement)
-
-		if (!proven): 
-			newFacts = modusTollens(statement, node)
-facts = facts + newFacts
-proven = isProven(facts, statement)
-
-			if (!proven): 
-				newFacts = disjunctiveSyllogism(statement, node)
-facts = facts + newFacts
-proven = isProven(facts, statement)
-
+	for fact in facts: 
+		for node in tree.body:
+			if (!proven):
+				newFacts = modusPonens(statement, node)
+				facts = facts + newFacts
+				proven = isProven(facts, statement)
+		
 				if (!proven): 
-					newFacts = deMorgansLaw(statement, node)
-facts = facts + newFacts
-proven = isProven(facts, statement)
-
+					newFacts = modusTollens(statement, node)
+					facts = facts + newFacts
+					proven = isProven(facts, statement)
+		
 					if (!proven): 
-						newFacts = ruleOfSyllogism(statement, node)
-facts = facts + newFacts
-proven = isProven(facts, statement)
-
+						newFacts = disjunctiveSyllogism(statement, node)
+						facts = facts + newFacts
+						proven = isProven(facts, statement)
+		
 						if (!proven): 
-							newFacts = doubleNegation(statement, node)
-facts = facts + newFacts
-proven = isProven(facts, statement)
+							newFacts = deMorgansLaw(statement, node)
+							facts = facts + newFacts
+							proven = isProven(facts, statement)
+		
 							if (!proven): 
-							newFacts = decomposingConjunction(statement, node)
-facts = facts + newFacts
-proven = isProven(facts, statement)
+								newFacts = ruleOfSyllogism(statement, node)
+								facts = facts + newFacts
+								proven = isProven(facts, statement)
+		
+								if (!proven): 
+									newFacts = doubleNegation(statement, node)
+									facts = facts + newFacts
+									proven = isProven(facts, statement)
+								
+									if (!proven): 
+										newFacts = decomposingConjunction(statement, node)
+										facts = facts + newFacts
+										proven = isProven(facts, statement)
 
 	return proven
 
