@@ -128,56 +128,92 @@ def isProven(facts, statement):
 	
 def proofRules(statement, facts, tree):
 	proven = false;
+	steps = ["", ""]
 	statementTree = ast.parse(statement)
 
 	for fact in facts: 
 		for node in tree.body:
 			if (!proven):
 				newFacts = modusPonens(statement, node)
-				facts = facts + newFacts
+				
+				if (newFacts != []): 
+					facts = facts + newFacts
+					steps = steps + ["modus ponens", fact]
+					
 				proven = isProven(facts, statement)
 		
 				if (!proven): 
 					newFacts = modusTollens(statement, node)
-					facts = facts + newFacts
+				
+					if (newFacts != []): 
+						facts = facts + newFacts
+						steps = steps + ["modus tollens", fact]
+						
 					proven = isProven(facts, statement)
 		
 					if (!proven): 
 						newFacts = disjunctiveSyllogism(statement, node)
-						facts = facts + newFacts
+				
+						if (newFacts != []): 
+							facts = facts + newFacts
+							steps = steps + ["disjunctive syllogism", fact]
+							
 						proven = isProven(facts, statement)
 		
 						if (!proven): 
 							newFacts = deMorgansLaw(statement, node)
-							facts = facts + newFacts
+				
+							if (newFacts != []): 
+								facts = facts + newFacts
+								steps = steps + ["deMorgan's law", fact]
+								
 							proven = isProven(facts, statement)
 		
 							if (!proven): 
 								newFacts = ruleOfSyllogism(statement, node)
-								facts = facts + newFacts
+				
+								if (newFacts != []): 
+									facts = facts + newFacts
+									steps = steps + ["rule of syllogism", fact]
+									
 								proven = isProven(facts, statement)
 		
 								if (!proven): 
 									newFacts = doubleNegation(statement, node)
-									facts = facts + newFacts
+				
+									if (newFacts != []): 
+										facts = facts + newFacts
+										steps = steps + ["double negation", fact]
+										
 									proven = isProven(facts, statement)
 								
 									if (!proven): 
 										newFacts = decomposingConjunction(statement, node)
-										facts = facts + newFacts
+				
+										if (newFacts != []): 
+											facts = facts + newFacts
+											steps = steps + ["decomposing conjunction", fact]
+											
 										proven = isProven(facts, statement)
 
-	return proven
+	return steps
 
 def main(argv):
 	if len(argv) == 1:
-		print "no statement to prove provided"
+		print "no facts or statement to prove provided"
 		return
 
 	statementToProve = argv[1]
-facts = argv[2]
+	facts = argv[2]
  
-	proven = proofRules(statementToProve, facts, tree)
+	proverSteps = proofRules(statementToProve, facts, tree)
+	
+	if proverSteps == ["", ""]:
+		print "statement is incongruent with provided facts"
+		
+	else: 
+		for step in steps: 
+			print step[0] + ": " + step[1]
 
 if __name__ == "__main__":
 	main(sys.argv)
