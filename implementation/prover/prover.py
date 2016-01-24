@@ -66,11 +66,8 @@ def doubleNegation(statement, tree):
 # ¬¬P is equivalent to P 
 	facts = []
 	
-	if !found:
-		facts = facts + ruleStrategy(fact, node, "if (P) then (¬¬P)");
-		
-		if !found: 
-			facts = facts + ruleStrategy(fact, node, "if (¬¬P) then (P)");
+	facts = facts + ruleStrategy(fact, node, "if (P) then (¬¬P)");
+	facts = facts + ruleStrategy(fact, node, "if (¬¬P) then (P)");
 
 	return facts
 
@@ -99,17 +96,10 @@ def deMorgansLaw(fact, tree):
 # ¬P or ¬Q is equivalent to ¬(P and Q)
 	facts = []
 	
-	if !found: 
-		facts = facts + ruleStrategy(fact, node, "if (¬(P or Q)) then ((¬P) and (¬Q))");
-		
-		if !found: 
-			facts = facts + ruleStrategy(fact, node, "if ((¬P) and (¬Q)) then (¬(P or Q))");
-		
-			if !found: 
-				facts = facts + ruleStrategy(fact, node, "if (¬(P and Q)) then ((¬P) or (¬Q))");
-		
-				if !found: 
-					facts = facts + ruleStrategy(fact, node, "if ((¬P) or (¬Q)) then (¬(P and Q))");
+	facts = facts + ruleStrategy(fact, node, "if (¬(P or Q)) then ((¬P) and (¬Q))");
+	facts = facts + ruleStrategy(fact, node, "if ((¬P) and (¬Q)) then (¬(P or Q))");
+	facts = facts + ruleStrategy(fact, node, "if (¬(P and Q)) then ((¬P) or (¬Q))");
+	facts = facts + ruleStrategy(fact, node, "if ((¬P) or (¬Q)) then (¬(P and Q))");
 
 	return facts
 	
