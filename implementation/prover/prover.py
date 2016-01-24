@@ -47,7 +47,7 @@ def transform(fact, rule):
 def search(pattern, node):
 	facts = [];
 
-	if node == pattern
+	if node == pattern:
 		facts = facts + node
 
 	return facts
