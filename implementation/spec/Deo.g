@@ -8,7 +8,7 @@ options {
 
 tokens {        //TODO special tokens for labeling AST nodes
 	IF;
-	IFF;
+//	IFF;
 	THEN;
 	EXPR;
 	FACT;
@@ -18,19 +18,24 @@ tokens {        //TODO special tokens for labeling AST nodes
 	PROG;
 	FACT;
 	ATOM;
+	ASSN;
 }
 
 // PARSER RULES //
 
-prog	:	fact_decl+ rule_decl+ EOF   			-> ^(PROG fact_decl+ rule_decl+)
+prog	:	fact_decl+ rule_decl+    			-> ^(PROG fact_decl+ rule_decl+)
 	;
 
 rule_decl	
-	:	expr+						-> ^(RULE expr+) 
+	:	expr						-> ^(RULE expr) 
 	;
 
 fact_decl
-	:	(ID ASSN fact EOL)+				-> ^((ID ASSN fact)+)
+	:	fact						-> ^(FACT fact)
+	;
+
+fact
+	:	ID ASSN atom 					//-> ^(ID ASSN atom)
 	;
 
 norm	
@@ -39,7 +44,7 @@ norm
 	| 	PER								
 	;
 
-fact	:	ATOM						-> ^(FACT fact)
+atom	:	ATOM						
 	;
 
 op	:	AND 
@@ -47,11 +52,11 @@ op	:	AND
 	| 	NOT 
 	| 	THEN
 	|	IF
-	|	IFF
+//	|	IFF
 	;
 
 axiom	
-	:	LB (norm LB fact RB) RB	
+	:	LB (norm LB atom RB) RB
 	;
 
 comp_axiom	
@@ -64,13 +69,12 @@ cond	:	LB fact RB
 	
 comp_cond
 	:	cond
-	|	LB cond (op cond)+ RB
+	|	cond (op cond)+ 
 	;
 
-expr	:
-	:	IF comp_cond THEN comp_axiom EOL	 	-> ^(EXPR IF COND comp_cond THEN AXIOM comp_axiom)
-//	|	comp_axiom IFF cond EOL		 		-> ^(EXPR IFF FACT fact THEN AXIOM comp_axiom)	
-	|	comp_axiom EOL					-> ^(EXPR AXIOM comp_axiom)
+expr	:	IF comp_cond THEN comp_axiom		 	-> ^(EXPR IF COND comp_cond THEN AXIOM comp_axiom)
+//		comp_axiom IFF cond		 		-> ^(EXPR IFF FACT fact THEN AXIOM comp_axiom)	
+	|	comp_axiom					-> ^(EXPR AXIOM comp_axiom)
 	;
 
 // LEXER RULES //
@@ -91,11 +95,10 @@ RB	:	')';
 
 ASSN	: 	':';
 
+EOL 	: 	'.';
+
 ATOM	:	LETTER (LETTER | DIGIT | ' ')*;
 ID	:	LETTER (LETTER | DIGIT | '_')*;
-
-EOF	: 	'#';
-EOL	:	'.';
 
 fragment LETTER 	: 	'a'..'z' | 'A'..'Z';
 fragment DIGIT  	: 	'0'..'9';
