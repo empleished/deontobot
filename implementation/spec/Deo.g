@@ -8,7 +8,7 @@ options {
 
 tokens {        //TODO special tokens for labeling AST nodes
 	IF;
-//	IFF;
+	IFF;
 	THEN;
 	EXPR;
 	FACT;
@@ -19,62 +19,90 @@ tokens {        //TODO special tokens for labeling AST nodes
 	FACT;
 	ATOM;
 	ASSN;
+	GOAL;
+	DECL;
+	INF;
+	PREF;
+	IFTHEN;
 }
 
 // PARSER RULES //
 
-prog	:	fact_decl+ rule_decl+    			-> ^(PROG fact_decl+ rule_decl+)
+prog	:	decl+	  					-> ^(PROG decl+)
+	;
+
+decl	:	fact_decl					-> ^(DECL fact_decl)
+	|	rule_decl 					-> ^(DECL rule_decl)
 	;
 
 rule_decl	
-	:	expr						-> ^(RULE expr) 
+	:	expr						
 	;
 
 fact_decl
-	:	fact						-> ^(FACT fact)
+	:	fact						
 	;
+
+//goal
+//	:	decl						-> ^(GOAL goal)
+//	;
 
 fact
-	:	ID ASSN atom 					//-> ^(ID ASSN atom)
-	;
-
-norm	
-	:	OB 								
-	| 	PRO 								
-	| 	PER								
+	:	ID ASSN atom 							
 	;
 
 atom	:	ATOM						
 	;
 
-op	:	AND 
+pop	
+	:	OB 								
+	| 	PRO 								
+	| 	PER	
+	| 	NOT 	
+	;
+
+iop	:	AND 
 	| 	OR 
-	| 	NOT 
-	| 	THEN
-	|	IF
-//	|	IFF
+	|	IFF
 	;
 
-axiom	
-	:	LB (norm LB atom RB) RB
-	;
+//axiom	
+//	:	LB (norm LB atom RB) RB
+//	;
 
-comp_axiom	
-	:	axiom
-	|	axiom (op axiom)+
-	;
+//comp_axiom	
+//	:	axiom
+//	|	axiom (op axiom)+
+//	;
 	
-cond	:	LB fact RB
-	;
+//cond	:	LB atom RB
+//	;
 	
-comp_cond
-	:	cond
-	|	cond (op cond)+ 
+//comp_cond
+//	:	cond
+//	|	cond (op cond)+ 
+//	;
+
+expr	:	
+//		IF comp_cond THEN comp_axiom		 	-> ^(EXPR IF COND comp_cond THEN AXIOM comp_axiom)
+//	|	comp_axiom IFF comp_cond	 		-> ^(EXPR AXIOM comp_axiom IFF COND comp_cond)	
+//	|	comp_axiom					-> ^(EXPR AXIOM comp_axiom)
+		atom						-> ^(EXPR atom)
+	|	prefix_expr					-> ^(EXPR prefix_expr)
+	|	infix_expr					-> ^(EXPR infix_expr)
+	|	ifthen_expr					-> ^(EXPR ifthen_expr)
 	;
 
-expr	:	IF comp_cond THEN comp_axiom		 	-> ^(EXPR IF COND comp_cond THEN AXIOM comp_axiom)
-//		comp_axiom IFF cond		 		-> ^(EXPR IFF FACT fact THEN AXIOM comp_axiom)	
-	|	comp_axiom					-> ^(EXPR AXIOM comp_axiom)
+prefix_expr
+	:	LB pop LB expr RB RB				-> ^(PREF pop expr)
+	;
+
+infix_expr
+	:	LB expr iop expr RB				-> ^(INF expr iop expr)
+	;
+
+ifthen_expr
+	:	LB IF expr THEN expr RB				-> ^(IFTHEN expr expr)
 	;
 
 // LEXER RULES //
@@ -84,7 +112,7 @@ PRO	:	'PRO';
 PER	:	'PER';
 
 IF	:	'if';
-//IFF	:	'iff';
+IFF	:	'iff';
 THEN	:	'then';
 NOT	:	'not';
 AND	:	'and';

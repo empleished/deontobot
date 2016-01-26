@@ -1,4 +1,4 @@
-# $ANTLR 3.5.2 Deo.g 2016-01-25 15:39:10
+# $ANTLR 3.5.2 Deo.g 2016-01-26 11:10:46
 
 import sys
 from antlr3 import *
@@ -19,30 +19,36 @@ ASSN=5
 ATOM=6
 AXIOM=7
 COND=8
-DIGIT=9
-EOL=10
-EXPR=11
-FACT=12
-ID=13
-IF=14
-LB=15
-LETTER=16
-NOT=17
-OB=18
-OR=19
-PER=20
-PRO=21
-PROG=22
-RB=23
-RULE=24
-THEN=25
+DECL=9
+DIGIT=10
+EOL=11
+EXPR=12
+FACT=13
+GOAL=14
+ID=15
+IF=16
+IFF=17
+IFTHEN=18
+INF=19
+LB=20
+LETTER=21
+NOT=22
+OB=23
+OR=24
+PER=25
+PREF=26
+PRO=27
+PROG=28
+RB=29
+RULE=30
+THEN=31
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
-    "AND", "ASSN", "ATOM", "AXIOM", "COND", "DIGIT", "EOL", "EXPR", "FACT", 
-    "ID", "IF", "LB", "LETTER", "NOT", "OB", "OR", "PER", "PRO", "PROG", 
-    "RB", "RULE", "THEN"
+    "AND", "ASSN", "ATOM", "AXIOM", "COND", "DECL", "DIGIT", "EOL", "EXPR", 
+    "FACT", "GOAL", "ID", "IF", "IFF", "IFTHEN", "INF", "LB", "LETTER", 
+    "NOT", "OB", "OR", "PER", "PREF", "PRO", "PROG", "RB", "RULE", "THEN"
 ]
 
 
@@ -89,7 +95,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "prog"
-    # Deo.g:26:1: prog : ( fact_decl )+ ( rule_decl )+ -> ^( PROG ( fact_decl )+ ( rule_decl )+ ) ;
+    # Deo.g:31:1: prog : ( decl )+ -> ^( PROG ( decl )+ ) ;
     def prog(self, ):
         retval = self.prog_return()
         retval.start = self.input.LT(1)
@@ -97,34 +103,32 @@ class DeoParser(Parser):
 
         root_0 = None
 
-        fact_decl1 = None
-        rule_decl2 = None
+        decl1 = None
 
-        stream_fact_decl = RewriteRuleSubtreeStream(self._adaptor, "rule fact_decl")
-        stream_rule_decl = RewriteRuleSubtreeStream(self._adaptor, "rule rule_decl")
+        stream_decl = RewriteRuleSubtreeStream(self._adaptor, "rule decl")
         try:
             try:
-                # Deo.g:26:6: ( ( fact_decl )+ ( rule_decl )+ -> ^( PROG ( fact_decl )+ ( rule_decl )+ ) )
-                # Deo.g:26:8: ( fact_decl )+ ( rule_decl )+
+                # Deo.g:31:6: ( ( decl )+ -> ^( PROG ( decl )+ ) )
+                # Deo.g:31:8: ( decl )+
                 pass 
-                # Deo.g:26:8: ( fact_decl )+
+                # Deo.g:31:8: ( decl )+
                 cnt1 = 0
                 while True: #loop1
                     alt1 = 2
                     LA1_0 = self.input.LA(1)
 
-                    if (LA1_0 == ID) :
+                    if (LA1_0 == ATOM or LA1_0 == ID or LA1_0 == LB) :
                         alt1 = 1
 
 
                     if alt1 == 1:
-                        # Deo.g:26:8: fact_decl
+                        # Deo.g:31:8: decl
                         pass 
-                        self._state.following.append(self.FOLLOW_fact_decl_in_prog99)
-                        fact_decl1 = self.fact_decl()
+                        self._state.following.append(self.FOLLOW_decl_in_prog122)
+                        decl1 = self.decl()
 
                         self._state.following.pop()
-                        stream_fact_decl.add(fact_decl1.tree)
+                        stream_decl.add(decl1.tree)
 
 
 
@@ -138,39 +142,8 @@ class DeoParser(Parser):
                     cnt1 += 1
 
 
-                # Deo.g:26:19: ( rule_decl )+
-                cnt2 = 0
-                while True: #loop2
-                    alt2 = 2
-                    LA2_0 = self.input.LA(1)
-
-                    if ((IF <= LA2_0 <= LB)) :
-                        alt2 = 1
-
-
-                    if alt2 == 1:
-                        # Deo.g:26:19: rule_decl
-                        pass 
-                        self._state.following.append(self.FOLLOW_rule_decl_in_prog102)
-                        rule_decl2 = self.rule_decl()
-
-                        self._state.following.pop()
-                        stream_rule_decl.add(rule_decl2.tree)
-
-
-
-                    else:
-                        if cnt2 >= 1:
-                            break #loop2
-
-                        eee = EarlyExitException(2, self.input)
-                        raise eee
-
-                    cnt2 += 1
-
-
                 # AST Rewrite
-                # elements: fact_decl, rule_decl
+                # elements: decl
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -184,32 +157,22 @@ class DeoParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 26:36: -> ^( PROG ( fact_decl )+ ( rule_decl )+ )
-                # Deo.g:26:39: ^( PROG ( fact_decl )+ ( rule_decl )+ )
+                # 31:21: -> ^( PROG ( decl )+ )
+                # Deo.g:31:24: ^( PROG ( decl )+ )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
                 self._adaptor.createFromType(PROG, "PROG")
                 , root_1)
 
-                # Deo.g:26:46: ( fact_decl )+
-                if not (stream_fact_decl.hasNext()):
+                # Deo.g:31:31: ( decl )+
+                if not (stream_decl.hasNext()):
                     raise RewriteEarlyExitException()
 
-                while stream_fact_decl.hasNext():
-                    self._adaptor.addChild(root_1, stream_fact_decl.nextTree())
+                while stream_decl.hasNext():
+                    self._adaptor.addChild(root_1, stream_decl.nextTree())
 
 
-                stream_fact_decl.reset()
-
-                # Deo.g:26:57: ( rule_decl )+
-                if not (stream_rule_decl.hasNext()):
-                    raise RewriteEarlyExitException()
-
-                while stream_rule_decl.hasNext():
-                    self._adaptor.addChild(root_1, stream_rule_decl.nextTree())
-
-
-                stream_rule_decl.reset()
+                stream_decl.reset()
 
                 self._adaptor.addChild(root_0, root_1)
 
@@ -242,6 +205,154 @@ class DeoParser(Parser):
     # $ANTLR end "prog"
 
 
+    class decl_return(ParserRuleReturnScope):
+        def __init__(self):
+            super(DeoParser.decl_return, self).__init__()
+
+            self.tree = None
+
+
+
+
+
+    # $ANTLR start "decl"
+    # Deo.g:34:1: decl : ( fact_decl -> ^( DECL fact_decl ) | rule_decl -> ^( DECL rule_decl ) );
+    def decl(self, ):
+        retval = self.decl_return()
+        retval.start = self.input.LT(1)
+
+
+        root_0 = None
+
+        fact_decl2 = None
+        rule_decl3 = None
+
+        stream_fact_decl = RewriteRuleSubtreeStream(self._adaptor, "rule fact_decl")
+        stream_rule_decl = RewriteRuleSubtreeStream(self._adaptor, "rule rule_decl")
+        try:
+            try:
+                # Deo.g:34:6: ( fact_decl -> ^( DECL fact_decl ) | rule_decl -> ^( DECL rule_decl ) )
+                alt2 = 2
+                LA2_0 = self.input.LA(1)
+
+                if (LA2_0 == ID) :
+                    alt2 = 1
+                elif (LA2_0 == ATOM or LA2_0 == LB) :
+                    alt2 = 2
+                else:
+                    nvae = NoViableAltException("", 2, 0, self.input)
+
+                    raise nvae
+
+
+                if alt2 == 1:
+                    # Deo.g:34:8: fact_decl
+                    pass 
+                    self._state.following.append(self.FOLLOW_fact_decl_in_decl149)
+                    fact_decl2 = self.fact_decl()
+
+                    self._state.following.pop()
+                    stream_fact_decl.add(fact_decl2.tree)
+
+
+                    # AST Rewrite
+                    # elements: fact_decl
+                    # token labels: 
+                    # rule labels: retval
+                    # token list labels: 
+                    # rule list labels: 
+                    # wildcard labels: 
+                    retval.tree = root_0
+                    if retval is not None:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                    else:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                    root_0 = self._adaptor.nil()
+                    # 34:22: -> ^( DECL fact_decl )
+                    # Deo.g:34:25: ^( DECL fact_decl )
+                    root_1 = self._adaptor.nil()
+                    root_1 = self._adaptor.becomeRoot(
+                    self._adaptor.createFromType(DECL, "DECL")
+                    , root_1)
+
+                    self._adaptor.addChild(root_1, stream_fact_decl.nextTree())
+
+                    self._adaptor.addChild(root_0, root_1)
+
+
+
+
+                    retval.tree = root_0
+
+
+
+
+                elif alt2 == 2:
+                    # Deo.g:35:4: rule_decl
+                    pass 
+                    self._state.following.append(self.FOLLOW_rule_decl_in_decl166)
+                    rule_decl3 = self.rule_decl()
+
+                    self._state.following.pop()
+                    stream_rule_decl.add(rule_decl3.tree)
+
+
+                    # AST Rewrite
+                    # elements: rule_decl
+                    # token labels: 
+                    # rule labels: retval
+                    # token list labels: 
+                    # rule list labels: 
+                    # wildcard labels: 
+                    retval.tree = root_0
+                    if retval is not None:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                    else:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                    root_0 = self._adaptor.nil()
+                    # 35:19: -> ^( DECL rule_decl )
+                    # Deo.g:35:22: ^( DECL rule_decl )
+                    root_1 = self._adaptor.nil()
+                    root_1 = self._adaptor.becomeRoot(
+                    self._adaptor.createFromType(DECL, "DECL")
+                    , root_1)
+
+                    self._adaptor.addChild(root_1, stream_rule_decl.nextTree())
+
+                    self._adaptor.addChild(root_0, root_1)
+
+
+
+
+                    retval.tree = root_0
+
+
+
+
+                retval.stop = self.input.LT(-1)
+
+
+                retval.tree = self._adaptor.rulePostProcessing(root_0)
+                self._adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop)
+
+
+
+            except RecognitionException, re:
+                self.reportError(re)
+                self.recover(self.input, re)
+                retval.tree = self._adaptor.errorNode(self.input, retval.start, self.input.LT(-1), re)
+
+        finally:
+            pass
+        return retval
+
+    # $ANTLR end "decl"
+
+
     class rule_decl_return(ParserRuleReturnScope):
         def __init__(self):
             super(DeoParser.rule_decl_return, self).__init__()
@@ -253,7 +364,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "rule_decl"
-    # Deo.g:29:1: rule_decl : expr -> ^( RULE expr ) ;
+    # Deo.g:38:1: rule_decl : expr ;
     def rule_decl(self, ):
         retval = self.rule_decl_return()
         retval.start = self.input.LT(1)
@@ -261,52 +372,22 @@ class DeoParser(Parser):
 
         root_0 = None
 
-        expr3 = None
+        expr4 = None
 
-        stream_expr = RewriteRuleSubtreeStream(self._adaptor, "rule expr")
+
         try:
             try:
-                # Deo.g:30:2: ( expr -> ^( RULE expr ) )
-                # Deo.g:30:4: expr
+                # Deo.g:39:2: ( expr )
+                # Deo.g:39:4: expr
                 pass 
-                self._state.following.append(self.FOLLOW_expr_in_rule_decl133)
-                expr3 = self.expr()
+                root_0 = self._adaptor.nil()
+
+
+                self._state.following.append(self.FOLLOW_expr_in_rule_decl191)
+                expr4 = self.expr()
 
                 self._state.following.pop()
-                stream_expr.add(expr3.tree)
-
-
-                # AST Rewrite
-                # elements: expr
-                # token labels: 
-                # rule labels: retval
-                # token list labels: 
-                # rule list labels: 
-                # wildcard labels: 
-                retval.tree = root_0
-                if retval is not None:
-                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
-                else:
-                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
-
-
-                root_0 = self._adaptor.nil()
-                # 30:14: -> ^( RULE expr )
-                # Deo.g:30:17: ^( RULE expr )
-                root_1 = self._adaptor.nil()
-                root_1 = self._adaptor.becomeRoot(
-                self._adaptor.createFromType(RULE, "RULE")
-                , root_1)
-
-                self._adaptor.addChild(root_1, stream_expr.nextTree())
-
-                self._adaptor.addChild(root_0, root_1)
-
-
-
-
-                retval.tree = root_0
-
+                self._adaptor.addChild(root_0, expr4.tree)
 
 
 
@@ -342,7 +423,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "fact_decl"
-    # Deo.g:33:1: fact_decl : fact -> ^( FACT fact ) ;
+    # Deo.g:42:1: fact_decl : fact ;
     def fact_decl(self, ):
         retval = self.fact_decl_return()
         retval.start = self.input.LT(1)
@@ -350,52 +431,22 @@ class DeoParser(Parser):
 
         root_0 = None
 
-        fact4 = None
+        fact5 = None
 
-        stream_fact = RewriteRuleSubtreeStream(self._adaptor, "rule fact")
+
         try:
             try:
-                # Deo.g:34:2: ( fact -> ^( FACT fact ) )
-                # Deo.g:34:4: fact
+                # Deo.g:43:2: ( fact )
+                # Deo.g:43:4: fact
                 pass 
-                self._state.following.append(self.FOLLOW_fact_in_fact_decl158)
-                fact4 = self.fact()
+                root_0 = self._adaptor.nil()
+
+
+                self._state.following.append(self.FOLLOW_fact_in_fact_decl208)
+                fact5 = self.fact()
 
                 self._state.following.pop()
-                stream_fact.add(fact4.tree)
-
-
-                # AST Rewrite
-                # elements: fact
-                # token labels: 
-                # rule labels: retval
-                # token list labels: 
-                # rule list labels: 
-                # wildcard labels: 
-                retval.tree = root_0
-                if retval is not None:
-                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
-                else:
-                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
-
-
-                root_0 = self._adaptor.nil()
-                # 34:14: -> ^( FACT fact )
-                # Deo.g:34:17: ^( FACT fact )
-                root_1 = self._adaptor.nil()
-                root_1 = self._adaptor.becomeRoot(
-                self._adaptor.createFromType(FACT, "FACT")
-                , root_1)
-
-                self._adaptor.addChild(root_1, stream_fact.nextTree())
-
-                self._adaptor.addChild(root_0, root_1)
-
-
-
-
-                retval.tree = root_0
-
+                self._adaptor.addChild(root_0, fact5.tree)
 
 
 
@@ -431,7 +482,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "fact"
-    # Deo.g:37:1: fact : ID ASSN atom ;
+    # Deo.g:50:1: fact : ID ASSN atom ;
     def fact(self, ):
         retval = self.fact_return()
         retval.start = self.input.LT(1)
@@ -439,38 +490,38 @@ class DeoParser(Parser):
 
         root_0 = None
 
-        ID5 = None
-        ASSN6 = None
-        atom7 = None
+        ID6 = None
+        ASSN7 = None
+        atom8 = None
 
-        ID5_tree = None
-        ASSN6_tree = None
+        ID6_tree = None
+        ASSN7_tree = None
 
         try:
             try:
-                # Deo.g:38:2: ( ID ASSN atom )
-                # Deo.g:38:4: ID ASSN atom
+                # Deo.g:51:2: ( ID ASSN atom )
+                # Deo.g:51:4: ID ASSN atom
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                ID5 = self.match(self.input, ID, self.FOLLOW_ID_in_fact182)
-                ID5_tree = self._adaptor.createWithPayload(ID5)
-                self._adaptor.addChild(root_0, ID5_tree)
+                ID6 = self.match(self.input, ID, self.FOLLOW_ID_in_fact229)
+                ID6_tree = self._adaptor.createWithPayload(ID6)
+                self._adaptor.addChild(root_0, ID6_tree)
 
 
 
-                ASSN6 = self.match(self.input, ASSN, self.FOLLOW_ASSN_in_fact184)
-                ASSN6_tree = self._adaptor.createWithPayload(ASSN6)
-                self._adaptor.addChild(root_0, ASSN6_tree)
+                ASSN7 = self.match(self.input, ASSN, self.FOLLOW_ASSN_in_fact231)
+                ASSN7_tree = self._adaptor.createWithPayload(ASSN7)
+                self._adaptor.addChild(root_0, ASSN7_tree)
 
 
 
-                self._state.following.append(self.FOLLOW_atom_in_fact186)
-                atom7 = self.atom()
+                self._state.following.append(self.FOLLOW_atom_in_fact233)
+                atom8 = self.atom()
 
                 self._state.following.pop()
-                self._adaptor.addChild(root_0, atom7.tree)
+                self._adaptor.addChild(root_0, atom8.tree)
 
 
 
@@ -495,74 +546,6 @@ class DeoParser(Parser):
     # $ANTLR end "fact"
 
 
-    class norm_return(ParserRuleReturnScope):
-        def __init__(self):
-            super(DeoParser.norm_return, self).__init__()
-
-            self.tree = None
-
-
-
-
-
-    # $ANTLR start "norm"
-    # Deo.g:41:1: norm : ( OB | PRO | PER );
-    def norm(self, ):
-        retval = self.norm_return()
-        retval.start = self.input.LT(1)
-
-
-        root_0 = None
-
-        set8 = None
-
-        set8_tree = None
-
-        try:
-            try:
-                # Deo.g:42:2: ( OB | PRO | PER )
-                # Deo.g:
-                pass 
-                root_0 = self._adaptor.nil()
-
-
-                set8 = self.input.LT(1)
-
-                if self.input.LA(1) == OB or (PER <= self.input.LA(1) <= PRO):
-                    self.input.consume()
-                    self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set8))
-
-                    self._state.errorRecovery = False
-
-
-                else:
-                    mse = MismatchedSetException(None, self.input)
-                    raise mse
-
-
-
-
-
-                retval.stop = self.input.LT(-1)
-
-
-                retval.tree = self._adaptor.rulePostProcessing(root_0)
-                self._adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop)
-
-
-
-            except RecognitionException, re:
-                self.reportError(re)
-                self.recover(self.input, re)
-                retval.tree = self._adaptor.errorNode(self.input, retval.start, self.input.LT(-1), re)
-
-        finally:
-            pass
-        return retval
-
-    # $ANTLR end "norm"
-
-
     class atom_return(ParserRuleReturnScope):
         def __init__(self):
             super(DeoParser.atom_return, self).__init__()
@@ -574,7 +557,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "atom"
-    # Deo.g:47:1: atom : ATOM ;
+    # Deo.g:54:1: atom : ATOM ;
     def atom(self, ):
         retval = self.atom_return()
         retval.start = self.input.LT(1)
@@ -588,13 +571,13 @@ class DeoParser(Parser):
 
         try:
             try:
-                # Deo.g:47:6: ( ATOM )
-                # Deo.g:47:8: ATOM
+                # Deo.g:54:6: ( ATOM )
+                # Deo.g:54:8: ATOM
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                ATOM9 = self.match(self.input, ATOM, self.FOLLOW_ATOM_in_atom252)
+                ATOM9 = self.match(self.input, ATOM, self.FOLLOW_ATOM_in_atom251)
                 ATOM9_tree = self._adaptor.createWithPayload(ATOM9)
                 self._adaptor.addChild(root_0, ATOM9_tree)
 
@@ -622,9 +605,9 @@ class DeoParser(Parser):
     # $ANTLR end "atom"
 
 
-    class op_return(ParserRuleReturnScope):
+    class pop_return(ParserRuleReturnScope):
         def __init__(self):
-            super(DeoParser.op_return, self).__init__()
+            super(DeoParser.pop_return, self).__init__()
 
             self.tree = None
 
@@ -632,10 +615,10 @@ class DeoParser(Parser):
 
 
 
-    # $ANTLR start "op"
-    # Deo.g:50:1: op : ( AND | OR | NOT | THEN | IF );
-    def op(self, ):
-        retval = self.op_return()
+    # $ANTLR start "pop"
+    # Deo.g:57:1: pop : ( OB | PRO | PER | NOT );
+    def pop(self, ):
+        retval = self.pop_return()
         retval.start = self.input.LT(1)
 
 
@@ -647,7 +630,7 @@ class DeoParser(Parser):
 
         try:
             try:
-                # Deo.g:50:4: ( AND | OR | NOT | THEN | IF )
+                # Deo.g:58:2: ( OB | PRO | PER | NOT )
                 # Deo.g:
                 pass 
                 root_0 = self._adaptor.nil()
@@ -655,7 +638,7 @@ class DeoParser(Parser):
 
                 set10 = self.input.LT(1)
 
-                if self.input.LA(1) == AND or self.input.LA(1) == IF or self.input.LA(1) == NOT or self.input.LA(1) == OR or self.input.LA(1) == THEN:
+                if (NOT <= self.input.LA(1) <= OB) or self.input.LA(1) == PER or self.input.LA(1) == PRO:
                     self.input.consume()
                     self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set10))
 
@@ -687,12 +670,12 @@ class DeoParser(Parser):
             pass
         return retval
 
-    # $ANTLR end "op"
+    # $ANTLR end "pop"
 
 
-    class axiom_return(ParserRuleReturnScope):
+    class iop_return(ParserRuleReturnScope):
         def __init__(self):
-            super(DeoParser.axiom_return, self).__init__()
+            super(DeoParser.iop_return, self).__init__()
 
             self.tree = None
 
@@ -700,365 +683,39 @@ class DeoParser(Parser):
 
 
 
-    # $ANTLR start "axiom"
-    # Deo.g:58:1: axiom : LB ( norm LB atom RB ) RB ;
-    def axiom(self, ):
-        retval = self.axiom_return()
+    # $ANTLR start "iop"
+    # Deo.g:64:1: iop : ( AND | OR | IFF );
+    def iop(self, ):
+        retval = self.iop_return()
         retval.start = self.input.LT(1)
 
 
         root_0 = None
 
-        LB11 = None
-        LB13 = None
-        RB15 = None
-        RB16 = None
-        norm12 = None
-        atom14 = None
+        set11 = None
 
-        LB11_tree = None
-        LB13_tree = None
-        RB15_tree = None
-        RB16_tree = None
+        set11_tree = None
 
         try:
             try:
-                # Deo.g:59:2: ( LB ( norm LB atom RB ) RB )
-                # Deo.g:59:4: LB ( norm LB atom RB ) RB
+                # Deo.g:64:5: ( AND | OR | IFF )
+                # Deo.g:
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                LB11 = self.match(self.input, LB, self.FOLLOW_LB_in_axiom307)
-                LB11_tree = self._adaptor.createWithPayload(LB11)
-                self._adaptor.addChild(root_0, LB11_tree)
+                set11 = self.input.LT(1)
 
+                if self.input.LA(1) == AND or self.input.LA(1) == IFF or self.input.LA(1) == OR:
+                    self.input.consume()
+                    self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set11))
 
-
-                # Deo.g:59:7: ( norm LB atom RB )
-                # Deo.g:59:8: norm LB atom RB
-                pass 
-                self._state.following.append(self.FOLLOW_norm_in_axiom310)
-                norm12 = self.norm()
-
-                self._state.following.pop()
-                self._adaptor.addChild(root_0, norm12.tree)
-
-
-                LB13 = self.match(self.input, LB, self.FOLLOW_LB_in_axiom312)
-                LB13_tree = self._adaptor.createWithPayload(LB13)
-                self._adaptor.addChild(root_0, LB13_tree)
-
-
-
-                self._state.following.append(self.FOLLOW_atom_in_axiom314)
-                atom14 = self.atom()
-
-                self._state.following.pop()
-                self._adaptor.addChild(root_0, atom14.tree)
-
-
-                RB15 = self.match(self.input, RB, self.FOLLOW_RB_in_axiom316)
-                RB15_tree = self._adaptor.createWithPayload(RB15)
-                self._adaptor.addChild(root_0, RB15_tree)
-
-
-
-
-
-
-                RB16 = self.match(self.input, RB, self.FOLLOW_RB_in_axiom319)
-                RB16_tree = self._adaptor.createWithPayload(RB16)
-                self._adaptor.addChild(root_0, RB16_tree)
-
-
-
-
-
-                retval.stop = self.input.LT(-1)
-
-
-                retval.tree = self._adaptor.rulePostProcessing(root_0)
-                self._adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop)
-
-
-
-            except RecognitionException, re:
-                self.reportError(re)
-                self.recover(self.input, re)
-                retval.tree = self._adaptor.errorNode(self.input, retval.start, self.input.LT(-1), re)
-
-        finally:
-            pass
-        return retval
-
-    # $ANTLR end "axiom"
-
-
-    class comp_axiom_return(ParserRuleReturnScope):
-        def __init__(self):
-            super(DeoParser.comp_axiom_return, self).__init__()
-
-            self.tree = None
-
-
-
-
-
-    # $ANTLR start "comp_axiom"
-    # Deo.g:62:1: comp_axiom : ( axiom | axiom ( op axiom )+ );
-    def comp_axiom(self, ):
-        retval = self.comp_axiom_return()
-        retval.start = self.input.LT(1)
-
-
-        root_0 = None
-
-        axiom17 = None
-        axiom18 = None
-        op19 = None
-        axiom20 = None
-
-
-        try:
-            try:
-                # Deo.g:63:2: ( axiom | axiom ( op axiom )+ )
-                alt4 = 2
-                LA4_0 = self.input.LA(1)
-
-                if (LA4_0 == LB) :
-                    LA4_1 = self.input.LA(2)
-
-                    if (LA4_1 == OB or (PER <= LA4_1 <= PRO)) :
-                        LA4_2 = self.input.LA(3)
-
-                        if (LA4_2 == LB) :
-                            LA4_3 = self.input.LA(4)
-
-                            if (LA4_3 == ATOM) :
-                                LA4_4 = self.input.LA(5)
-
-                                if (LA4_4 == RB) :
-                                    LA4_5 = self.input.LA(6)
-
-                                    if (LA4_5 == RB) :
-                                        LA4 = self.input.LA(7)
-                                        if LA4 == EOF or LA4 == LB:
-                                            alt4 = 1
-                                        elif LA4 == IF:
-                                            LA4_8 = self.input.LA(8)
-
-                                            if (LA4_8 == LB) :
-                                                LA4_10 = self.input.LA(9)
-
-                                                if (LA4_10 == ID) :
-                                                    alt4 = 1
-                                                elif (LA4_10 == OB or (PER <= LA4_10 <= PRO)) :
-                                                    alt4 = 2
-                                                else:
-                                                    nvae = NoViableAltException("", 4, 10, self.input)
-
-                                                    raise nvae
-
-
-                                            else:
-                                                nvae = NoViableAltException("", 4, 8, self.input)
-
-                                                raise nvae
-
-
-                                        elif LA4 == AND or LA4 == NOT or LA4 == OR or LA4 == THEN:
-                                            alt4 = 2
-                                        else:
-                                            nvae = NoViableAltException("", 4, 6, self.input)
-
-                                            raise nvae
-
-
-                                    else:
-                                        nvae = NoViableAltException("", 4, 5, self.input)
-
-                                        raise nvae
-
-
-                                else:
-                                    nvae = NoViableAltException("", 4, 4, self.input)
-
-                                    raise nvae
-
-
-                            else:
-                                nvae = NoViableAltException("", 4, 3, self.input)
-
-                                raise nvae
-
-
-                        else:
-                            nvae = NoViableAltException("", 4, 2, self.input)
-
-                            raise nvae
-
-
-                    else:
-                        nvae = NoViableAltException("", 4, 1, self.input)
-
-                        raise nvae
+                    self._state.errorRecovery = False
 
 
                 else:
-                    nvae = NoViableAltException("", 4, 0, self.input)
-
-                    raise nvae
-
-
-                if alt4 == 1:
-                    # Deo.g:63:4: axiom
-                    pass 
-                    root_0 = self._adaptor.nil()
-
-
-                    self._state.following.append(self.FOLLOW_axiom_in_comp_axiom331)
-                    axiom17 = self.axiom()
-
-                    self._state.following.pop()
-                    self._adaptor.addChild(root_0, axiom17.tree)
-
-
-
-                elif alt4 == 2:
-                    # Deo.g:64:4: axiom ( op axiom )+
-                    pass 
-                    root_0 = self._adaptor.nil()
-
-
-                    self._state.following.append(self.FOLLOW_axiom_in_comp_axiom336)
-                    axiom18 = self.axiom()
-
-                    self._state.following.pop()
-                    self._adaptor.addChild(root_0, axiom18.tree)
-
-
-                    # Deo.g:64:10: ( op axiom )+
-                    cnt3 = 0
-                    while True: #loop3
-                        alt3 = 2
-                        LA3_0 = self.input.LA(1)
-
-                        if (LA3_0 == IF) :
-                            LA3_2 = self.input.LA(2)
-
-                            if (LA3_2 == LB) :
-                                LA3_4 = self.input.LA(3)
-
-                                if (LA3_4 == OB or (PER <= LA3_4 <= PRO)) :
-                                    alt3 = 1
-
-
-
-
-                        elif (LA3_0 == AND or LA3_0 == NOT or LA3_0 == OR or LA3_0 == THEN) :
-                            alt3 = 1
-
-
-                        if alt3 == 1:
-                            # Deo.g:64:11: op axiom
-                            pass 
-                            self._state.following.append(self.FOLLOW_op_in_comp_axiom339)
-                            op19 = self.op()
-
-                            self._state.following.pop()
-                            self._adaptor.addChild(root_0, op19.tree)
-
-
-                            self._state.following.append(self.FOLLOW_axiom_in_comp_axiom341)
-                            axiom20 = self.axiom()
-
-                            self._state.following.pop()
-                            self._adaptor.addChild(root_0, axiom20.tree)
-
-
-
-                        else:
-                            if cnt3 >= 1:
-                                break #loop3
-
-                            eee = EarlyExitException(3, self.input)
-                            raise eee
-
-                        cnt3 += 1
-
-
-
-                retval.stop = self.input.LT(-1)
-
-
-                retval.tree = self._adaptor.rulePostProcessing(root_0)
-                self._adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop)
-
-
-
-            except RecognitionException, re:
-                self.reportError(re)
-                self.recover(self.input, re)
-                retval.tree = self._adaptor.errorNode(self.input, retval.start, self.input.LT(-1), re)
-
-        finally:
-            pass
-        return retval
-
-    # $ANTLR end "comp_axiom"
-
-
-    class cond_return(ParserRuleReturnScope):
-        def __init__(self):
-            super(DeoParser.cond_return, self).__init__()
-
-            self.tree = None
-
-
-
-
-
-    # $ANTLR start "cond"
-    # Deo.g:67:1: cond : LB fact RB ;
-    def cond(self, ):
-        retval = self.cond_return()
-        retval.start = self.input.LT(1)
-
-
-        root_0 = None
-
-        LB21 = None
-        RB23 = None
-        fact22 = None
-
-        LB21_tree = None
-        RB23_tree = None
-
-        try:
-            try:
-                # Deo.g:67:6: ( LB fact RB )
-                # Deo.g:67:8: LB fact RB
-                pass 
-                root_0 = self._adaptor.nil()
-
-
-                LB21 = self.match(self.input, LB, self.FOLLOW_LB_in_cond354)
-                LB21_tree = self._adaptor.createWithPayload(LB21)
-                self._adaptor.addChild(root_0, LB21_tree)
-
-
-
-                self._state.following.append(self.FOLLOW_fact_in_cond356)
-                fact22 = self.fact()
-
-                self._state.following.pop()
-                self._adaptor.addChild(root_0, fact22.tree)
-
-
-                RB23 = self.match(self.input, RB, self.FOLLOW_RB_in_cond358)
-                RB23_tree = self._adaptor.createWithPayload(RB23)
-                self._adaptor.addChild(root_0, RB23_tree)
+                    mse = MismatchedSetException(None, self.input)
+                    raise mse
 
 
 
@@ -1081,211 +738,7 @@ class DeoParser(Parser):
             pass
         return retval
 
-    # $ANTLR end "cond"
-
-
-    class comp_cond_return(ParserRuleReturnScope):
-        def __init__(self):
-            super(DeoParser.comp_cond_return, self).__init__()
-
-            self.tree = None
-
-
-
-
-
-    # $ANTLR start "comp_cond"
-    # Deo.g:70:1: comp_cond : ( cond | cond ( op cond )+ );
-    def comp_cond(self, ):
-        retval = self.comp_cond_return()
-        retval.start = self.input.LT(1)
-
-
-        root_0 = None
-
-        cond24 = None
-        cond25 = None
-        op26 = None
-        cond27 = None
-
-
-        try:
-            try:
-                # Deo.g:71:2: ( cond | cond ( op cond )+ )
-                alt6 = 2
-                LA6_0 = self.input.LA(1)
-
-                if (LA6_0 == LB) :
-                    LA6_1 = self.input.LA(2)
-
-                    if (LA6_1 == ID) :
-                        LA6_2 = self.input.LA(3)
-
-                        if (LA6_2 == ASSN) :
-                            LA6_3 = self.input.LA(4)
-
-                            if (LA6_3 == ATOM) :
-                                LA6_4 = self.input.LA(5)
-
-                                if (LA6_4 == RB) :
-                                    LA6_5 = self.input.LA(6)
-
-                                    if (LA6_5 == THEN) :
-                                        LA6_6 = self.input.LA(7)
-
-                                        if (LA6_6 == LB) :
-                                            LA6_8 = self.input.LA(8)
-
-                                            if (LA6_8 == OB or (PER <= LA6_8 <= PRO)) :
-                                                alt6 = 1
-                                            elif (LA6_8 == ID) :
-                                                alt6 = 2
-                                            else:
-                                                nvae = NoViableAltException("", 6, 8, self.input)
-
-                                                raise nvae
-
-
-                                        else:
-                                            nvae = NoViableAltException("", 6, 6, self.input)
-
-                                            raise nvae
-
-
-                                    elif (LA6_5 == AND or LA6_5 == IF or LA6_5 == NOT or LA6_5 == OR) :
-                                        alt6 = 2
-                                    else:
-                                        nvae = NoViableAltException("", 6, 5, self.input)
-
-                                        raise nvae
-
-
-                                else:
-                                    nvae = NoViableAltException("", 6, 4, self.input)
-
-                                    raise nvae
-
-
-                            else:
-                                nvae = NoViableAltException("", 6, 3, self.input)
-
-                                raise nvae
-
-
-                        else:
-                            nvae = NoViableAltException("", 6, 2, self.input)
-
-                            raise nvae
-
-
-                    else:
-                        nvae = NoViableAltException("", 6, 1, self.input)
-
-                        raise nvae
-
-
-                else:
-                    nvae = NoViableAltException("", 6, 0, self.input)
-
-                    raise nvae
-
-
-                if alt6 == 1:
-                    # Deo.g:71:4: cond
-                    pass 
-                    root_0 = self._adaptor.nil()
-
-
-                    self._state.following.append(self.FOLLOW_cond_in_comp_cond370)
-                    cond24 = self.cond()
-
-                    self._state.following.pop()
-                    self._adaptor.addChild(root_0, cond24.tree)
-
-
-
-                elif alt6 == 2:
-                    # Deo.g:72:4: cond ( op cond )+
-                    pass 
-                    root_0 = self._adaptor.nil()
-
-
-                    self._state.following.append(self.FOLLOW_cond_in_comp_cond375)
-                    cond25 = self.cond()
-
-                    self._state.following.pop()
-                    self._adaptor.addChild(root_0, cond25.tree)
-
-
-                    # Deo.g:72:9: ( op cond )+
-                    cnt5 = 0
-                    while True: #loop5
-                        alt5 = 2
-                        LA5_0 = self.input.LA(1)
-
-                        if (LA5_0 == THEN) :
-                            LA5_1 = self.input.LA(2)
-
-                            if (LA5_1 == LB) :
-                                LA5_3 = self.input.LA(3)
-
-                                if (LA5_3 == ID) :
-                                    alt5 = 1
-
-
-
-
-                        elif (LA5_0 == AND or LA5_0 == IF or LA5_0 == NOT or LA5_0 == OR) :
-                            alt5 = 1
-
-
-                        if alt5 == 1:
-                            # Deo.g:72:10: op cond
-                            pass 
-                            self._state.following.append(self.FOLLOW_op_in_comp_cond378)
-                            op26 = self.op()
-
-                            self._state.following.pop()
-                            self._adaptor.addChild(root_0, op26.tree)
-
-
-                            self._state.following.append(self.FOLLOW_cond_in_comp_cond380)
-                            cond27 = self.cond()
-
-                            self._state.following.pop()
-                            self._adaptor.addChild(root_0, cond27.tree)
-
-
-
-                        else:
-                            if cnt5 >= 1:
-                                break #loop5
-
-                            eee = EarlyExitException(5, self.input)
-                            raise eee
-
-                        cnt5 += 1
-
-
-
-                retval.stop = self.input.LT(-1)
-
-
-                retval.tree = self._adaptor.rulePostProcessing(root_0)
-                self._adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop)
-
-
-
-            except RecognitionException, re:
-                self.reportError(re)
-                self.recover(self.input, re)
-                retval.tree = self._adaptor.errorNode(self.input, retval.start, self.input.LT(-1), re)
-
-        finally:
-            pass
-        return retval
-
-    # $ANTLR end "comp_cond"
+    # $ANTLR end "iop"
 
 
     class expr_return(ParserRuleReturnScope):
@@ -1299,7 +752,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "expr"
-    # Deo.g:75:1: expr : ( IF comp_cond THEN comp_axiom -> ^( EXPR IF COND comp_cond THEN AXIOM comp_axiom ) | comp_axiom -> ^( EXPR AXIOM comp_axiom ) );
+    # Deo.g:86:1: expr : ( atom -> ^( EXPR atom ) | prefix_expr -> ^( EXPR prefix_expr ) | infix_expr -> ^( EXPR infix_expr ) | ifthen_expr -> ^( EXPR ifthen_expr ) );
     def expr(self, ):
         retval = self.expr_return()
         retval.start = self.input.LT(1)
@@ -1307,61 +760,55 @@ class DeoParser(Parser):
 
         root_0 = None
 
-        IF28 = None
-        THEN30 = None
-        comp_cond29 = None
-        comp_axiom31 = None
-        comp_axiom32 = None
+        atom12 = None
+        prefix_expr13 = None
+        infix_expr14 = None
+        ifthen_expr15 = None
 
-        IF28_tree = None
-        THEN30_tree = None
-        stream_THEN = RewriteRuleTokenStream(self._adaptor, "token THEN")
-        stream_IF = RewriteRuleTokenStream(self._adaptor, "token IF")
-        stream_comp_axiom = RewriteRuleSubtreeStream(self._adaptor, "rule comp_axiom")
-        stream_comp_cond = RewriteRuleSubtreeStream(self._adaptor, "rule comp_cond")
+        stream_infix_expr = RewriteRuleSubtreeStream(self._adaptor, "rule infix_expr")
+        stream_prefix_expr = RewriteRuleSubtreeStream(self._adaptor, "rule prefix_expr")
+        stream_ifthen_expr = RewriteRuleSubtreeStream(self._adaptor, "rule ifthen_expr")
+        stream_atom = RewriteRuleSubtreeStream(self._adaptor, "rule atom")
         try:
             try:
-                # Deo.g:75:6: ( IF comp_cond THEN comp_axiom -> ^( EXPR IF COND comp_cond THEN AXIOM comp_axiom ) | comp_axiom -> ^( EXPR AXIOM comp_axiom ) )
-                alt7 = 2
-                LA7_0 = self.input.LA(1)
+                # Deo.g:86:6: ( atom -> ^( EXPR atom ) | prefix_expr -> ^( EXPR prefix_expr ) | infix_expr -> ^( EXPR infix_expr ) | ifthen_expr -> ^( EXPR ifthen_expr ) )
+                alt3 = 4
+                LA3_0 = self.input.LA(1)
 
-                if (LA7_0 == IF) :
-                    alt7 = 1
-                elif (LA7_0 == LB) :
-                    alt7 = 2
+                if (LA3_0 == ATOM) :
+                    alt3 = 1
+                elif (LA3_0 == LB) :
+                    LA3 = self.input.LA(2)
+                    if LA3 == IF:
+                        alt3 = 4
+                    elif LA3 == NOT or LA3 == OB or LA3 == PER or LA3 == PRO:
+                        alt3 = 2
+                    elif LA3 == ATOM or LA3 == LB:
+                        alt3 = 3
+                    else:
+                        nvae = NoViableAltException("", 3, 2, self.input)
+
+                        raise nvae
+
+
                 else:
-                    nvae = NoViableAltException("", 7, 0, self.input)
+                    nvae = NoViableAltException("", 3, 0, self.input)
 
                     raise nvae
 
 
-                if alt7 == 1:
-                    # Deo.g:75:8: IF comp_cond THEN comp_axiom
+                if alt3 == 1:
+                    # Deo.g:90:3: atom
                     pass 
-                    IF28 = self.match(self.input, IF, self.FOLLOW_IF_in_expr393) 
-                    stream_IF.add(IF28)
-
-
-                    self._state.following.append(self.FOLLOW_comp_cond_in_expr395)
-                    comp_cond29 = self.comp_cond()
+                    self._state.following.append(self.FOLLOW_atom_in_expr366)
+                    atom12 = self.atom()
 
                     self._state.following.pop()
-                    stream_comp_cond.add(comp_cond29.tree)
-
-
-                    THEN30 = self.match(self.input, THEN, self.FOLLOW_THEN_in_expr397) 
-                    stream_THEN.add(THEN30)
-
-
-                    self._state.following.append(self.FOLLOW_comp_axiom_in_expr399)
-                    comp_axiom31 = self.comp_axiom()
-
-                    self._state.following.pop()
-                    stream_comp_axiom.add(comp_axiom31.tree)
+                    stream_atom.add(atom12.tree)
 
 
                     # AST Rewrite
-                    # elements: comp_cond, comp_axiom, THEN, IF
+                    # elements: atom
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1375,32 +822,14 @@ class DeoParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 75:40: -> ^( EXPR IF COND comp_cond THEN AXIOM comp_axiom )
-                    # Deo.g:75:43: ^( EXPR IF COND comp_cond THEN AXIOM comp_axiom )
+                    # 90:13: -> ^( EXPR atom )
+                    # Deo.g:90:16: ^( EXPR atom )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(EXPR, "EXPR")
                     , root_1)
 
-                    self._adaptor.addChild(root_1, 
-                    stream_IF.nextNode()
-                    )
-
-                    self._adaptor.addChild(root_1, 
-                    self._adaptor.createFromType(COND, "COND")
-                    )
-
-                    self._adaptor.addChild(root_1, stream_comp_cond.nextTree())
-
-                    self._adaptor.addChild(root_1, 
-                    stream_THEN.nextNode()
-                    )
-
-                    self._adaptor.addChild(root_1, 
-                    self._adaptor.createFromType(AXIOM, "AXIOM")
-                    )
-
-                    self._adaptor.addChild(root_1, stream_comp_axiom.nextTree())
+                    self._adaptor.addChild(root_1, stream_atom.nextTree())
 
                     self._adaptor.addChild(root_0, root_1)
 
@@ -1412,18 +841,18 @@ class DeoParser(Parser):
 
 
 
-                elif alt7 == 2:
-                    # Deo.g:77:4: comp_axiom
+                elif alt3 == 2:
+                    # Deo.g:91:4: prefix_expr
                     pass 
-                    self._state.following.append(self.FOLLOW_comp_axiom_in_expr426)
-                    comp_axiom32 = self.comp_axiom()
+                    self._state.following.append(self.FOLLOW_prefix_expr_in_expr384)
+                    prefix_expr13 = self.prefix_expr()
 
                     self._state.following.pop()
-                    stream_comp_axiom.add(comp_axiom32.tree)
+                    stream_prefix_expr.add(prefix_expr13.tree)
 
 
                     # AST Rewrite
-                    # elements: comp_axiom
+                    # elements: prefix_expr
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1437,18 +866,102 @@ class DeoParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 77:19: -> ^( EXPR AXIOM comp_axiom )
-                    # Deo.g:77:22: ^( EXPR AXIOM comp_axiom )
+                    # 91:20: -> ^( EXPR prefix_expr )
+                    # Deo.g:91:23: ^( EXPR prefix_expr )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(EXPR, "EXPR")
                     , root_1)
 
-                    self._adaptor.addChild(root_1, 
-                    self._adaptor.createFromType(AXIOM, "AXIOM")
-                    )
+                    self._adaptor.addChild(root_1, stream_prefix_expr.nextTree())
 
-                    self._adaptor.addChild(root_1, stream_comp_axiom.nextTree())
+                    self._adaptor.addChild(root_0, root_1)
+
+
+
+
+                    retval.tree = root_0
+
+
+
+
+                elif alt3 == 3:
+                    # Deo.g:92:4: infix_expr
+                    pass 
+                    self._state.following.append(self.FOLLOW_infix_expr_in_expr401)
+                    infix_expr14 = self.infix_expr()
+
+                    self._state.following.pop()
+                    stream_infix_expr.add(infix_expr14.tree)
+
+
+                    # AST Rewrite
+                    # elements: infix_expr
+                    # token labels: 
+                    # rule labels: retval
+                    # token list labels: 
+                    # rule list labels: 
+                    # wildcard labels: 
+                    retval.tree = root_0
+                    if retval is not None:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                    else:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                    root_0 = self._adaptor.nil()
+                    # 92:19: -> ^( EXPR infix_expr )
+                    # Deo.g:92:22: ^( EXPR infix_expr )
+                    root_1 = self._adaptor.nil()
+                    root_1 = self._adaptor.becomeRoot(
+                    self._adaptor.createFromType(EXPR, "EXPR")
+                    , root_1)
+
+                    self._adaptor.addChild(root_1, stream_infix_expr.nextTree())
+
+                    self._adaptor.addChild(root_0, root_1)
+
+
+
+
+                    retval.tree = root_0
+
+
+
+
+                elif alt3 == 4:
+                    # Deo.g:93:4: ifthen_expr
+                    pass 
+                    self._state.following.append(self.FOLLOW_ifthen_expr_in_expr418)
+                    ifthen_expr15 = self.ifthen_expr()
+
+                    self._state.following.pop()
+                    stream_ifthen_expr.add(ifthen_expr15.tree)
+
+
+                    # AST Rewrite
+                    # elements: ifthen_expr
+                    # token labels: 
+                    # rule labels: retval
+                    # token list labels: 
+                    # rule list labels: 
+                    # wildcard labels: 
+                    retval.tree = root_0
+                    if retval is not None:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                    else:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                    root_0 = self._adaptor.nil()
+                    # 93:20: -> ^( EXPR ifthen_expr )
+                    # Deo.g:93:23: ^( EXPR ifthen_expr )
+                    root_1 = self._adaptor.nil()
+                    root_1 = self._adaptor.becomeRoot(
+                    self._adaptor.createFromType(EXPR, "EXPR")
+                    , root_1)
+
+                    self._adaptor.addChild(root_1, stream_ifthen_expr.nextTree())
 
                     self._adaptor.addChild(root_0, root_1)
 
@@ -1480,39 +993,416 @@ class DeoParser(Parser):
     # $ANTLR end "expr"
 
 
+    class prefix_expr_return(ParserRuleReturnScope):
+        def __init__(self):
+            super(DeoParser.prefix_expr_return, self).__init__()
+
+            self.tree = None
+
+
+
+
+
+    # $ANTLR start "prefix_expr"
+    # Deo.g:96:1: prefix_expr : LB pop LB expr RB RB -> ^( PREF pop expr ) ;
+    def prefix_expr(self, ):
+        retval = self.prefix_expr_return()
+        retval.start = self.input.LT(1)
+
+
+        root_0 = None
+
+        LB16 = None
+        LB18 = None
+        RB20 = None
+        RB21 = None
+        pop17 = None
+        expr19 = None
+
+        LB16_tree = None
+        LB18_tree = None
+        RB20_tree = None
+        RB21_tree = None
+        stream_RB = RewriteRuleTokenStream(self._adaptor, "token RB")
+        stream_LB = RewriteRuleTokenStream(self._adaptor, "token LB")
+        stream_pop = RewriteRuleSubtreeStream(self._adaptor, "rule pop")
+        stream_expr = RewriteRuleSubtreeStream(self._adaptor, "rule expr")
+        try:
+            try:
+                # Deo.g:97:2: ( LB pop LB expr RB RB -> ^( PREF pop expr ) )
+                # Deo.g:97:4: LB pop LB expr RB RB
+                pass 
+                LB16 = self.match(self.input, LB, self.FOLLOW_LB_in_prefix_expr441) 
+                stream_LB.add(LB16)
+
+
+                self._state.following.append(self.FOLLOW_pop_in_prefix_expr443)
+                pop17 = self.pop()
+
+                self._state.following.pop()
+                stream_pop.add(pop17.tree)
+
+
+                LB18 = self.match(self.input, LB, self.FOLLOW_LB_in_prefix_expr445) 
+                stream_LB.add(LB18)
+
+
+                self._state.following.append(self.FOLLOW_expr_in_prefix_expr447)
+                expr19 = self.expr()
+
+                self._state.following.pop()
+                stream_expr.add(expr19.tree)
+
+
+                RB20 = self.match(self.input, RB, self.FOLLOW_RB_in_prefix_expr449) 
+                stream_RB.add(RB20)
+
+
+                RB21 = self.match(self.input, RB, self.FOLLOW_RB_in_prefix_expr451) 
+                stream_RB.add(RB21)
+
+
+                # AST Rewrite
+                # elements: pop, expr
+                # token labels: 
+                # rule labels: retval
+                # token list labels: 
+                # rule list labels: 
+                # wildcard labels: 
+                retval.tree = root_0
+                if retval is not None:
+                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                else:
+                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                root_0 = self._adaptor.nil()
+                # 97:28: -> ^( PREF pop expr )
+                # Deo.g:97:31: ^( PREF pop expr )
+                root_1 = self._adaptor.nil()
+                root_1 = self._adaptor.becomeRoot(
+                self._adaptor.createFromType(PREF, "PREF")
+                , root_1)
+
+                self._adaptor.addChild(root_1, stream_pop.nextTree())
+
+                self._adaptor.addChild(root_1, stream_expr.nextTree())
+
+                self._adaptor.addChild(root_0, root_1)
+
+
+
+
+                retval.tree = root_0
+
+
+
+
+
+                retval.stop = self.input.LT(-1)
+
+
+                retval.tree = self._adaptor.rulePostProcessing(root_0)
+                self._adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop)
+
+
+
+            except RecognitionException, re:
+                self.reportError(re)
+                self.recover(self.input, re)
+                retval.tree = self._adaptor.errorNode(self.input, retval.start, self.input.LT(-1), re)
+
+        finally:
+            pass
+        return retval
+
+    # $ANTLR end "prefix_expr"
+
+
+    class infix_expr_return(ParserRuleReturnScope):
+        def __init__(self):
+            super(DeoParser.infix_expr_return, self).__init__()
+
+            self.tree = None
+
+
+
+
+
+    # $ANTLR start "infix_expr"
+    # Deo.g:100:1: infix_expr : LB expr iop expr RB -> ^( INF expr iop expr ) ;
+    def infix_expr(self, ):
+        retval = self.infix_expr_return()
+        retval.start = self.input.LT(1)
+
+
+        root_0 = None
+
+        LB22 = None
+        RB26 = None
+        expr23 = None
+        iop24 = None
+        expr25 = None
+
+        LB22_tree = None
+        RB26_tree = None
+        stream_RB = RewriteRuleTokenStream(self._adaptor, "token RB")
+        stream_LB = RewriteRuleTokenStream(self._adaptor, "token LB")
+        stream_expr = RewriteRuleSubtreeStream(self._adaptor, "rule expr")
+        stream_iop = RewriteRuleSubtreeStream(self._adaptor, "rule iop")
+        try:
+            try:
+                # Deo.g:101:2: ( LB expr iop expr RB -> ^( INF expr iop expr ) )
+                # Deo.g:101:4: LB expr iop expr RB
+                pass 
+                LB22 = self.match(self.input, LB, self.FOLLOW_LB_in_infix_expr475) 
+                stream_LB.add(LB22)
+
+
+                self._state.following.append(self.FOLLOW_expr_in_infix_expr477)
+                expr23 = self.expr()
+
+                self._state.following.pop()
+                stream_expr.add(expr23.tree)
+
+
+                self._state.following.append(self.FOLLOW_iop_in_infix_expr479)
+                iop24 = self.iop()
+
+                self._state.following.pop()
+                stream_iop.add(iop24.tree)
+
+
+                self._state.following.append(self.FOLLOW_expr_in_infix_expr481)
+                expr25 = self.expr()
+
+                self._state.following.pop()
+                stream_expr.add(expr25.tree)
+
+
+                RB26 = self.match(self.input, RB, self.FOLLOW_RB_in_infix_expr483) 
+                stream_RB.add(RB26)
+
+
+                # AST Rewrite
+                # elements: expr, expr, iop
+                # token labels: 
+                # rule labels: retval
+                # token list labels: 
+                # rule list labels: 
+                # wildcard labels: 
+                retval.tree = root_0
+                if retval is not None:
+                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                else:
+                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                root_0 = self._adaptor.nil()
+                # 101:27: -> ^( INF expr iop expr )
+                # Deo.g:101:30: ^( INF expr iop expr )
+                root_1 = self._adaptor.nil()
+                root_1 = self._adaptor.becomeRoot(
+                self._adaptor.createFromType(INF, "INF")
+                , root_1)
+
+                self._adaptor.addChild(root_1, stream_expr.nextTree())
+
+                self._adaptor.addChild(root_1, stream_iop.nextTree())
+
+                self._adaptor.addChild(root_1, stream_expr.nextTree())
+
+                self._adaptor.addChild(root_0, root_1)
+
+
+
+
+                retval.tree = root_0
+
+
+
+
+
+                retval.stop = self.input.LT(-1)
+
+
+                retval.tree = self._adaptor.rulePostProcessing(root_0)
+                self._adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop)
+
+
+
+            except RecognitionException, re:
+                self.reportError(re)
+                self.recover(self.input, re)
+                retval.tree = self._adaptor.errorNode(self.input, retval.start, self.input.LT(-1), re)
+
+        finally:
+            pass
+        return retval
+
+    # $ANTLR end "infix_expr"
+
+
+    class ifthen_expr_return(ParserRuleReturnScope):
+        def __init__(self):
+            super(DeoParser.ifthen_expr_return, self).__init__()
+
+            self.tree = None
+
+
+
+
+
+    # $ANTLR start "ifthen_expr"
+    # Deo.g:104:1: ifthen_expr : LB IF expr THEN expr RB -> ^( IFTHEN expr expr ) ;
+    def ifthen_expr(self, ):
+        retval = self.ifthen_expr_return()
+        retval.start = self.input.LT(1)
+
+
+        root_0 = None
+
+        LB27 = None
+        IF28 = None
+        THEN30 = None
+        RB32 = None
+        expr29 = None
+        expr31 = None
+
+        LB27_tree = None
+        IF28_tree = None
+        THEN30_tree = None
+        RB32_tree = None
+        stream_RB = RewriteRuleTokenStream(self._adaptor, "token RB")
+        stream_LB = RewriteRuleTokenStream(self._adaptor, "token LB")
+        stream_THEN = RewriteRuleTokenStream(self._adaptor, "token THEN")
+        stream_IF = RewriteRuleTokenStream(self._adaptor, "token IF")
+        stream_expr = RewriteRuleSubtreeStream(self._adaptor, "rule expr")
+        try:
+            try:
+                # Deo.g:105:2: ( LB IF expr THEN expr RB -> ^( IFTHEN expr expr ) )
+                # Deo.g:105:4: LB IF expr THEN expr RB
+                pass 
+                LB27 = self.match(self.input, LB, self.FOLLOW_LB_in_ifthen_expr509) 
+                stream_LB.add(LB27)
+
+
+                IF28 = self.match(self.input, IF, self.FOLLOW_IF_in_ifthen_expr511) 
+                stream_IF.add(IF28)
+
+
+                self._state.following.append(self.FOLLOW_expr_in_ifthen_expr513)
+                expr29 = self.expr()
+
+                self._state.following.pop()
+                stream_expr.add(expr29.tree)
+
+
+                THEN30 = self.match(self.input, THEN, self.FOLLOW_THEN_in_ifthen_expr515) 
+                stream_THEN.add(THEN30)
+
+
+                self._state.following.append(self.FOLLOW_expr_in_ifthen_expr517)
+                expr31 = self.expr()
+
+                self._state.following.pop()
+                stream_expr.add(expr31.tree)
+
+
+                RB32 = self.match(self.input, RB, self.FOLLOW_RB_in_ifthen_expr519) 
+                stream_RB.add(RB32)
+
+
+                # AST Rewrite
+                # elements: expr, expr
+                # token labels: 
+                # rule labels: retval
+                # token list labels: 
+                # rule list labels: 
+                # wildcard labels: 
+                retval.tree = root_0
+                if retval is not None:
+                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                else:
+                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                root_0 = self._adaptor.nil()
+                # 105:31: -> ^( IFTHEN expr expr )
+                # Deo.g:105:34: ^( IFTHEN expr expr )
+                root_1 = self._adaptor.nil()
+                root_1 = self._adaptor.becomeRoot(
+                self._adaptor.createFromType(IFTHEN, "IFTHEN")
+                , root_1)
+
+                self._adaptor.addChild(root_1, stream_expr.nextTree())
+
+                self._adaptor.addChild(root_1, stream_expr.nextTree())
+
+                self._adaptor.addChild(root_0, root_1)
+
+
+
+
+                retval.tree = root_0
+
+
+
+
+
+                retval.stop = self.input.LT(-1)
+
+
+                retval.tree = self._adaptor.rulePostProcessing(root_0)
+                self._adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop)
+
+
+
+            except RecognitionException, re:
+                self.reportError(re)
+                self.recover(self.input, re)
+                retval.tree = self._adaptor.errorNode(self.input, retval.start, self.input.LT(-1), re)
+
+        finally:
+            pass
+        return retval
+
+    # $ANTLR end "ifthen_expr"
+
+
 
  
 
-    FOLLOW_fact_decl_in_prog99 = frozenset([13, 14, 15])
-    FOLLOW_rule_decl_in_prog102 = frozenset([1, 14, 15])
-    FOLLOW_expr_in_rule_decl133 = frozenset([1])
-    FOLLOW_fact_in_fact_decl158 = frozenset([1])
-    FOLLOW_ID_in_fact182 = frozenset([5])
-    FOLLOW_ASSN_in_fact184 = frozenset([6])
-    FOLLOW_atom_in_fact186 = frozenset([1])
-    FOLLOW_ATOM_in_atom252 = frozenset([1])
-    FOLLOW_LB_in_axiom307 = frozenset([18, 20, 21])
-    FOLLOW_norm_in_axiom310 = frozenset([15])
-    FOLLOW_LB_in_axiom312 = frozenset([6])
-    FOLLOW_atom_in_axiom314 = frozenset([23])
-    FOLLOW_RB_in_axiom316 = frozenset([23])
-    FOLLOW_RB_in_axiom319 = frozenset([1])
-    FOLLOW_axiom_in_comp_axiom331 = frozenset([1])
-    FOLLOW_axiom_in_comp_axiom336 = frozenset([4, 14, 17, 19, 25])
-    FOLLOW_op_in_comp_axiom339 = frozenset([15])
-    FOLLOW_axiom_in_comp_axiom341 = frozenset([1, 4, 14, 17, 19, 25])
-    FOLLOW_LB_in_cond354 = frozenset([13])
-    FOLLOW_fact_in_cond356 = frozenset([23])
-    FOLLOW_RB_in_cond358 = frozenset([1])
-    FOLLOW_cond_in_comp_cond370 = frozenset([1])
-    FOLLOW_cond_in_comp_cond375 = frozenset([4, 14, 17, 19, 25])
-    FOLLOW_op_in_comp_cond378 = frozenset([15])
-    FOLLOW_cond_in_comp_cond380 = frozenset([1, 4, 14, 17, 19, 25])
-    FOLLOW_IF_in_expr393 = frozenset([15])
-    FOLLOW_comp_cond_in_expr395 = frozenset([25])
-    FOLLOW_THEN_in_expr397 = frozenset([15])
-    FOLLOW_comp_axiom_in_expr399 = frozenset([1])
-    FOLLOW_comp_axiom_in_expr426 = frozenset([1])
+    FOLLOW_decl_in_prog122 = frozenset([1, 6, 15, 20])
+    FOLLOW_fact_decl_in_decl149 = frozenset([1])
+    FOLLOW_rule_decl_in_decl166 = frozenset([1])
+    FOLLOW_expr_in_rule_decl191 = frozenset([1])
+    FOLLOW_fact_in_fact_decl208 = frozenset([1])
+    FOLLOW_ID_in_fact229 = frozenset([5])
+    FOLLOW_ASSN_in_fact231 = frozenset([6])
+    FOLLOW_atom_in_fact233 = frozenset([1])
+    FOLLOW_ATOM_in_atom251 = frozenset([1])
+    FOLLOW_atom_in_expr366 = frozenset([1])
+    FOLLOW_prefix_expr_in_expr384 = frozenset([1])
+    FOLLOW_infix_expr_in_expr401 = frozenset([1])
+    FOLLOW_ifthen_expr_in_expr418 = frozenset([1])
+    FOLLOW_LB_in_prefix_expr441 = frozenset([22, 23, 25, 27])
+    FOLLOW_pop_in_prefix_expr443 = frozenset([20])
+    FOLLOW_LB_in_prefix_expr445 = frozenset([6, 20])
+    FOLLOW_expr_in_prefix_expr447 = frozenset([29])
+    FOLLOW_RB_in_prefix_expr449 = frozenset([29])
+    FOLLOW_RB_in_prefix_expr451 = frozenset([1])
+    FOLLOW_LB_in_infix_expr475 = frozenset([6, 20])
+    FOLLOW_expr_in_infix_expr477 = frozenset([4, 17, 24])
+    FOLLOW_iop_in_infix_expr479 = frozenset([6, 20])
+    FOLLOW_expr_in_infix_expr481 = frozenset([29])
+    FOLLOW_RB_in_infix_expr483 = frozenset([1])
+    FOLLOW_LB_in_ifthen_expr509 = frozenset([16])
+    FOLLOW_IF_in_ifthen_expr511 = frozenset([6, 20])
+    FOLLOW_expr_in_ifthen_expr513 = frozenset([31])
+    FOLLOW_THEN_in_ifthen_expr515 = frozenset([6, 20])
+    FOLLOW_expr_in_ifthen_expr517 = frozenset([29])
+    FOLLOW_RB_in_ifthen_expr519 = frozenset([1])
 
 
 

@@ -6,6 +6,6 @@ T: comply with points on ethics checklist form
 U: use introduction and debriefing scripts
 V: include introduction and debriefing scripts with signed ethics checklist form as part of report
 
-if (P or Q) then (OB(R))
-if (P and R and T) then ¬OB(S) and OB(U) and OB(V)
-if (P and R and ¬T) then (OB(S))
+(if (P or Q) then (OB(R)))
+(if (P and R and T) then ¬OB(S) and OB(U) and OB(V))
+(if (P and R and ¬T) then (OB(S)))
