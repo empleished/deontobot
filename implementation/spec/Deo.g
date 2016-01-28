@@ -7,18 +7,9 @@ options {
 }
 
 tokens {        //TODO special tokens for labeling AST nodes
-	IF;
-	IFF;
-	THEN;
+	IFTHEN;
 	EXPR;
-	FACT;
-	RULE;
-	AXIOM;
-	COND;
 	PROG;
-	FACT;
-	ATOM;
-	ASSN;
 	GOAL;
 	DECL;
 	INF;
@@ -66,28 +57,7 @@ iop	:	AND
 	|	IFF
 	;
 
-//axiom	
-//	:	LB (norm LB atom RB) RB
-//	;
-
-//comp_axiom	
-//	:	axiom
-//	|	axiom (op axiom)+
-//	;
-	
-//cond	:	LB atom RB
-//	;
-	
-//comp_cond
-//	:	cond
-//	|	cond (op cond)+ 
-//	;
-
-expr	:	
-//		IF comp_cond THEN comp_axiom		 	-> ^(EXPR IF COND comp_cond THEN AXIOM comp_axiom)
-//	|	comp_axiom IFF comp_cond	 		-> ^(EXPR AXIOM comp_axiom IFF COND comp_cond)	
-//	|	comp_axiom					-> ^(EXPR AXIOM comp_axiom)
-		atom						-> ^(EXPR atom)
+expr	:	atom						-> ^(EXPR atom)
 	|	prefix_expr					-> ^(EXPR prefix_expr)
 	|	infix_expr					-> ^(EXPR infix_expr)
 	|	ifthen_expr					-> ^(EXPR ifthen_expr)
@@ -122,8 +92,6 @@ LB	:	'(';
 RB	:	')';
 
 ASSN	: 	':';
-
-EOL 	: 	'.';
 
 ATOM	:	LETTER (LETTER | DIGIT | ' ')*;
 ID	:	LETTER (LETTER | DIGIT | '_')*;
