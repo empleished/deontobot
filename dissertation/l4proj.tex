@@ -13,7 +13,7 @@
 \maketitle
 
 \begin{abstract}
-A formalisation of deontic logic to represent the obligations, prohibitions and permissions within a system, which can then be checked for coherency and consistency to determine the validity of the set of rules.
+
 \end{abstract}
 
 \educationalconsent
@@ -114,8 +114,13 @@ One tool which has been explicitly developed to operationalise deontic logic is 
 %NHS Health Research Authority Decision Tool
 
 \chapter{Design}
+%more high level than implementation
+%how could we do this
+%what considerations do we have
 
 \section{Lexical Specification}
+
+As the finished product is not designed for any kind of specialist, it is important to take into consideration the needs of an average user. Most people will not be familiar with formal logic, particularly the use of frequently esoteric symbolism. 
 
 %first order logic + notions of obligation
 %conditions
@@ -129,8 +134,16 @@ One tool which has been explicitly developed to operationalise deontic logic is 
 %simplify fact set using logic rules
 
 \chapter{Implementation}
+%what have i done
+%how did i take on design considerations
 
 \section{Lexical Specification}
+
+I created an ANTLR grammar to outline the specification of rules for a system. These rules extended first order logic with notions of obligation, prohibition and permission. The grammar consists of parser rules and lexer rules. 
+
+The lexer rules include 'OB', 'PRO' and 'PER' to represent obligation, prohibition and permission, as well as lexer rules for common first order logic operators. I chose to represent these as words rather than symbols, particularly 'then' rather than '->' because it makes the code more readable for the person specifying the rules of the system. Assigning of atoms to symbols is done with ':', as I felt this was more intuitive in context than a possibly more traditional '='. 
+
+The parser rules start with the program, which is made up of declarations, which are split into declarations of facts, in the form of 'C: some statement', and declarations of rules, which are one of three kinds of expression. Expressions are split into prefix expressions, which have an operator before some kind of statement; infix expressions, which have an operator between two statements; and if...then expressions, which have a statement enclosed by the IF operator and the THEN operator. 
 
 %first order logic + notions of obligation
 %conditions
@@ -182,3 +195,4 @@ An example of running from the command line is as follows:
 \bibliography{bib}
 
 \end{document}
+
