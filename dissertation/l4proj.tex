@@ -145,10 +145,7 @@ The lexer rules include 'OB', 'PRO' and 'PER' to represent obligation, prohibiti
 
 The parser rules start with the program, which is made up of declarations, which are split into declarations of facts, in the form of 'C: some statement', and declarations of rules, which are one of three kinds of expression. Expressions are split into prefix expressions, which have an operator before some kind of statement; infix expressions, which have an operator between two statements; and if...then expressions, which have a statement enclosed by the IF operator and the THEN operator. 
 
-%first order logic + notions of obligation
-%conditions
-%axioms
-%atoms
+ANTLR is used to generate a lexer and parser for the grammar. Once rules have been specified in a program with this grammar, a tree is generated of the various nodes of the program, which will then be used for the next stage of the process, the prover. 
 
 \section{Proof Strategy}
 
