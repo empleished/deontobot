@@ -62,7 +62,7 @@ Concepts of obligation, prohibition and permission pervade everyday life, from l
 \section{Objectives and Achievements} %What did I set out to achieve and what have I achieved. 
 
 \section{Structure}
-I will now set out the history of deontic logic, as well as current and potential applications of deontic logic, and then I will examine existing tool support for the issue I have presented. I will then explain the design and implementation of my software, broken down into the lexical specification of the flavour of deontic logic I am working with and the proof strategy for a set of rules. I will then evaluate the success of what I have achieved against what I initially set out to achieve. Once this is complete, I will present my conclusions about what the work I have done shows, and also suggest potential avenues of future work. 
+I will now set out the history of deontic logic, as well as current and potential applications of deontic logic, and then I will examine existing tool support for the issue I have presented. I will then explain the design and implementation of my software, broken down into the lexical specification of the flavour of deontic logic I am working with and the proof strategy for a given set of rules and facts. I will then evaluate the success of what I have achieved against what I initially set out to achieve. Once this is complete, I will present my conclusions about what the work I have done shows, and also suggest potential avenues of future work. 
 
 \chapter{Literature Review}
 
@@ -154,6 +154,8 @@ The parser rules start with the program, which is made up of declarations, which
 ANTLR is used to generate a lexer and parser for the grammar. Once rules have been specified in a program with this grammar, a tree is generated of the various nodes of the program, which will then be used for the next stage of the process, the prover. 
 
 \section{Proof Strategy}
+
+The prover uses a brute force proof strategy to prove, given a set of facts, that these facts cohere with the defined set of rules, or not, as the case may be. 
 
 %use generated tree to walk
 %brute force prover
