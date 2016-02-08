@@ -45,7 +45,7 @@ def transform(fact, rule):
 	return transformedStatement
 
 def search(pattern, node):
-	facts = [];
+	facts = []
 
 	if node == pattern:
 		facts = facts + node
@@ -128,7 +128,7 @@ def isProven(facts, statement):
 	
 def proofRules(statement, facts, tree):
 	proven = false;
-	steps = ["", ""]
+	steps = []
 	statementTree = ast.parse(statement)
 
 	for fact in facts: 
@@ -196,7 +196,7 @@ def proofRules(statement, facts, tree):
 											
 										proven = isProven(facts, statement)
 
-	return steps
+	return [proven] + steps
 
 def main(argv):
 	if len(argv) == 1:
@@ -207,13 +207,16 @@ def main(argv):
 	facts = argv[2]
  
 	proverSteps = proofRules(statementToProve, facts, tree)
+
+	count = 1
 	
-	if proverSteps == ["", ""]:
+	if proverSteps[0] = false:
 		print "statement is incongruent with provided facts"
-		
 	else: 
-		for step in steps: 
-			print step[0] + ": " + step[1]
+		print "statement is coherent with provided facts"
+
+	while count < proverSteps.length:  
+		print proverSteps[count][0] + ": " + proverSteps[count][1]
 
 if __name__ == "__main__":
 	main(sys.argv)
