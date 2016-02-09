@@ -79,7 +79,7 @@ This is often described as the autonomy formula of the categorical imperative. S
 R-in states that a maxim, $m_i$ is allowed to be part of the set of acceptable maxims, $M$, if $m_i$ is consistent with the ethical 
 system, $G$. That is, $m_i \in M \iff G \vdash m_i $. 
 
-R-out states that if a maxim, $m_i$, becomes inconsistent with the ethical system, $G$, $m_i$ is no longer allowed in the set of acceptable maxims, $M$. That is, $m_i$ $\notin M \rightarrow \neg(G \vdash m_{i})$. 
+R-out states that if a maxim, $m_i$, becomes inconsistent with the ethical system, $G$, $m_i$ is no longer allowed in the set of acceptable maxims, $M$. That is, $m_i \notin M \rightarrow \neg(G \vdash m_i)$. 
 
 %-GENERALISM VS PARTICULARISM
 %--generalism + fregean concepts + algorithms
@@ -128,7 +128,7 @@ One tool which has been explicitly developed to operationalise deontic logic is 
 
 \section{Lexical Specification}
 
-As the finished product is not designed for any kind of specialist, it is important to take into consideration the needs of an average user. Most people will not be familiar with formal logic, particularly the use of frequently esoteric symbolism. 
+As the finished product is not designed for any kind of specialist, it is important to take into consideration the needs of an average user. Most people will not be familiar with formal logic, particularly the frequently esoteric symbolism. 
 
 %first order logic + notions of obligation
 %conditions
@@ -149,7 +149,7 @@ As the finished product is not designed for any kind of specialist, it is import
 
 I created an ANTLR grammar to outline the specification of rules for a system. These rules extended first order logic with notions of obligation, prohibition and permission. The grammar consists of parser rules and lexer rules. 
 
-The lexer rules include 'OB', 'PRO' and 'PER' to represent obligation, prohibition and permission, as well as lexer rules for common first order logic operators. I chose to represent these as words rather than symbols, particularly 'then' rather than '->' because it makes the code more readable for the person specifying the rules of the system. Assigning of atoms to symbols is done with ':', as I felt this was more intuitive in context than a possibly more traditional '='. 
+The lexer rules include 'OB', 'PRO' and 'PER' to represent obligation, prohibition and permission, as well as lexer rules for common first order logic operators. I chose to represent these as words rather than symbols, particularly 'then' rather than '->' because it makes the code more readable for the person specifying the rules of the system. Assigning of atoms to symbols is done with ':', as this os more intuitive in context than a possibly more traditional '='. 
 
 The parser rules start with the program, which is made up of declarations, which are split into declarations of facts, in the form of 'C: some statement', and declarations of rules, which are one of three kinds of expression. Expressions are split into prefix expressions, which have an operator before some kind of statement; infix expressions, which have an operator between two statements; and if...then expressions, which have a statement enclosed by the IF operator and the THEN operator. 
 

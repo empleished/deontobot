@@ -24,7 +24,7 @@
 
 # useful documentation: 
 # https://greentreesnakes.readthedocs.org/en/latest/manipulating.html
-# https://bitbucket.org/takluyver/greentreesnakes/src/default/astpp.py?fileviewer=file-view-default
+# https://hg.python.org/cpython/file/2.7/Lib/ast.py
 
 # useful pieces of code: 
 # for node in tree.body - for every node in the tree
@@ -71,22 +71,21 @@ def doubleNegation(statement, tree):
 
 	return facts
 
+
+#def modusPonens (facts)
+# if P and P -> Q then Q
+# if fact data set contains a P and Q, such that there is one fact P and another fact P->Q, then add Q to facts list.
+#    for fact in facts:
+#        if fact is an atom;
+#            for fact2 in facts:
+#                 if fact2 is an implication:
+#                     then facts.add(fact2.consequence)
+
 def modusPonens(statement, tree): 
 # if P and P -> Q then Q
 	facts = ruleStrategy(fact, node, "if ((P) and (P -> Q)) then (Q)");
 
 	return facts
-
-
-def modusPonens (facts)
-# if P and P -> Q then Q
-# if fact data set contains a P and Q, such that there is one fact P and another fact P->Q, then add Q to facts list.
-    for fact in facts:
-        if fact is an atom;
-            for fact2 in facts:
-                 if fact2 is an implication:
-                     then facts.add(fact2.consequence)
-
 	
 def modusTollens(statement, tree):
 # if ¬Q and P -> Q then ¬P
@@ -141,10 +140,10 @@ def proofRules(statement, facts, tree):
 	proven = false;
 	steps = []
 	statementTree = ast.parse(statement)
-
-	for fact in facts: 
-		for node in tree.body:
-			if (!proven):
+	
+    while (!proven): 
+        for fact in facts: 
+		    for node in tree.body:
 				newFacts = modusPonens(statement, node)
 				
 				if (newFacts != []): 
