@@ -71,7 +71,6 @@ def doubleNegation(statement, tree):
 
 	return facts
 
-
 #def modusPonens (facts)
 # if P and P -> Q then Q
 # if fact data set contains a P and Q, such that there is one fact P and another fact P->Q, then add Q to facts list.
