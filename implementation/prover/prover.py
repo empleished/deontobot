@@ -17,7 +17,6 @@ def isAtom(fact):
 	return atoms
 
 # returns the negation of a fact
-# TODO
 def negation(fact):
 	negatedFact = Tree("PREF")
 	negatedFact.add = "not"
@@ -145,7 +144,6 @@ def proofStrategy(goals, facts, rules):
 
 	return proven
 
-#TODO
 def yieldFactsFromRules(rules):
 	facts = []
 
@@ -154,27 +152,42 @@ def yieldFactsFromRules(rules):
 
 	return facts
 
-#TODO
 def getTerms(tree): 
+	terms = Tree()
 	terms.value = "TERMS"
+
+	for node in tree.body: 
+		if node.op == "TERM": 
+			terms.add(node.right)
 
 	return terms
 
-#TODO
 def getRules(tree): 
+	rules = Tree()
 	rules.value = "RULES"
+
+	for node in tree.body: 
+		if node.op == "RULE": 
+			rules.add(node.right)
 
 	return rules
 
-#TODO
 def getFacts(tree): 
 	facts = []
 
+	for node in tree.body: 
+		if node.op == "FACT": 
+			facts = facts + node.right.n
+
 	return facts
 
-#TODO
 def getGoals(tree): 
+	goals = Tree()
 	goals.value = "GOALS"
+
+	for node in tree.body: 
+		if node.op == "GOAL": 
+			goals.add(node.right)
 
 	return goals
 
