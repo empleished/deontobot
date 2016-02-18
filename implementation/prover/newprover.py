@@ -1,4 +1,10 @@
 import ast
+
+A
+B
+A->B
+AvB
+
 	
 def doubleNegation(statement, tree):
 # P is equivalent to ¬¬P 
@@ -7,13 +13,13 @@ def doubleNegation(statement, tree):
 
 	return facts
 
-def modusPonens(fact, node): 
-# if P and P -> Q then Q
+def modusPonens(expr1, expr2): 
+# if P and P -> (A and B) then (A and B)
 	facts = []
 
-	if node == 'IFTHEN': 
-		if node.expr1 == fact: 
-			facts = facts + node.expr2
+	if expr1 == 'IFTHEN': 
+		if expr1.condition == expr2: 
+			facts = facts + node.consequent
 
 	return facts
 	
@@ -64,6 +70,25 @@ def isProven(facts, statement):
 def proofRules(statement, facts, tree):
 	proven = false
 	steps = []
+
+def try_modus_ponens ():
+        for expr1, expr2 in facts:
+                apply_modus_ponens(expr1, expr2)
+                if proven return
+
+
+
+while (!proven and progress):
+        fact_size=len(facts)
+
+        try_modus_ponens ()
+        try_
+        
+        for each rule in rules:
+                try all combinations of facts
+        if (len(facts) == fact_size):
+                progress = false
+
 	
     while (!proven): 
         for fact in facts: 
