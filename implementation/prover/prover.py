@@ -1,16 +1,29 @@
 import ast
 
-# checks if fact is an atom
+# recursively checks if fact is an atom
 # returns the fact if it is
 # returns a list of decomposed atoms if not
-# TODO
 def isAtom(fact): 
-	return fact
+	atoms = []
+
+	if fact.value == ATOM:
+		atoms = atoms + fact.left
+	else fact.value == "and":
+		atoms = atoms + decomposingConjunction(fact)
+	else: 
+		atoms = atoms + isAtom(fact.left)
+		atoms = atoms + isAtom(fact.right)				
+
+	return atoms
 
 # returns the negation of a fact
 # TODO
 def negation(fact):
-	return fact
+	negatedFact = Tree("PREF")
+	negatedFact.add = "not"
+	negatedFact.add = fact
+
+	return negatedFact
 
 def modusPonens(fact, node):
 # if P and P -> Q then Q

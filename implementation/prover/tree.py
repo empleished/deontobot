@@ -1,4 +1,4 @@
-# from http://stackoverflow.com/a/28864021
+# adapted from http://stackoverflow.com/a/28864021
 
 class Node:
     def __init__(self, v):
@@ -12,6 +12,15 @@ class Tree:
 
     def getRoot(self):
         return self.root
+
+	def getLeft(self):
+		return self.left
+
+	def getRight(self):
+		return self.right
+
+	def getValue(self):
+		return self.value
 
     def add(self, v):
         if (self.root == None):
