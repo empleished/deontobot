@@ -1,0 +1,32 @@
+Prover workflow
+Read in list of statements about the world (data set of facts).
+Read in goal.
+while data set doesn't contain goal.
+choose member of data set via some strategy
+choose a rule to apply to generate new fact
+if new fact created add to data set
+
+Note, need to know when to stop (i.e. cannot generate any new facts).
+
+Example program:
+Facts:
+A
+A -> B
+Goal:
+B
+Prover would apply rule A ^ (A->B) => B
+Would add B to fact set
+Check fact set contains B (it does).
+halt.
+report sequence of steps to prove B (what rules were applied).
+
+NOTES:
+
+useful documentation: 
+https://greentreesnakes.readthedocs.org/en/latest/manipulating.html
+https://hg.python.org/cpython/file/2.7/Lib/ast.py
+
+useful pieces of code: 
+for node in tree.body - for every node in the tree
+self.generic_visit(node) - visit children of the node
+node.body[-1] - gets the last node in a function's body
