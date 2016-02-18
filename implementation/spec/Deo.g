@@ -15,41 +15,53 @@ tokens {        //TODO special tokens for labeling AST nodes
 	INF;
 	PREF;
 	IFTHEN;
+	ATOM;
+	TERM;
+	RULE;
+	FACT;
 }
 
 // PARSER RULES //
 
 prog
-    :	decl+					-> ^(PROG decl+)
+    :	decl+								-> ^(PROG decl+)
 	;
 
 decl
-    :	fact					-> ^(DECL fact)
-	|	rule 					-> ^(DECL rule)
-    |   goal                    -> ^(DECL goal)    
+    :	term								-> ^(TERM term)
+	|	rule 								-> ^(RULE rule)
+	|	fact								-> ^(FACT fact)
+    |   goal      			  				-> ^(GOAL goal)    
+	;
+
+rule
+	:	RULE ASSN expr
+
+fact
+	:	FACT ASSN expr
 	;
 
 goal
-	:	expr					-> ^(GOAL goal)
+	:	GOAL ASSN expr						
 	;
 
-fact
+term
 	:	ID ASSN atom 							
 	;
 
 atom
-    :	ATOM						
+    :	ATOM								-> ^(ATOM atom)
 	;
 
 expr
-    :	atom						-> ^(EXPR atom)
-	|	prefix_expr					-> ^(EXPR prefix_expr)
-	|	infix_expr					-> ^(EXPR infix_expr)
-	|	ifthen_expr					-> ^(EXPR ifthen_expr)
+    :	atom								-> ^(EXPR atom)
+	|	prefix_expr							-> ^(EXPR prefix_expr)
+	|	infix_expr							-> ^(EXPR infix_expr)
+	|	ifthen_expr							-> ^(EXPR ifthen_expr)
 	;
 
 prefix_expr
-	:	LB pop LB expr RB RB				-> ^(PREF pop expr)
+	:	LB pop LB expr RB RB						-> ^(PREF pop expr)
 	;
 
 pop	
@@ -60,7 +72,7 @@ pop
 	;
 
 infix_expr
-	:	LB expr iop expr RB				-> ^(INF expr iop expr)
+	:	LB e1=expr iop e2=expr RB					-> ^(iop e1 e2)
 	;
 
 iop	:	AND 
@@ -69,7 +81,7 @@ iop	:	AND
 	;
 
 ifthen_expr
-	:	LB IF expr THEN expr RB			-> ^(IFTHEN expr expr)
+	:	LB IF e1=expr THEN e1=expr RB				-> ^(IFTHEN e1 e2)
 	;
 
 
