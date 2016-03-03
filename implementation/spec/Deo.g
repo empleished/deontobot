@@ -24,18 +24,19 @@ tokens {        //TODO special tokens for labeling AST nodes
 // PARSER RULES //
 
 prog
-    :	decl+								-> ^(PROG decl+)
+	:	decl+ EOF								-> ^(PROG decl+)
 	;
 
 decl
-    :	term								-> ^(TERM term)
-	|	rule 								-> ^(RULE rule)
-	|	fact								-> ^(FACT fact)
-    |   goal      			  				-> ^(GOAL goal)    
+	:	term EOL								-> ^(TERM term)
+	|	rule EOL								-> ^(RULE rule)
+	|	fact EOL								-> ^(FACT fact)
+	|	goal EOL     			  				-> ^(GOAL goal)    
 	;
 
 rule
 	:	RULE ASSN expr
+	;
 
 fact
 	:	FACT ASSN expr
@@ -50,18 +51,18 @@ term
 	;
 
 atom
-    :	ATOM								-> ^(ATOM atom)
+	:	ATOM								
 	;
 
 expr
-    :	atom								-> ^(EXPR atom)
-	|	prefix_expr							-> ^(EXPR prefix_expr)
-	|	infix_expr							-> ^(EXPR infix_expr)
-	|	ifthen_expr							-> ^(EXPR ifthen_expr)
+	:	atom								-> ^(EXPR atom)
+	|	prefix_expr						    -> ^(EXPR prefix_expr)
+	|	infix_expr						    -> ^(EXPR infix_expr)
+	|	ifthen_expr						    -> ^(EXPR ifthen_expr)
 	;
 
 prefix_expr
-	:	LB pop LB expr RB RB						-> ^(PREF pop expr)
+	:	LB pop SPACE LB expr RB RB						-> ^(PREF pop expr)
 	;
 
 pop	
@@ -72,7 +73,7 @@ pop
 	;
 
 infix_expr
-	:	LB e1=expr iop e2=expr RB					-> ^(iop e1 e2)
+	:	LB e1=expr SPACE iop SPACE e2=expr RB					-> ^(iop $e1 $e2)
 	;
 
 iop	:	AND 
@@ -81,9 +82,8 @@ iop	:	AND
 	;
 
 ifthen_expr
-	:	LB IF e1=expr THEN e1=expr RB				-> ^(IFTHEN e1 e2)
+	:	LB IF SPACE e1=expr SPACE THEN SPACE e2=expr SPACE RB				-> ^(IFTHEN $e1 $e2)
 	;
-
 
 // LEXER RULES //
 
@@ -91,20 +91,28 @@ OB	:	'OB';
 PRO	:	'PRO';
 PER	:	'PER';
 
-IF	:	'if';
-IFF	:	'iff';
+IF	    :	'if';
+IFF	    :	'iff';
 THEN	:	'then';
-NOT	:	'not';
-AND	:	'and';
-OR	:	'or';
+NOT	    :	'not';
+AND	    :	'and';
+OR	    :	'or';
+
+TERM    :   'term';
+GOAL    :   'goal';
+RULE    :   'rule';
+FACT    :   'fact';
 
 LB	:	'(';
 RB	:	')';
 
-ASSN	: 	':';
+ASSN	: 	': ';
 
-ATOM	:	LETTER (LETTER | DIGIT | ' ')*;
-ID	:	LETTER (LETTER | DIGIT | '_')*;
+ATOM	:	'"' LETTER (LETTER | DIGIT | ' ')* '"';
+ID	    :	LETTER (LETTER | DIGIT | '_')*;
 
 fragment LETTER 	: 	'a'..'z' | 'A'..'Z';
 fragment DIGIT  	: 	'0'..'9';
+
+EOL     :   '\n';
+SPACE   :   ' ';

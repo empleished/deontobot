@@ -10,5 +10,5 @@ parser = DeoParser(tokens)
 rule = parser.prog()
 tree = rule.tree
 
-for node in tree: 
-	print node
+#for node in tree.body: 
+#	print node

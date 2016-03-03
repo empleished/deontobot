@@ -1,57 +1,55 @@
-# $ANTLR 3.5.2 Deo.g 2016-01-28 17:17:12
+# $ANTLR 3.1.2 Deo.g 2016-03-03 16:58:17
 
 import sys
 from antlr3 import *
 from antlr3.compat import set, frozenset
 
 
-
 # for convenience in actions
 HIDDEN = BaseRecognizer.HIDDEN
 
 # token types
+TERM=12
+IFF=27
+ASSN=16
+RULE=13
+RB=20
+PER=23
+LETTER=30
+PREF=10
+NOT=24
+ATOM=11
+AND=25
+ID=17
 EOF=-1
-AND=4
-ASSN=5
-ATOM=6
-AXIOM=7
-COND=8
-DECL=9
-DIGIT=10
-EOL=11
-EXPR=12
-FACT=13
-GOAL=14
-ID=15
-IF=16
-IFF=17
-IFTHEN=18
-INF=19
-LB=20
-LETTER=21
-NOT=22
-OB=23
-OR=24
-PER=25
-PREF=26
-PRO=27
-PROG=28
-RB=29
-RULE=30
-THEN=31
+SPACE=19
+PRO=22
+INF=9
+OB=21
+IF=28
+PROG=6
+EOL=15
+EXPR=5
+THEN=29
+DECL=8
+OR=26
+IFTHEN=4
+LB=18
+DIGIT=31
+FACT=14
+GOAL=7
 
 
 class DeoLexer(Lexer):
 
     grammarFileName = "Deo.g"
-    api_version = 1
+    antlr_version = version_str_to_tuple("3.1.2")
+    antlr_version_str = "3.1.2"
 
     def __init__(self, input=None, state=None):
         if state is None:
             state = RecognizerSharedState()
-        super(DeoLexer, self).__init__(input, state)
-
-        self.delegates = []
+        Lexer.__init__(self, input, state)
 
         self.dfa3 = self.DFA3(
             self, 3,
@@ -71,21 +69,23 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "OB"
     def mOB(self, ):
+
         try:
             _type = OB
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:110:4: ( 'OB' )
-            # Deo.g:110:6: 'OB'
+            # Deo.g:90:4: ( 'OB' )
+            # Deo.g:90:6: 'OB'
             pass 
             self.match("OB")
 
 
 
-
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "OB"
@@ -94,21 +94,23 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "PRO"
     def mPRO(self, ):
+
         try:
             _type = PRO
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:111:5: ( 'PRO' )
-            # Deo.g:111:7: 'PRO'
+            # Deo.g:91:5: ( 'PRO' )
+            # Deo.g:91:7: 'PRO'
             pass 
             self.match("PRO")
 
 
 
-
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "PRO"
@@ -117,21 +119,23 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "PER"
     def mPER(self, ):
+
         try:
             _type = PER
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:112:5: ( 'PER' )
-            # Deo.g:112:7: 'PER'
+            # Deo.g:92:5: ( 'PER' )
+            # Deo.g:92:7: 'PER'
             pass 
             self.match("PER")
 
 
 
-
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "PER"
@@ -140,21 +144,23 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "IF"
     def mIF(self, ):
+
         try:
             _type = IF
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:114:4: ( 'if' )
-            # Deo.g:114:6: 'if'
+            # Deo.g:94:8: ( 'if' )
+            # Deo.g:94:10: 'if'
             pass 
             self.match("if")
 
 
 
-
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "IF"
@@ -163,21 +169,23 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "IFF"
     def mIFF(self, ):
+
         try:
             _type = IFF
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:115:5: ( 'iff' )
-            # Deo.g:115:7: 'iff'
+            # Deo.g:95:9: ( 'iff' )
+            # Deo.g:95:11: 'iff'
             pass 
             self.match("iff")
 
 
 
-
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "IFF"
@@ -186,21 +194,23 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "THEN"
     def mTHEN(self, ):
+
         try:
             _type = THEN
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:116:6: ( 'then' )
-            # Deo.g:116:8: 'then'
+            # Deo.g:96:6: ( 'then' )
+            # Deo.g:96:8: 'then'
             pass 
             self.match("then")
 
 
 
-
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "THEN"
@@ -209,21 +219,23 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "NOT"
     def mNOT(self, ):
+
         try:
             _type = NOT
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:117:5: ( 'not' )
-            # Deo.g:117:7: 'not'
+            # Deo.g:97:9: ( 'not' )
+            # Deo.g:97:11: 'not'
             pass 
             self.match("not")
 
 
 
-
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "NOT"
@@ -232,21 +244,23 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "AND"
     def mAND(self, ):
+
         try:
             _type = AND
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:118:5: ( 'and' )
-            # Deo.g:118:7: 'and'
+            # Deo.g:98:9: ( 'and' )
+            # Deo.g:98:11: 'and'
             pass 
             self.match("and")
 
 
 
-
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "AND"
@@ -255,35 +269,138 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "OR"
     def mOR(self, ):
+
         try:
             _type = OR
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:119:4: ( 'or' )
-            # Deo.g:119:6: 'or'
+            # Deo.g:99:8: ( 'or' )
+            # Deo.g:99:10: 'or'
             pass 
             self.match("or")
 
 
 
-
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "OR"
 
 
 
+    # $ANTLR start "TERM"
+    def mTERM(self, ):
+
+        try:
+            _type = TERM
+            _channel = DEFAULT_CHANNEL
+
+            # Deo.g:101:9: ( 'term' )
+            # Deo.g:101:13: 'term'
+            pass 
+            self.match("term")
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+
+        finally:
+
+            pass
+
+    # $ANTLR end "TERM"
+
+
+
+    # $ANTLR start "GOAL"
+    def mGOAL(self, ):
+
+        try:
+            _type = GOAL
+            _channel = DEFAULT_CHANNEL
+
+            # Deo.g:102:9: ( 'goal' )
+            # Deo.g:102:13: 'goal'
+            pass 
+            self.match("goal")
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+
+        finally:
+
+            pass
+
+    # $ANTLR end "GOAL"
+
+
+
+    # $ANTLR start "RULE"
+    def mRULE(self, ):
+
+        try:
+            _type = RULE
+            _channel = DEFAULT_CHANNEL
+
+            # Deo.g:103:9: ( 'rule' )
+            # Deo.g:103:13: 'rule'
+            pass 
+            self.match("rule")
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+
+        finally:
+
+            pass
+
+    # $ANTLR end "RULE"
+
+
+
+    # $ANTLR start "FACT"
+    def mFACT(self, ):
+
+        try:
+            _type = FACT
+            _channel = DEFAULT_CHANNEL
+
+            # Deo.g:104:9: ( 'fact' )
+            # Deo.g:104:13: 'fact'
+            pass 
+            self.match("fact")
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+
+        finally:
+
+            pass
+
+    # $ANTLR end "FACT"
+
+
+
     # $ANTLR start "LB"
     def mLB(self, ):
+
         try:
             _type = LB
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:121:4: ( '(' )
-            # Deo.g:121:6: '('
+            # Deo.g:106:4: ( '(' )
+            # Deo.g:106:6: '('
             pass 
             self.match(40)
 
@@ -291,7 +408,9 @@ class DeoLexer(Lexer):
 
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "LB"
@@ -300,12 +419,13 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "RB"
     def mRB(self, ):
+
         try:
             _type = RB
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:122:4: ( ')' )
-            # Deo.g:122:6: ')'
+            # Deo.g:107:4: ( ')' )
+            # Deo.g:107:6: ')'
             pass 
             self.match(41)
 
@@ -313,7 +433,9 @@ class DeoLexer(Lexer):
 
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "RB"
@@ -322,61 +444,42 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "ASSN"
     def mASSN(self, ):
+
         try:
             _type = ASSN
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:124:6: ( ':' )
-            # Deo.g:124:9: ':'
+            # Deo.g:109:6: ( ': ' )
+            # Deo.g:109:9: ': '
             pass 
-            self.match(58)
+            self.match(": ")
 
 
 
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "ASSN"
 
 
 
-    # $ANTLR start "EOL"
-    def mEOL(self, ):
-        try:
-            _type = EOL
-            _channel = DEFAULT_CHANNEL
-
-            # Deo.g:126:6: ( '.' )
-            # Deo.g:126:9: '.'
-            pass 
-            self.match(46)
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "EOL"
-
-
-
     # $ANTLR start "ATOM"
     def mATOM(self, ):
+
         try:
             _type = ATOM
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:128:6: ( LETTER ( LETTER | DIGIT | ' ' )* )
-            # Deo.g:128:8: LETTER ( LETTER | DIGIT | ' ' )*
+            # Deo.g:111:6: ( '\"' LETTER ( LETTER | DIGIT | ' ' )* '\"' )
+            # Deo.g:111:8: '\"' LETTER ( LETTER | DIGIT | ' ' )* '\"'
             pass 
+            self.match(34)
             self.mLETTER()
-
-
-            # Deo.g:128:15: ( LETTER | DIGIT | ' ' )*
+            # Deo.g:111:19: ( LETTER | DIGIT | ' ' )*
             while True: #loop1
                 alt1 = 2
                 LA1_0 = self.input.LA(1)
@@ -397,16 +500,19 @@ class DeoLexer(Lexer):
 
 
 
-
                 else:
                     break #loop1
 
+
+            self.match(34)
 
 
 
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "ATOM"
@@ -415,17 +521,16 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "ID"
     def mID(self, ):
+
         try:
             _type = ID
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:129:4: ( LETTER ( LETTER | DIGIT | '_' )* )
-            # Deo.g:129:6: LETTER ( LETTER | DIGIT | '_' )*
+            # Deo.g:112:8: ( LETTER ( LETTER | DIGIT | '_' )* )
+            # Deo.g:112:10: LETTER ( LETTER | DIGIT | '_' )*
             pass 
             self.mLETTER()
-
-
-            # Deo.g:129:13: ( LETTER | DIGIT | '_' )*
+            # Deo.g:112:17: ( LETTER | DIGIT | '_' )*
             while True: #loop2
                 alt2 = 2
                 LA2_0 = self.input.LA(1)
@@ -446,16 +551,18 @@ class DeoLexer(Lexer):
 
 
 
-
                 else:
                     break #loop2
 
 
 
 
+
             self._state.type = _type
             self._state.channel = _channel
+
         finally:
+
             pass
 
     # $ANTLR end "ID"
@@ -464,8 +571,9 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "LETTER"
     def mLETTER(self, ):
+
         try:
-            # Deo.g:131:18: ( 'a' .. 'z' | 'A' .. 'Z' )
+            # Deo.g:114:18: ( 'a' .. 'z' | 'A' .. 'Z' )
             # Deo.g:
             pass 
             if (65 <= self.input.LA(1) <= 90) or (97 <= self.input.LA(1) <= 122):
@@ -479,8 +587,8 @@ class DeoLexer(Lexer):
 
 
 
-
         finally:
+
             pass
 
     # $ANTLR end "LETTER"
@@ -489,38 +597,82 @@ class DeoLexer(Lexer):
 
     # $ANTLR start "DIGIT"
     def mDIGIT(self, ):
+
         try:
-            # Deo.g:132:18: ( '0' .. '9' )
-            # Deo.g:
+            # Deo.g:115:18: ( '0' .. '9' )
+            # Deo.g:115:21: '0' .. '9'
             pass 
-            if (48 <= self.input.LA(1) <= 57):
-                self.input.consume()
-            else:
-                mse = MismatchedSetException(None, self.input)
-                self.recover(mse)
-                raise mse
-
-
+            self.matchRange(48, 57)
 
 
 
 
         finally:
+
             pass
 
     # $ANTLR end "DIGIT"
 
 
 
+    # $ANTLR start "EOL"
+    def mEOL(self, ):
+
+        try:
+            _type = EOL
+            _channel = DEFAULT_CHANNEL
+
+            # Deo.g:117:9: ( '\\n' )
+            # Deo.g:117:13: '\\n'
+            pass 
+            self.match(10)
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+
+        finally:
+
+            pass
+
+    # $ANTLR end "EOL"
+
+
+
+    # $ANTLR start "SPACE"
+    def mSPACE(self, ):
+
+        try:
+            _type = SPACE
+            _channel = DEFAULT_CHANNEL
+
+            # Deo.g:118:9: ( ' ' )
+            # Deo.g:118:13: ' '
+            pass 
+            self.match(32)
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+
+        finally:
+
+            pass
+
+    # $ANTLR end "SPACE"
+
+
+
     def mTokens(self):
-        # Deo.g:1:8: ( OB | PRO | PER | IF | IFF | THEN | NOT | AND | OR | LB | RB | ASSN | EOL | ATOM | ID )
-        alt3 = 15
+        # Deo.g:1:8: ( OB | PRO | PER | IF | IFF | THEN | NOT | AND | OR | TERM | GOAL | RULE | FACT | LB | RB | ASSN | ATOM | ID | EOL | SPACE )
+        alt3 = 20
         alt3 = self.dfa3.predict(self.input)
         if alt3 == 1:
             # Deo.g:1:10: OB
             pass 
             self.mOB()
-
 
 
         elif alt3 == 2:
@@ -529,12 +681,10 @@ class DeoLexer(Lexer):
             self.mPRO()
 
 
-
         elif alt3 == 3:
             # Deo.g:1:17: PER
             pass 
             self.mPER()
-
 
 
         elif alt3 == 4:
@@ -543,12 +693,10 @@ class DeoLexer(Lexer):
             self.mIF()
 
 
-
         elif alt3 == 5:
             # Deo.g:1:24: IFF
             pass 
             self.mIFF()
-
 
 
         elif alt3 == 6:
@@ -557,12 +705,10 @@ class DeoLexer(Lexer):
             self.mTHEN()
 
 
-
         elif alt3 == 7:
             # Deo.g:1:33: NOT
             pass 
             self.mNOT()
-
 
 
         elif alt3 == 8:
@@ -571,54 +717,76 @@ class DeoLexer(Lexer):
             self.mAND()
 
 
-
         elif alt3 == 9:
             # Deo.g:1:41: OR
             pass 
             self.mOR()
 
 
-
         elif alt3 == 10:
-            # Deo.g:1:44: LB
+            # Deo.g:1:44: TERM
+            pass 
+            self.mTERM()
+
+
+        elif alt3 == 11:
+            # Deo.g:1:49: GOAL
+            pass 
+            self.mGOAL()
+
+
+        elif alt3 == 12:
+            # Deo.g:1:54: RULE
+            pass 
+            self.mRULE()
+
+
+        elif alt3 == 13:
+            # Deo.g:1:59: FACT
+            pass 
+            self.mFACT()
+
+
+        elif alt3 == 14:
+            # Deo.g:1:64: LB
             pass 
             self.mLB()
 
 
-
-        elif alt3 == 11:
-            # Deo.g:1:47: RB
+        elif alt3 == 15:
+            # Deo.g:1:67: RB
             pass 
             self.mRB()
 
 
-
-        elif alt3 == 12:
-            # Deo.g:1:50: ASSN
+        elif alt3 == 16:
+            # Deo.g:1:70: ASSN
             pass 
             self.mASSN()
 
 
-
-        elif alt3 == 13:
-            # Deo.g:1:55: EOL
-            pass 
-            self.mEOL()
-
-
-
-        elif alt3 == 14:
-            # Deo.g:1:59: ATOM
+        elif alt3 == 17:
+            # Deo.g:1:75: ATOM
             pass 
             self.mATOM()
 
 
-
-        elif alt3 == 15:
-            # Deo.g:1:64: ID
+        elif alt3 == 18:
+            # Deo.g:1:80: ID
             pass 
             self.mID()
 
+
+        elif alt3 == 19:
+            # Deo.g:1:83: EOL
+            pass 
+            self.mEOL()
+
+
+        elif alt3 == 20:
+            # Deo.g:1:87: SPACE
+            pass 
+            self.mSPACE()
 
 
 
@@ -629,96 +797,99 @@ class DeoLexer(Lexer):
     # lookup tables for DFA #3
 
     DFA3_eot = DFA.unpack(
-        u"\1\uffff\7\16\4\uffff\1\16\1\30\1\uffff\1\16\1\uffff\2\16\1\34"
-        u"\3\16\1\40\1\uffff\1\41\1\42\1\43\1\uffff\1\16\1\45\1\46\4\uffff"
-        u"\1\47\3\uffff"
+        u"\1\uffff\12\17\7\uffff\1\36\2\17\1\42\4\17\1\47\3\17\1\uffff\1"
+        u"\53\1\54\1\55\1\uffff\2\17\1\60\1\61\1\uffff\3\17\3\uffff\1\65"
+        u"\1\66\2\uffff\1\67\1\70\1\71\5\uffff"
         )
 
     DFA3_eof = DFA.unpack(
-        u"\50\uffff"
+        u"\72\uffff"
         )
 
     DFA3_min = DFA.unpack(
-        u"\1\50\7\60\4\uffff\1\60\1\40\1\uffff\1\60\1\uffff\2\60\1\40\3\60"
-        u"\1\40\1\uffff\3\40\1\uffff\1\60\2\40\4\uffff\1\40\3\uffff"
+        u"\1\12\1\102\1\105\1\146\1\145\1\157\1\156\1\162\1\157\1\165\1\141"
+        u"\7\uffff\1\60\1\117\1\122\1\60\1\145\1\162\1\164\1\144\1\60\1\141"
+        u"\1\154\1\143\1\uffff\3\60\1\uffff\1\156\1\155\2\60\1\uffff\1\154"
+        u"\1\145\1\164\3\uffff\2\60\2\uffff\3\60\5\uffff"
         )
 
     DFA3_max = DFA.unpack(
-        u"\10\172\4\uffff\2\172\1\uffff\1\172\1\uffff\7\172\1\uffff\3\172"
-        u"\1\uffff\3\172\4\uffff\1\172\3\uffff"
+        u"\1\172\1\102\1\122\1\146\1\150\1\157\1\156\1\162\1\157\1\165\1"
+        u"\141\7\uffff\1\172\1\117\1\122\1\172\1\145\1\162\1\164\1\144\1"
+        u"\172\1\141\1\154\1\143\1\uffff\3\172\1\uffff\1\156\1\155\2\172"
+        u"\1\uffff\1\154\1\145\1\164\3\uffff\2\172\2\uffff\3\172\5\uffff"
         )
 
     DFA3_accept = DFA.unpack(
-        u"\10\uffff\1\12\1\13\1\14\1\15\2\uffff\1\16\1\uffff\1\17\7\uffff"
-        u"\1\1\3\uffff\1\4\3\uffff\1\11\1\2\1\3\1\5\1\uffff\1\7\1\10\1\6"
+        u"\13\uffff\1\16\1\17\1\20\1\21\1\22\1\23\1\24\14\uffff\1\1\3\uffff"
+        u"\1\4\4\uffff\1\11\3\uffff\1\2\1\3\1\5\2\uffff\1\7\1\10\3\uffff"
+        u"\1\6\1\12\1\13\1\14\1\15"
         )
 
     DFA3_special = DFA.unpack(
-        u"\50\uffff"
+        u"\72\uffff"
         )
 
-
+            
     DFA3_transition = [
-        DFA.unpack(u"\1\10\1\11\4\uffff\1\13\13\uffff\1\12\6\uffff\16\14"
-        u"\1\1\1\2\12\14\6\uffff\1\6\7\14\1\3\4\14\1\5\1\7\4\14\1\4\6\14"),
-        DFA.unpack(u"\12\17\7\uffff\1\17\1\15\30\17\4\uffff\1\20\1\uffff"
-        u"\32\17"),
-        DFA.unpack(u"\12\17\7\uffff\4\17\1\22\14\17\1\21\10\17\4\uffff\1"
-        u"\20\1\uffff\32\17"),
-        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff\5\17\1\23"
+        DFA.unpack(u"\1\20\25\uffff\1\21\1\uffff\1\16\5\uffff\1\13\1\14\20"
+        u"\uffff\1\15\6\uffff\16\17\1\1\1\2\12\17\6\uffff\1\6\4\17\1\12\1"
+        u"\10\1\17\1\3\4\17\1\5\1\7\2\17\1\11\1\17\1\4\6\17"),
+        DFA.unpack(u"\1\22"),
+        DFA.unpack(u"\1\24\14\uffff\1\23"),
+        DFA.unpack(u"\1\25"),
+        DFA.unpack(u"\1\27\2\uffff\1\26"),
+        DFA.unpack(u"\1\30"),
+        DFA.unpack(u"\1\31"),
+        DFA.unpack(u"\1\32"),
+        DFA.unpack(u"\1\33"),
+        DFA.unpack(u"\1\34"),
+        DFA.unpack(u"\1\35"),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\32\17"),
+        DFA.unpack(u"\1\37"),
+        DFA.unpack(u"\1\40"),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\5\17\1\41"
         u"\24\17"),
-        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff\7\17\1\24"
-        u"\22\17"),
-        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff\16\17\1\25"
-        u"\13\17"),
-        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff\15\17\1\26"
-        u"\14\17"),
-        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff\21\17\1\27"
-        u"\10\17"),
+        DFA.unpack(u"\1\43"),
+        DFA.unpack(u"\1\44"),
+        DFA.unpack(u"\1\45"),
+        DFA.unpack(u"\1\46"),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\32\17"),
+        DFA.unpack(u"\1\50"),
+        DFA.unpack(u"\1\51"),
+        DFA.unpack(u"\1\52"),
+        DFA.unpack(u""),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\32\17"),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\32\17"),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\32\17"),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\56"),
+        DFA.unpack(u"\1\57"),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\32\17"),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\32\17"),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\62"),
+        DFA.unpack(u"\1\63"),
+        DFA.unpack(u"\1\64"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u""),
-        DFA.unpack(u""),
-        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff\32\17"),
-        DFA.unpack(u"\1\16\17\uffff\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff"
-        u"\32\17"),
-        DFA.unpack(u""),
-        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff\32\17"),
-        DFA.unpack(u""),
-        DFA.unpack(u"\12\17\7\uffff\16\17\1\31\13\17\4\uffff\1\20\1\uffff"
-        u"\32\17"),
-        DFA.unpack(u"\12\17\7\uffff\21\17\1\32\10\17\4\uffff\1\20\1\uffff"
-        u"\32\17"),
-        DFA.unpack(u"\1\16\17\uffff\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff"
-        u"\5\17\1\33\24\17"),
-        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff\4\17\1\35"
-        u"\25\17"),
-        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff\23\17\1\36"
-        u"\6\17"),
-        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff\3\17\1\37"
-        u"\26\17"),
-        DFA.unpack(u"\1\16\17\uffff\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff"
-        u"\32\17"),
-        DFA.unpack(u""),
-        DFA.unpack(u"\1\16\17\uffff\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff"
-        u"\32\17"),
-        DFA.unpack(u"\1\16\17\uffff\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff"
-        u"\32\17"),
-        DFA.unpack(u"\1\16\17\uffff\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff"
-        u"\32\17"),
-        DFA.unpack(u""),
-        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff\15\17\1\44"
-        u"\14\17"),
-        DFA.unpack(u"\1\16\17\uffff\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff"
-        u"\32\17"),
-        DFA.unpack(u"\1\16\17\uffff\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff"
-        u"\32\17"),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\32\17"),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\32\17"),
         DFA.unpack(u""),
         DFA.unpack(u""),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\32\17"),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\32\17"),
+        DFA.unpack(u"\12\17\7\uffff\32\17\4\uffff\1\17\1\uffff\32\17"),
         DFA.unpack(u""),
         DFA.unpack(u""),
-        DFA.unpack(u"\1\16\17\uffff\12\17\7\uffff\32\17\4\uffff\1\20\1\uffff"
-        u"\32\17"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u"")
@@ -726,10 +897,7 @@ class DeoLexer(Lexer):
 
     # class definition for DFA #3
 
-    class DFA3(DFA):
-        pass
-
-
+    DFA3 = DFA
  
 
 
@@ -737,12 +905,10 @@ class DeoLexer(Lexer):
 def main(argv, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr):
     from antlr3.main import LexerMain
     main = LexerMain(DeoLexer)
-
     main.stdin = stdin
     main.stdout = stdout
     main.stderr = stderr
     main.execute(argv)
-
 
 
 if __name__ == '__main__':
