@@ -1,10 +1,11 @@
-term: P: "involve participation of other people"
-term: Q: "involve data relating to other people"
-term: R: "complete ethics checklist form"
-term: S: "apply for ethical approval"
-term: T: "comply with points on ethics checklist form"
-term: U: "use introduction and debriefing scripts"
-term: V: "include introduction and debriefing scripts with signed ethics checklist form as part of report"
-rule: (if (P or Q) then (OB(R)))
+P: "involve participation of other people"
+Q: "involve data relating to other people"
+R: "complete ethics checklist form"
+S: "apply for ethical approval"
+T: "comply with points on ethics checklist form"
+U: "use introduction and debriefing scripts"
+V: "include introduction and debriefing scripts with signed ethics checklist form as part of report"
+rule: (if P then R)
 rule: (if ((P and R) and T) then ((not OB(S) and OB(U)) and OB(V)))
 rule: (if ((P and R) and not T) then (OB(S)))
+rule: P

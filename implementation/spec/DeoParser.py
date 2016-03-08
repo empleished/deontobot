@@ -1,4 +1,4 @@
-# $ANTLR 3.1.2 Deo.g 2016-03-03 16:58:16
+# $ANTLR 3.1.2 Deo.g 2016-03-08 10:50:26
 
 import sys
 from antlr3 import *
@@ -16,19 +16,19 @@ IFF=27
 TERM=12
 ASSN=16
 RULE=13
-RB=20
-PER=23
+RB=19
+PER=22
 LETTER=30
 PREF=10
-NOT=24
+NOT=23
 ATOM=11
 AND=25
 ID=17
-SPACE=19
+SPACE=24
 EOF=-1
-PRO=22
+PRO=21
 INF=9
-OB=21
+OB=20
 IF=28
 PROG=6
 EXPR=5
@@ -46,8 +46,8 @@ FACT=14
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>", 
     "IFTHEN", "EXPR", "PROG", "GOAL", "DECL", "INF", "PREF", "ATOM", "TERM", 
-    "RULE", "FACT", "EOL", "ASSN", "ID", "LB", "SPACE", "RB", "OB", "PRO", 
-    "PER", "NOT", "AND", "OR", "IFF", "IF", "THEN", "LETTER", "DIGIT"
+    "RULE", "FACT", "EOL", "ASSN", "ID", "LB", "RB", "OB", "PRO", "PER", 
+    "NOT", "SPACE", "AND", "OR", "IFF", "IF", "THEN", "LETTER", "DIGIT"
 ]
 
 
@@ -419,8 +419,8 @@ class DeoParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 34:26: -> ^( GOAL goal )
-                    # Deo.g:34:29: ^( GOAL goal )
+                    # 34:25: -> ^( GOAL goal )
+                    # Deo.g:34:28: ^( GOAL goal )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(self._adaptor.createFromType(GOAL, "GOAL"), root_1)
 
@@ -485,17 +485,17 @@ class DeoParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                RULE11=self.match(self.input, RULE, self.FOLLOW_RULE_in_rule237)
+                RULE11=self.match(self.input, RULE, self.FOLLOW_RULE_in_rule236)
 
                 RULE11_tree = self._adaptor.createWithPayload(RULE11)
                 self._adaptor.addChild(root_0, RULE11_tree)
 
-                ASSN12=self.match(self.input, ASSN, self.FOLLOW_ASSN_in_rule239)
+                ASSN12=self.match(self.input, ASSN, self.FOLLOW_ASSN_in_rule238)
 
                 ASSN12_tree = self._adaptor.createWithPayload(ASSN12)
                 self._adaptor.addChild(root_0, ASSN12_tree)
 
-                self._state.following.append(self.FOLLOW_expr_in_rule241)
+                self._state.following.append(self.FOLLOW_expr_in_rule240)
                 expr13 = self.expr()
 
                 self._state.following.pop()
@@ -555,17 +555,17 @@ class DeoParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                FACT14=self.match(self.input, FACT, self.FOLLOW_FACT_in_fact252)
+                FACT14=self.match(self.input, FACT, self.FOLLOW_FACT_in_fact251)
 
                 FACT14_tree = self._adaptor.createWithPayload(FACT14)
                 self._adaptor.addChild(root_0, FACT14_tree)
 
-                ASSN15=self.match(self.input, ASSN, self.FOLLOW_ASSN_in_fact254)
+                ASSN15=self.match(self.input, ASSN, self.FOLLOW_ASSN_in_fact253)
 
                 ASSN15_tree = self._adaptor.createWithPayload(ASSN15)
                 self._adaptor.addChild(root_0, ASSN15_tree)
 
-                self._state.following.append(self.FOLLOW_expr_in_fact256)
+                self._state.following.append(self.FOLLOW_expr_in_fact255)
                 expr16 = self.expr()
 
                 self._state.following.pop()
@@ -625,17 +625,17 @@ class DeoParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                GOAL17=self.match(self.input, GOAL, self.FOLLOW_GOAL_in_goal267)
+                GOAL17=self.match(self.input, GOAL, self.FOLLOW_GOAL_in_goal266)
 
                 GOAL17_tree = self._adaptor.createWithPayload(GOAL17)
                 self._adaptor.addChild(root_0, GOAL17_tree)
 
-                ASSN18=self.match(self.input, ASSN, self.FOLLOW_ASSN_in_goal269)
+                ASSN18=self.match(self.input, ASSN, self.FOLLOW_ASSN_in_goal268)
 
                 ASSN18_tree = self._adaptor.createWithPayload(ASSN18)
                 self._adaptor.addChild(root_0, ASSN18_tree)
 
-                self._state.following.append(self.FOLLOW_expr_in_goal271)
+                self._state.following.append(self.FOLLOW_expr_in_goal270)
                 expr19 = self.expr()
 
                 self._state.following.pop()
@@ -695,17 +695,17 @@ class DeoParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                ID20=self.match(self.input, ID, self.FOLLOW_ID_in_term288)
+                ID20=self.match(self.input, ID, self.FOLLOW_ID_in_term287)
 
                 ID20_tree = self._adaptor.createWithPayload(ID20)
                 self._adaptor.addChild(root_0, ID20_tree)
 
-                ASSN21=self.match(self.input, ASSN, self.FOLLOW_ASSN_in_term290)
+                ASSN21=self.match(self.input, ASSN, self.FOLLOW_ASSN_in_term289)
 
                 ASSN21_tree = self._adaptor.createWithPayload(ASSN21)
                 self._adaptor.addChild(root_0, ASSN21_tree)
 
-                self._state.following.append(self.FOLLOW_atom_in_term292)
+                self._state.following.append(self.FOLLOW_atom_in_term291)
                 atom22 = self.atom()
 
                 self._state.following.pop()
@@ -761,7 +761,7 @@ class DeoParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                ATOM23=self.match(self.input, ATOM, self.FOLLOW_ATOM_in_atom311)
+                ATOM23=self.match(self.input, ATOM, self.FOLLOW_ATOM_in_atom310)
 
                 ATOM23_tree = self._adaptor.createWithPayload(ATOM23)
                 self._adaptor.addChild(root_0, ATOM23_tree)
@@ -798,7 +798,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "expr"
-    # Deo.g:57:1: expr : ( atom -> ^( EXPR atom ) | prefix_expr -> ^( EXPR prefix_expr ) | infix_expr -> ^( EXPR infix_expr ) | ifthen_expr -> ^( EXPR ifthen_expr ) );
+    # Deo.g:57:1: expr : ( ID -> ^( EXPR ID ) | prefix_expr -> ^( EXPR prefix_expr ) | infix_expr -> ^( EXPR infix_expr ) | ifthen_expr -> ^( EXPR ifthen_expr ) );
     def expr(self, ):
 
         retval = self.expr_return()
@@ -806,8 +806,7 @@ class DeoParser(Parser):
 
         root_0 = None
 
-        atom24 = None
-
+        ID24 = None
         prefix_expr25 = None
 
         infix_expr26 = None
@@ -815,23 +814,24 @@ class DeoParser(Parser):
         ifthen_expr27 = None
 
 
+        ID24_tree = None
+        stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
         stream_prefix_expr = RewriteRuleSubtreeStream(self._adaptor, "rule prefix_expr")
-        stream_atom = RewriteRuleSubtreeStream(self._adaptor, "rule atom")
         stream_infix_expr = RewriteRuleSubtreeStream(self._adaptor, "rule infix_expr")
         stream_ifthen_expr = RewriteRuleSubtreeStream(self._adaptor, "rule ifthen_expr")
         try:
             try:
-                # Deo.g:58:2: ( atom -> ^( EXPR atom ) | prefix_expr -> ^( EXPR prefix_expr ) | infix_expr -> ^( EXPR infix_expr ) | ifthen_expr -> ^( EXPR ifthen_expr ) )
+                # Deo.g:58:2: ( ID -> ^( EXPR ID ) | prefix_expr -> ^( EXPR prefix_expr ) | infix_expr -> ^( EXPR infix_expr ) | ifthen_expr -> ^( EXPR ifthen_expr ) )
                 alt3 = 4
                 LA3_0 = self.input.LA(1)
 
-                if (LA3_0 == ATOM) :
+                if (LA3_0 == ID) :
                     alt3 = 1
                 elif (LA3_0 == LB) :
                     LA3 = self.input.LA(2)
                     if LA3 == IF:
                         alt3 = 4
-                    elif LA3 == ATOM or LA3 == LB:
+                    elif LA3 == ID or LA3 == LB:
                         alt3 = 3
                     elif LA3 == OB or LA3 == PRO or LA3 == PER or LA3 == NOT:
                         alt3 = 2
@@ -846,16 +846,13 @@ class DeoParser(Parser):
                     raise nvae
 
                 if alt3 == 1:
-                    # Deo.g:58:4: atom
+                    # Deo.g:58:4: ID
                     pass 
-                    self._state.following.append(self.FOLLOW_atom_in_expr330)
-                    atom24 = self.atom()
-
-                    self._state.following.pop()
-                    stream_atom.add(atom24.tree)
+                    ID24=self.match(self.input, ID, self.FOLLOW_ID_in_expr329) 
+                    stream_ID.add(ID24)
 
                     # AST Rewrite
-                    # elements: atom
+                    # elements: ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -871,12 +868,12 @@ class DeoParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 58:16: -> ^( EXPR atom )
-                    # Deo.g:58:19: ^( EXPR atom )
+                    # 58:18: -> ^( EXPR ID )
+                    # Deo.g:58:21: ^( EXPR ID )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(self._adaptor.createFromType(EXPR, "EXPR"), root_1)
 
-                    self._adaptor.addChild(root_1, stream_atom.nextTree())
+                    self._adaptor.addChild(root_1, stream_ID.nextNode())
 
                     self._adaptor.addChild(root_0, root_1)
 
@@ -888,7 +885,7 @@ class DeoParser(Parser):
                 elif alt3 == 2:
                     # Deo.g:59:4: prefix_expr
                     pass 
-                    self._state.following.append(self.FOLLOW_prefix_expr_in_expr350)
+                    self._state.following.append(self.FOLLOW_prefix_expr_in_expr353)
                     prefix_expr25 = self.prefix_expr()
 
                     self._state.following.pop()
@@ -928,7 +925,7 @@ class DeoParser(Parser):
                 elif alt3 == 3:
                     # Deo.g:60:4: infix_expr
                     pass 
-                    self._state.following.append(self.FOLLOW_infix_expr_in_expr372)
+                    self._state.following.append(self.FOLLOW_infix_expr_in_expr375)
                     infix_expr26 = self.infix_expr()
 
                     self._state.following.pop()
@@ -968,7 +965,7 @@ class DeoParser(Parser):
                 elif alt3 == 4:
                     # Deo.g:61:4: ifthen_expr
                     pass 
-                    self._state.following.append(self.FOLLOW_ifthen_expr_in_expr394)
+                    self._state.following.append(self.FOLLOW_ifthen_expr_in_expr397)
                     ifthen_expr27 = self.ifthen_expr()
 
                     self._state.following.pop()
@@ -1034,7 +1031,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "prefix_expr"
-    # Deo.g:64:1: prefix_expr : LB pop SPACE LB expr RB RB -> ^( PREF pop expr ) ;
+    # Deo.g:64:1: prefix_expr : LB pop LB expr RB RB -> ^( PREF pop expr ) ;
     def prefix_expr(self, ):
 
         retval = self.prefix_expr_return()
@@ -1043,50 +1040,45 @@ class DeoParser(Parser):
         root_0 = None
 
         LB28 = None
-        SPACE30 = None
-        LB31 = None
+        LB30 = None
+        RB32 = None
         RB33 = None
-        RB34 = None
         pop29 = None
 
-        expr32 = None
+        expr31 = None
 
 
         LB28_tree = None
-        SPACE30_tree = None
-        LB31_tree = None
+        LB30_tree = None
+        RB32_tree = None
         RB33_tree = None
-        RB34_tree = None
         stream_LB = RewriteRuleTokenStream(self._adaptor, "token LB")
         stream_RB = RewriteRuleTokenStream(self._adaptor, "token RB")
-        stream_SPACE = RewriteRuleTokenStream(self._adaptor, "token SPACE")
         stream_pop = RewriteRuleSubtreeStream(self._adaptor, "rule pop")
         stream_expr = RewriteRuleSubtreeStream(self._adaptor, "rule expr")
         try:
             try:
-                # Deo.g:65:2: ( LB pop SPACE LB expr RB RB -> ^( PREF pop expr ) )
-                # Deo.g:65:4: LB pop SPACE LB expr RB RB
+                # Deo.g:65:2: ( LB pop LB expr RB RB -> ^( PREF pop expr ) )
+                # Deo.g:65:4: LB pop LB expr RB RB
                 pass 
-                LB28=self.match(self.input, LB, self.FOLLOW_LB_in_prefix_expr422) 
+                LB28=self.match(self.input, LB, self.FOLLOW_LB_in_prefix_expr425) 
                 stream_LB.add(LB28)
-                self._state.following.append(self.FOLLOW_pop_in_prefix_expr424)
+                self._state.following.append(self.FOLLOW_pop_in_prefix_expr427)
                 pop29 = self.pop()
 
                 self._state.following.pop()
                 stream_pop.add(pop29.tree)
-                SPACE30=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_prefix_expr426) 
-                stream_SPACE.add(SPACE30)
-                LB31=self.match(self.input, LB, self.FOLLOW_LB_in_prefix_expr428) 
-                stream_LB.add(LB31)
-                self._state.following.append(self.FOLLOW_expr_in_prefix_expr430)
-                expr32 = self.expr()
+                LB30=self.match(self.input, LB, self.FOLLOW_LB_in_prefix_expr429) 
+                stream_LB.add(LB30)
+                self._state.following.append(self.FOLLOW_expr_in_prefix_expr431)
+                expr31 = self.expr()
 
                 self._state.following.pop()
-                stream_expr.add(expr32.tree)
-                RB33=self.match(self.input, RB, self.FOLLOW_RB_in_prefix_expr432) 
+                stream_expr.add(expr31.tree)
+                RB32=self.match(self.input, RB, self.FOLLOW_RB_in_prefix_expr433) 
+                stream_RB.add(RB32)
+                RB33=self.match(self.input, RB, self.FOLLOW_RB_in_prefix_expr435) 
                 stream_RB.add(RB33)
-                RB34=self.match(self.input, RB, self.FOLLOW_RB_in_prefix_expr434) 
-                stream_RB.add(RB34)
 
                 # AST Rewrite
                 # elements: pop, expr
@@ -1105,8 +1097,8 @@ class DeoParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 65:36: -> ^( PREF pop expr )
-                # Deo.g:65:39: ^( PREF pop expr )
+                # 65:30: -> ^( PREF pop expr )
+                # Deo.g:65:33: ^( PREF pop expr )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(self._adaptor.createFromType(PREF, "PREF"), root_1)
 
@@ -1158,9 +1150,9 @@ class DeoParser(Parser):
 
         root_0 = None
 
-        set35 = None
+        set34 = None
 
-        set35_tree = None
+        set34_tree = None
 
         try:
             try:
@@ -1169,10 +1161,10 @@ class DeoParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                set35 = self.input.LT(1)
+                set34 = self.input.LT(1)
                 if (OB <= self.input.LA(1) <= NOT):
                     self.input.consume()
-                    self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set35))
+                    self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set34))
                     self._state.errorRecovery = False
 
                 else:
@@ -1220,21 +1212,21 @@ class DeoParser(Parser):
 
         root_0 = None
 
-        LB36 = None
-        SPACE37 = None
-        SPACE39 = None
-        RB40 = None
+        LB35 = None
+        SPACE36 = None
+        SPACE38 = None
+        RB39 = None
         e1 = None
 
         e2 = None
 
-        iop38 = None
+        iop37 = None
 
 
-        LB36_tree = None
-        SPACE37_tree = None
-        SPACE39_tree = None
-        RB40_tree = None
+        LB35_tree = None
+        SPACE36_tree = None
+        SPACE38_tree = None
+        RB39_tree = None
         stream_LB = RewriteRuleTokenStream(self._adaptor, "token LB")
         stream_RB = RewriteRuleTokenStream(self._adaptor, "token RB")
         stream_SPACE = RewriteRuleTokenStream(self._adaptor, "token SPACE")
@@ -1245,32 +1237,32 @@ class DeoParser(Parser):
                 # Deo.g:76:2: ( LB e1= expr SPACE iop SPACE e2= expr RB -> ^( iop $e1 $e2) )
                 # Deo.g:76:4: LB e1= expr SPACE iop SPACE e2= expr RB
                 pass 
-                LB36=self.match(self.input, LB, self.FOLLOW_LB_in_infix_expr511) 
-                stream_LB.add(LB36)
-                self._state.following.append(self.FOLLOW_expr_in_infix_expr515)
+                LB35=self.match(self.input, LB, self.FOLLOW_LB_in_infix_expr512) 
+                stream_LB.add(LB35)
+                self._state.following.append(self.FOLLOW_expr_in_infix_expr516)
                 e1 = self.expr()
 
                 self._state.following.pop()
                 stream_expr.add(e1.tree)
-                SPACE37=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_infix_expr517) 
-                stream_SPACE.add(SPACE37)
-                self._state.following.append(self.FOLLOW_iop_in_infix_expr519)
-                iop38 = self.iop()
+                SPACE36=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_infix_expr518) 
+                stream_SPACE.add(SPACE36)
+                self._state.following.append(self.FOLLOW_iop_in_infix_expr520)
+                iop37 = self.iop()
 
                 self._state.following.pop()
-                stream_iop.add(iop38.tree)
-                SPACE39=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_infix_expr521) 
-                stream_SPACE.add(SPACE39)
-                self._state.following.append(self.FOLLOW_expr_in_infix_expr525)
+                stream_iop.add(iop37.tree)
+                SPACE38=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_infix_expr522) 
+                stream_SPACE.add(SPACE38)
+                self._state.following.append(self.FOLLOW_expr_in_infix_expr526)
                 e2 = self.expr()
 
                 self._state.following.pop()
                 stream_expr.add(e2.tree)
-                RB40=self.match(self.input, RB, self.FOLLOW_RB_in_infix_expr527) 
-                stream_RB.add(RB40)
+                RB39=self.match(self.input, RB, self.FOLLOW_RB_in_infix_expr528) 
+                stream_RB.add(RB39)
 
                 # AST Rewrite
-                # elements: e2, iop, e1
+                # elements: e1, e2, iop
                 # token labels: 
                 # rule labels: retval, e1, e2
                 # token list labels: 
@@ -1351,9 +1343,9 @@ class DeoParser(Parser):
 
         root_0 = None
 
-        set41 = None
+        set40 = None
 
-        set41_tree = None
+        set40_tree = None
 
         try:
             try:
@@ -1362,10 +1354,10 @@ class DeoParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                set41 = self.input.LT(1)
+                set40 = self.input.LT(1)
                 if (AND <= self.input.LA(1) <= IFF):
                     self.input.consume()
-                    self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set41))
+                    self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set40))
                     self._state.errorRecovery = False
 
                 else:
@@ -1405,7 +1397,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "ifthen_expr"
-    # Deo.g:84:1: ifthen_expr : LB IF SPACE e1= expr SPACE THEN SPACE e2= expr SPACE RB -> ^( IFTHEN $e1 $e2) ;
+    # Deo.g:84:1: ifthen_expr : LB IF SPACE e1= expr SPACE THEN SPACE e2= expr RB -> ^( IFTHEN $e1 $e2) ;
     def ifthen_expr(self, ):
 
         retval = self.ifthen_expr_return()
@@ -1413,27 +1405,25 @@ class DeoParser(Parser):
 
         root_0 = None
 
-        LB42 = None
-        IF43 = None
+        LB41 = None
+        IF42 = None
+        SPACE43 = None
         SPACE44 = None
-        SPACE45 = None
-        THEN46 = None
-        SPACE47 = None
-        SPACE48 = None
-        RB49 = None
+        THEN45 = None
+        SPACE46 = None
+        RB47 = None
         e1 = None
 
         e2 = None
 
 
-        LB42_tree = None
-        IF43_tree = None
+        LB41_tree = None
+        IF42_tree = None
+        SPACE43_tree = None
         SPACE44_tree = None
-        SPACE45_tree = None
-        THEN46_tree = None
-        SPACE47_tree = None
-        SPACE48_tree = None
-        RB49_tree = None
+        THEN45_tree = None
+        SPACE46_tree = None
+        RB47_tree = None
         stream_LB = RewriteRuleTokenStream(self._adaptor, "token LB")
         stream_THEN = RewriteRuleTokenStream(self._adaptor, "token THEN")
         stream_RB = RewriteRuleTokenStream(self._adaptor, "token RB")
@@ -1442,35 +1432,33 @@ class DeoParser(Parser):
         stream_expr = RewriteRuleSubtreeStream(self._adaptor, "rule expr")
         try:
             try:
-                # Deo.g:85:2: ( LB IF SPACE e1= expr SPACE THEN SPACE e2= expr SPACE RB -> ^( IFTHEN $e1 $e2) )
-                # Deo.g:85:4: LB IF SPACE e1= expr SPACE THEN SPACE e2= expr SPACE RB
+                # Deo.g:85:2: ( LB IF SPACE e1= expr SPACE THEN SPACE e2= expr RB -> ^( IFTHEN $e1 $e2) )
+                # Deo.g:85:4: LB IF SPACE e1= expr SPACE THEN SPACE e2= expr RB
                 pass 
-                LB42=self.match(self.input, LB, self.FOLLOW_LB_in_ifthen_expr577) 
-                stream_LB.add(LB42)
-                IF43=self.match(self.input, IF, self.FOLLOW_IF_in_ifthen_expr579) 
-                stream_IF.add(IF43)
-                SPACE44=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr581) 
-                stream_SPACE.add(SPACE44)
-                self._state.following.append(self.FOLLOW_expr_in_ifthen_expr585)
+                LB41=self.match(self.input, LB, self.FOLLOW_LB_in_ifthen_expr578) 
+                stream_LB.add(LB41)
+                IF42=self.match(self.input, IF, self.FOLLOW_IF_in_ifthen_expr580) 
+                stream_IF.add(IF42)
+                SPACE43=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr582) 
+                stream_SPACE.add(SPACE43)
+                self._state.following.append(self.FOLLOW_expr_in_ifthen_expr586)
                 e1 = self.expr()
 
                 self._state.following.pop()
                 stream_expr.add(e1.tree)
-                SPACE45=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr587) 
-                stream_SPACE.add(SPACE45)
-                THEN46=self.match(self.input, THEN, self.FOLLOW_THEN_in_ifthen_expr589) 
-                stream_THEN.add(THEN46)
-                SPACE47=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr591) 
-                stream_SPACE.add(SPACE47)
-                self._state.following.append(self.FOLLOW_expr_in_ifthen_expr595)
+                SPACE44=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr588) 
+                stream_SPACE.add(SPACE44)
+                THEN45=self.match(self.input, THEN, self.FOLLOW_THEN_in_ifthen_expr590) 
+                stream_THEN.add(THEN45)
+                SPACE46=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr592) 
+                stream_SPACE.add(SPACE46)
+                self._state.following.append(self.FOLLOW_expr_in_ifthen_expr596)
                 e2 = self.expr()
 
                 self._state.following.pop()
                 stream_expr.add(e2.tree)
-                SPACE48=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr597) 
-                stream_SPACE.add(SPACE48)
-                RB49=self.match(self.input, RB, self.FOLLOW_RB_in_ifthen_expr599) 
-                stream_RB.add(RB49)
+                RB47=self.match(self.input, RB, self.FOLLOW_RB_in_ifthen_expr598) 
+                stream_RB.add(RB47)
 
                 # AST Rewrite
                 # elements: e2, e1
@@ -1501,8 +1489,8 @@ class DeoParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 85:61: -> ^( IFTHEN $e1 $e2)
-                # Deo.g:85:64: ^( IFTHEN $e1 $e2)
+                # 85:55: -> ^( IFTHEN $e1 $e2)
+                # Deo.g:85:58: ^( IFTHEN $e1 $e2)
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(self._adaptor.createFromType(IFTHEN, "IFTHEN"), root_1)
 
@@ -1552,49 +1540,47 @@ class DeoParser(Parser):
     FOLLOW_EOL_in_decl179 = frozenset([1])
     FOLLOW_goal_in_decl199 = frozenset([15])
     FOLLOW_EOL_in_decl201 = frozenset([1])
-    FOLLOW_RULE_in_rule237 = frozenset([16])
-    FOLLOW_ASSN_in_rule239 = frozenset([11, 18])
-    FOLLOW_expr_in_rule241 = frozenset([1])
-    FOLLOW_FACT_in_fact252 = frozenset([16])
-    FOLLOW_ASSN_in_fact254 = frozenset([11, 18])
-    FOLLOW_expr_in_fact256 = frozenset([1])
-    FOLLOW_GOAL_in_goal267 = frozenset([16])
-    FOLLOW_ASSN_in_goal269 = frozenset([11, 18])
-    FOLLOW_expr_in_goal271 = frozenset([1])
-    FOLLOW_ID_in_term288 = frozenset([16])
-    FOLLOW_ASSN_in_term290 = frozenset([11])
-    FOLLOW_atom_in_term292 = frozenset([1])
-    FOLLOW_ATOM_in_atom311 = frozenset([1])
-    FOLLOW_atom_in_expr330 = frozenset([1])
-    FOLLOW_prefix_expr_in_expr350 = frozenset([1])
-    FOLLOW_infix_expr_in_expr372 = frozenset([1])
-    FOLLOW_ifthen_expr_in_expr394 = frozenset([1])
-    FOLLOW_LB_in_prefix_expr422 = frozenset([21, 22, 23, 24])
-    FOLLOW_pop_in_prefix_expr424 = frozenset([19])
-    FOLLOW_SPACE_in_prefix_expr426 = frozenset([18])
-    FOLLOW_LB_in_prefix_expr428 = frozenset([11, 18])
-    FOLLOW_expr_in_prefix_expr430 = frozenset([20])
-    FOLLOW_RB_in_prefix_expr432 = frozenset([20])
-    FOLLOW_RB_in_prefix_expr434 = frozenset([1])
+    FOLLOW_RULE_in_rule236 = frozenset([16])
+    FOLLOW_ASSN_in_rule238 = frozenset([17, 18])
+    FOLLOW_expr_in_rule240 = frozenset([1])
+    FOLLOW_FACT_in_fact251 = frozenset([16])
+    FOLLOW_ASSN_in_fact253 = frozenset([17, 18])
+    FOLLOW_expr_in_fact255 = frozenset([1])
+    FOLLOW_GOAL_in_goal266 = frozenset([16])
+    FOLLOW_ASSN_in_goal268 = frozenset([17, 18])
+    FOLLOW_expr_in_goal270 = frozenset([1])
+    FOLLOW_ID_in_term287 = frozenset([16])
+    FOLLOW_ASSN_in_term289 = frozenset([11])
+    FOLLOW_atom_in_term291 = frozenset([1])
+    FOLLOW_ATOM_in_atom310 = frozenset([1])
+    FOLLOW_ID_in_expr329 = frozenset([1])
+    FOLLOW_prefix_expr_in_expr353 = frozenset([1])
+    FOLLOW_infix_expr_in_expr375 = frozenset([1])
+    FOLLOW_ifthen_expr_in_expr397 = frozenset([1])
+    FOLLOW_LB_in_prefix_expr425 = frozenset([20, 21, 22, 23])
+    FOLLOW_pop_in_prefix_expr427 = frozenset([18])
+    FOLLOW_LB_in_prefix_expr429 = frozenset([17, 18])
+    FOLLOW_expr_in_prefix_expr431 = frozenset([19])
+    FOLLOW_RB_in_prefix_expr433 = frozenset([19])
+    FOLLOW_RB_in_prefix_expr435 = frozenset([1])
     FOLLOW_set_in_pop0 = frozenset([1])
-    FOLLOW_LB_in_infix_expr511 = frozenset([11, 18])
-    FOLLOW_expr_in_infix_expr515 = frozenset([19])
-    FOLLOW_SPACE_in_infix_expr517 = frozenset([25, 26, 27])
-    FOLLOW_iop_in_infix_expr519 = frozenset([19])
-    FOLLOW_SPACE_in_infix_expr521 = frozenset([11, 18])
-    FOLLOW_expr_in_infix_expr525 = frozenset([20])
-    FOLLOW_RB_in_infix_expr527 = frozenset([1])
+    FOLLOW_LB_in_infix_expr512 = frozenset([17, 18])
+    FOLLOW_expr_in_infix_expr516 = frozenset([24])
+    FOLLOW_SPACE_in_infix_expr518 = frozenset([25, 26, 27])
+    FOLLOW_iop_in_infix_expr520 = frozenset([24])
+    FOLLOW_SPACE_in_infix_expr522 = frozenset([17, 18])
+    FOLLOW_expr_in_infix_expr526 = frozenset([19])
+    FOLLOW_RB_in_infix_expr528 = frozenset([1])
     FOLLOW_set_in_iop0 = frozenset([1])
-    FOLLOW_LB_in_ifthen_expr577 = frozenset([28])
-    FOLLOW_IF_in_ifthen_expr579 = frozenset([19])
-    FOLLOW_SPACE_in_ifthen_expr581 = frozenset([11, 18])
-    FOLLOW_expr_in_ifthen_expr585 = frozenset([19])
-    FOLLOW_SPACE_in_ifthen_expr587 = frozenset([29])
-    FOLLOW_THEN_in_ifthen_expr589 = frozenset([19])
-    FOLLOW_SPACE_in_ifthen_expr591 = frozenset([11, 18])
-    FOLLOW_expr_in_ifthen_expr595 = frozenset([19])
-    FOLLOW_SPACE_in_ifthen_expr597 = frozenset([20])
-    FOLLOW_RB_in_ifthen_expr599 = frozenset([1])
+    FOLLOW_LB_in_ifthen_expr578 = frozenset([28])
+    FOLLOW_IF_in_ifthen_expr580 = frozenset([24])
+    FOLLOW_SPACE_in_ifthen_expr582 = frozenset([17, 18])
+    FOLLOW_expr_in_ifthen_expr586 = frozenset([24])
+    FOLLOW_SPACE_in_ifthen_expr588 = frozenset([29])
+    FOLLOW_THEN_in_ifthen_expr590 = frozenset([24])
+    FOLLOW_SPACE_in_ifthen_expr592 = frozenset([17, 18])
+    FOLLOW_expr_in_ifthen_expr596 = frozenset([19])
+    FOLLOW_RB_in_ifthen_expr598 = frozenset([1])
 
 
 
