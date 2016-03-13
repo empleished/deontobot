@@ -1,0 +1,17 @@
+term: A: "study has physical effects on participants"
+term: B: "participant shows signs of distress during their interview"
+term: C: "stop interviewing participant"
+term: D: "study involves human participants"
+term: E: "study involves members of vulnerable groups"
+term: F: "explain the full nature of the research to the participants"
+term: G: "offer anonymity to the participants"
+term: H: "participants participate"
+term: I: "participants can disengage from the study at any point"
+term: J: "participants can respond/not respond to any question asked during the interview"
+term: K: "researcher will respect all wishes expressed by all participants"
+term: L: "interviews will be conducted in areas where participants feel comfortable"
+fact: not A
+rule: (if B then C)
+fact: D
+fact: not E
+rule: if D then OB(F) and OB(G) and PER(H) and PER(I) and PER(J) and OB(K) and OB(L)

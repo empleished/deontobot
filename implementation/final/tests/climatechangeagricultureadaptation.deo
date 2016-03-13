@@ -1,0 +1,17 @@
+A: "study has physical effects on participants"
+B: "participant shows signs of distress during their interview"
+C: "stop interviewing participant"
+D: "study involves human participants"
+E: "study involves members of vulnerable groups"
+F: "explain the full nature of the research to the participants"
+G: "offer anonymity to the participants"
+H: "participants participate"
+I: "participants can disengage from the study at any point"
+J: "participants can respond/not respond to any question asked during the interview"
+K: "researcher will respect all wishes expressed by all participants"
+L: "interviews will be conducted in areas where participants feel comfortable"
+fact: not A
+rule: (if B then C)
+fact: D
+fact: not E
+rule: if D then OB(F) and OB(G) and PER(H) and PER(I) and PER(J) and OB(K) and OB(L)
