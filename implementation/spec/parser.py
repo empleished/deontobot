@@ -1,6 +1,7 @@
 import antlr3
 from DeoLexer import DeoLexer
 from DeoParser import DeoParser
+import astdump
 
 char_stream = antlr3.ANTLRFileStream("tests/csEthics.deo")
 
@@ -10,5 +11,4 @@ parser = DeoParser(tokens)
 rule = parser.prog()
 tree = rule.tree
 
-#for node in tree.body: 
-#	print node
+astdump.indented(tree)

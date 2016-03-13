@@ -6,6 +6,7 @@ version of the AST.
 __author__ = 'Martin Blais <blais@furius.ca>'
 
 import sys
+import optparse
 from compiler.ast import Node
 
 __all__ = ('printAst',)
@@ -45,7 +46,6 @@ def rec_node(node, level, indent, write):
 
 
 def main():
-    import optparse
     parser = optparse.OptionParser(__doc__.strip())
     opts, args = parser.parse_args()
 

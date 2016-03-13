@@ -6,6 +6,6 @@ T: "comply with points on ethics checklist form"
 U: "use introduction and debriefing scripts"
 V: "include introduction and debriefing scripts with signed ethics checklist form as part of report"
 rule: (if P then R)
-rule: (if ((P and R) and T) then ((not OB(S) and OB(U)) and OB(V)))
-rule: (if ((P and R) and not T) then (OB(S)))
+rule: (if ((P and R) and T) then S)
+rule: (if ((P and R) and (not(T))) then (OB(S)))
 rule: P

@@ -1,4 +1,4 @@
-# $ANTLR 3.1.2 Deo.g 2016-03-08 10:50:26
+# $ANTLR 3.1.2 Deo.g 2016-03-10 23:06:15
 
 import sys
 from antlr3 import *
@@ -51,15 +51,15 @@ class DeoLexer(Lexer):
             state = RecognizerSharedState()
         Lexer.__init__(self, input, state)
 
-        self.dfa4 = self.DFA4(
-            self, 4,
-            eot = self.DFA4_eot,
-            eof = self.DFA4_eof,
-            min = self.DFA4_min,
-            max = self.DFA4_max,
-            accept = self.DFA4_accept,
-            special = self.DFA4_special,
-            transition = self.DFA4_transition
+        self.dfa5 = self.DFA5(
+            self, 5,
+            eot = self.DFA5_eot,
+            eof = self.DFA5_eof,
+            min = self.DFA5_min,
+            max = self.DFA5_max,
+            accept = self.DFA5_accept,
+            special = self.DFA5_special,
+            transition = self.DFA5_transition
             )
 
 
@@ -660,10 +660,41 @@ class DeoLexer(Lexer):
             _type = SPACE
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:118:9: ( ' ' )
-            # Deo.g:118:13: ' '
+            # Deo.g:118:9: ( ( '\\t' | ' ' )+ )
+            # Deo.g:118:13: ( '\\t' | ' ' )+
             pass 
-            self.match(32)
+            # Deo.g:118:13: ( '\\t' | ' ' )+
+            cnt4 = 0
+            while True: #loop4
+                alt4 = 2
+                LA4_0 = self.input.LA(1)
+
+                if (LA4_0 == 9 or LA4_0 == 32) :
+                    alt4 = 1
+
+
+                if alt4 == 1:
+                    # Deo.g:
+                    pass 
+                    if self.input.LA(1) == 9 or self.input.LA(1) == 32:
+                        self.input.consume()
+                    else:
+                        mse = MismatchedSetException(None, self.input)
+                        self.recover(mse)
+                        raise mse
+
+
+
+                else:
+                    if cnt4 >= 1:
+                        break #loop4
+
+                    eee = EarlyExitException(4, self.input)
+                    raise eee
+
+                cnt4 += 1
+
+
 
 
 
@@ -680,123 +711,123 @@ class DeoLexer(Lexer):
 
     def mTokens(self):
         # Deo.g:1:8: ( OB | PRO | PER | IF | IFF | THEN | NOT | AND | OR | TERM | GOAL | RULE | FACT | LB | RB | ASSN | ATOM | ID | EOL | SPACE )
-        alt4 = 20
-        alt4 = self.dfa4.predict(self.input)
-        if alt4 == 1:
+        alt5 = 20
+        alt5 = self.dfa5.predict(self.input)
+        if alt5 == 1:
             # Deo.g:1:10: OB
             pass 
             self.mOB()
 
 
-        elif alt4 == 2:
+        elif alt5 == 2:
             # Deo.g:1:13: PRO
             pass 
             self.mPRO()
 
 
-        elif alt4 == 3:
+        elif alt5 == 3:
             # Deo.g:1:17: PER
             pass 
             self.mPER()
 
 
-        elif alt4 == 4:
+        elif alt5 == 4:
             # Deo.g:1:21: IF
             pass 
             self.mIF()
 
 
-        elif alt4 == 5:
+        elif alt5 == 5:
             # Deo.g:1:24: IFF
             pass 
             self.mIFF()
 
 
-        elif alt4 == 6:
+        elif alt5 == 6:
             # Deo.g:1:28: THEN
             pass 
             self.mTHEN()
 
 
-        elif alt4 == 7:
+        elif alt5 == 7:
             # Deo.g:1:33: NOT
             pass 
             self.mNOT()
 
 
-        elif alt4 == 8:
+        elif alt5 == 8:
             # Deo.g:1:37: AND
             pass 
             self.mAND()
 
 
-        elif alt4 == 9:
+        elif alt5 == 9:
             # Deo.g:1:41: OR
             pass 
             self.mOR()
 
 
-        elif alt4 == 10:
+        elif alt5 == 10:
             # Deo.g:1:44: TERM
             pass 
             self.mTERM()
 
 
-        elif alt4 == 11:
+        elif alt5 == 11:
             # Deo.g:1:49: GOAL
             pass 
             self.mGOAL()
 
 
-        elif alt4 == 12:
+        elif alt5 == 12:
             # Deo.g:1:54: RULE
             pass 
             self.mRULE()
 
 
-        elif alt4 == 13:
+        elif alt5 == 13:
             # Deo.g:1:59: FACT
             pass 
             self.mFACT()
 
 
-        elif alt4 == 14:
+        elif alt5 == 14:
             # Deo.g:1:64: LB
             pass 
             self.mLB()
 
 
-        elif alt4 == 15:
+        elif alt5 == 15:
             # Deo.g:1:67: RB
             pass 
             self.mRB()
 
 
-        elif alt4 == 16:
+        elif alt5 == 16:
             # Deo.g:1:70: ASSN
             pass 
             self.mASSN()
 
 
-        elif alt4 == 17:
+        elif alt5 == 17:
             # Deo.g:1:75: ATOM
             pass 
             self.mATOM()
 
 
-        elif alt4 == 18:
+        elif alt5 == 18:
             # Deo.g:1:80: ID
             pass 
             self.mID()
 
 
-        elif alt4 == 19:
+        elif alt5 == 19:
             # Deo.g:1:83: EOL
             pass 
             self.mEOL()
 
 
-        elif alt4 == 20:
+        elif alt5 == 20:
             # Deo.g:1:87: SPACE
             pass 
             self.mSPACE()
@@ -807,47 +838,48 @@ class DeoLexer(Lexer):
 
 
 
-    # lookup tables for DFA #4
+    # lookup tables for DFA #5
 
-    DFA4_eot = DFA.unpack(
+    DFA5_eot = DFA.unpack(
         u"\1\uffff\12\17\7\uffff\1\36\2\17\1\42\4\17\1\47\3\17\1\uffff\1"
         u"\53\1\54\1\55\1\uffff\2\17\1\60\1\61\1\uffff\3\17\3\uffff\1\65"
         u"\1\66\2\uffff\1\67\1\70\1\71\5\uffff"
         )
 
-    DFA4_eof = DFA.unpack(
+    DFA5_eof = DFA.unpack(
         u"\72\uffff"
         )
 
-    DFA4_min = DFA.unpack(
-        u"\1\12\1\102\1\105\1\146\1\145\1\157\1\156\1\162\1\157\1\165\1\141"
+    DFA5_min = DFA.unpack(
+        u"\1\11\1\102\1\105\1\146\1\145\1\157\1\156\1\162\1\157\1\165\1\141"
         u"\7\uffff\1\60\1\117\1\122\1\60\1\145\1\162\1\164\1\144\1\60\1\141"
         u"\1\154\1\143\1\uffff\3\60\1\uffff\1\156\1\155\2\60\1\uffff\1\154"
         u"\1\145\1\164\3\uffff\2\60\2\uffff\3\60\5\uffff"
         )
 
-    DFA4_max = DFA.unpack(
+    DFA5_max = DFA.unpack(
         u"\1\172\1\102\1\122\1\146\1\150\1\157\1\156\1\162\1\157\1\165\1"
         u"\141\7\uffff\1\172\1\117\1\122\1\172\1\145\1\162\1\164\1\144\1"
         u"\172\1\141\1\154\1\143\1\uffff\3\172\1\uffff\1\156\1\155\2\172"
         u"\1\uffff\1\154\1\145\1\164\3\uffff\2\172\2\uffff\3\172\5\uffff"
         )
 
-    DFA4_accept = DFA.unpack(
+    DFA5_accept = DFA.unpack(
         u"\13\uffff\1\16\1\17\1\20\1\21\1\22\1\23\1\24\14\uffff\1\1\3\uffff"
         u"\1\4\4\uffff\1\11\3\uffff\1\2\1\3\1\5\2\uffff\1\7\1\10\3\uffff"
         u"\1\6\1\12\1\13\1\14\1\15"
         )
 
-    DFA4_special = DFA.unpack(
+    DFA5_special = DFA.unpack(
         u"\72\uffff"
         )
 
             
-    DFA4_transition = [
-        DFA.unpack(u"\1\20\2\uffff\1\20\22\uffff\1\21\1\uffff\1\16\5\uffff"
-        u"\1\13\1\14\20\uffff\1\15\6\uffff\16\17\1\1\1\2\12\17\6\uffff\1"
-        u"\6\4\17\1\12\1\10\1\17\1\3\4\17\1\5\1\7\2\17\1\11\1\17\1\4\6\17"),
+    DFA5_transition = [
+        DFA.unpack(u"\1\21\1\20\2\uffff\1\20\22\uffff\1\21\1\uffff\1\16\5"
+        u"\uffff\1\13\1\14\20\uffff\1\15\6\uffff\16\17\1\1\1\2\12\17\6\uffff"
+        u"\1\6\4\17\1\12\1\10\1\17\1\3\4\17\1\5\1\7\2\17\1\11\1\17\1\4\6"
+        u"\17"),
         DFA.unpack(u"\1\22"),
         DFA.unpack(u"\1\24\14\uffff\1\23"),
         DFA.unpack(u"\1\25"),
@@ -908,9 +940,9 @@ class DeoLexer(Lexer):
         DFA.unpack(u"")
     ]
 
-    # class definition for DFA #4
+    # class definition for DFA #5
 
-    DFA4 = DFA
+    DFA5 = DFA
  
 
 

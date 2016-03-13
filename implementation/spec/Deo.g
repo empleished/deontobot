@@ -114,5 +114,5 @@ ID	    :	LETTER (LETTER | DIGIT | '_')*;
 fragment LETTER 	: 	'a'..'z' | 'A'..'Z';
 fragment DIGIT  	: 	'0'..'9';
 
-EOL     :   '\r'? '\n';
-SPACE   :   ' ';
+EOL     :   '\r'? '\n';             
+SPACE   :   ('\t' | ' ')+;          
