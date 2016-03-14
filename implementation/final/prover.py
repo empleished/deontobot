@@ -23,16 +23,23 @@ def negation(fact):
 	negatedFact = Tree("PREF")
 	negatedFact.add = "not"
 	negatedFact.add = fact
+	#TODO keep as ast, make new node and then setChildren(fact)
 
 	return negatedFact
+
+def isNegation(node): 
+	if node.getText() == "not":
+		return True
+	else: 
+		return False
 
 def modusPonens(fact, node):
 # if P and P -> Q then Q
 	facts = []
 
 	if node.value == "IFTHEN":
-		if node.left == fact:
-			facts = facts + node.right
+		if node.getChild(0) == fact:
+			facts = facts + node.getChild(2)
 
 	return facts
 
@@ -41,10 +48,9 @@ def modusTollens(fact, node):
 	facts = [] 
 
 	if isNegation(fact): 
-		if node.value == "IFTHEN": 
-			if node.right == negation(fact): 
-				print fact
-				facts = facts + isAtom(negation(node.left))
+		if node.getText() == "IFTHEN": 
+			if node.getChild(2) == negation(fact): 
+				facts = facts + negation(node.getChild(0))
 
 	return facts
 
@@ -149,33 +155,33 @@ def proofStrategy(goals, facts, rules):
 
 	return proven
 
-def yieldFactsFromRules(rules):
-	facts = []
-
-	for node in rules.body:
-		print fact
-		facts = facts + isAtom(node.left)
-
-	return facts
+#def yieldFactsFromRules(rules):
+#	facts = []
+#
+#	for node in rules.body:
+#		print fact
+#		facts = facts + isAtom(node.left)
+#
+#	return facts
 
 def getTerms(tree): 
 	terms = {}
 
 	for node in tree.getChildren(): 
 		if node.getText() == "TERM": 
-			terms["symbol"] = node.left
-			terms["term"] = node.right
+			terms["symbol"] = node.getChildren(0)
+			terms["term"] = node.getChildren(2)
+			#node.getChildren(1) is ': '
 
 	return terms
 
 def getRules(tree): 
-	rules = Tree()
-	rules.value = "RULES"
+	rules = []
 
 	for node in tree.getChildren(): 
 		if node.getText() == "RULE": 
-			rules.add(node.right)
-			#TODO recursively add child nodes
+			rules = rules + getChild(2)
+			#TODO fix - add node properly
 
 	return rules
 
@@ -184,19 +190,18 @@ def getFacts(tree):
 
 	for node in tree.getChildren(): 
 		if node.getText() == "FACT": 
-			facts = facts + node.right.getText()
-			#TODO recursively add child nodes
+			facts = facts + node.getChild(2)
+			#TODO fix - add node properly
 
 	return facts
 
 def getGoals(tree): 
-	goals = Tree()
-	goals.value = "GOALS"
+	goals = []
 
 	for node in tree.getChildren(): 
 		if node.getText() == "GOAL": 
-			goals.add(node.right)
-			#TODO recursively add child nodes
+			goals = goals + node.getChild(2)
+			#TODO fix - add node properly
 
 	return goals
 
@@ -206,10 +211,10 @@ def runProver(tree):
 	facts = getFacts(tree)
 	goals = getGoals(tree)
 
-	newFacts = yieldFactsFromRules(rules)
-	facts = facts + newFacts
+#	newFacts = yieldFactsFromRules(rules)
+#	facts = facts + newFacts
 
-	proverSteps = proofStrategy(goals, facts, tree)
+	proverSteps = proofStrategy(goals, facts, rules)
 
 	if proverSteps[0] == False:
 		print "statement is incongruent with provided facts"
@@ -218,9 +223,10 @@ def runProver(tree):
 
 	count = 1
 
+	#TODO modify to look up values of IDs in terms dictionary
 	while count < proverSteps.length: 
 		print proverSteps[count][0] + ": " + proverSteps[count][1]
+		count += 1
 
-print "hey ho"
 tree = parser.runParser("tests/csEthics.deo")
 runProver(tree)
