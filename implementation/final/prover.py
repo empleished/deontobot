@@ -92,12 +92,12 @@ def ruleOfSyllogism(tree):
 	nodes = Tree()
 	newNode.value = "IFTHEN"
 
-	for node in tree.body: 
+	for node in tree.getChildren(): 
 		if node.value == "IFTHEN":
 			p = node.left
 			q = node.right
 
-			for node in tree.body: 
+			for node in tree.getChildren(): 
 				if node.value == "IFTHEN": 
 					if node.left == q: 
 						r = node.right
@@ -159,12 +159,12 @@ def yieldFactsFromRules(rules):
 	return facts
 
 def getTerms(tree): 
-	terms = Tree()
-	terms.value = "TERMS"
+	terms = {}
 
-	for node in tree.body: 
-		if node.op == "TERM": 
-			terms.add(node.right)
+	for node in tree.getChildren(): 
+		if node.getText() == "TERM": 
+			terms["symbol"] = node.left
+			terms["term"] = node.right
 
 	return terms
 
@@ -172,18 +172,20 @@ def getRules(tree):
 	rules = Tree()
 	rules.value = "RULES"
 
-	for node in tree.body: 
-		if node.op == "RULE": 
+	for node in tree.getChildren(): 
+		if node.getText() == "RULE": 
 			rules.add(node.right)
+			#TODO recursively add child nodes
 
 	return rules
 
 def getFacts(tree): 
 	facts = []
 
-	for node in tree.body: 
-		if node.op == "FACT": 
-			facts = facts + node.right.n
+	for node in tree.getChildren(): 
+		if node.getText() == "FACT": 
+			facts = facts + node.right.getText()
+			#TODO recursively add child nodes
 
 	return facts
 
@@ -191,14 +193,14 @@ def getGoals(tree):
 	goals = Tree()
 	goals.value = "GOALS"
 
-	for node in tree.body: 
-		if node.op == "GOAL": 
+	for node in tree.getChildren(): 
+		if node.getText() == "GOAL": 
 			goals.add(node.right)
+			#TODO recursively add child nodes
 
 	return goals
 
 def runProver(tree):
-	print "hi"
 	terms = getTerms(tree)
 	rules = getRules(tree)
 	facts = getFacts(tree)

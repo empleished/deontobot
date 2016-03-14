@@ -24,13 +24,13 @@ tokens {        //TODO special tokens for labeling AST nodes
 // PARSER RULES //
 
 prog
-	:	decl+ EOF								-> ^(PROG decl+)
+	:	decl+ EOF							-> ^(PROG decl+)
 	;
 
 decl
-	:	term EOL								-> ^(TERM term)
-	|	rule EOL								-> ^(RULE rule)
-	|	fact EOL								-> ^(FACT fact)
+	:	term EOL							
+	|	rule EOL							-> ^(RULE rule)
+	|	fact EOL							-> ^(FACT fact)
 	|	goal EOL    			  				-> ^(GOAL goal)    
 	;
 
@@ -47,7 +47,7 @@ goal
 	;
 
 term
-	:	ID ASSN atom 							
+	:	ID ASSN atom 							->^(TERM term)
 	;
 
 atom
@@ -55,10 +55,10 @@ atom
 	;
 
 expr
-	:	ID								    -> ^(EXPR ID)
-	|	prefix_expr						    -> ^(EXPR prefix_expr)
-	|	infix_expr						    -> ^(EXPR infix_expr)
-	|	ifthen_expr						    -> ^(EXPR ifthen_expr)
+	:	ID								-> ^(EXPR ID)
+	|	prefix_expr							-> ^(EXPR prefix_expr)
+	|	infix_expr							-> ^(EXPR infix_expr)
+	|	ifthen_expr							-> ^(EXPR ifthen_expr)
 	;
 
 prefix_expr
@@ -73,7 +73,7 @@ pop
 	;
 
 infix_expr
-	:	LB e1=expr SPACE iop SPACE e2=expr RB					-> ^(iop $e1 $e2)
+	:	LB e1=expr SPACE iop SPACE e2=expr RB				-> ^(iop $e1 $e2)
 	;
 
 iop	:	AND 
@@ -82,7 +82,7 @@ iop	:	AND
 	;
 
 ifthen_expr
-	:	LB IF SPACE e1=expr SPACE THEN SPACE e2=expr RB				-> ^(IFTHEN $e1 $e2)
+	:	LB IF SPACE e1=expr SPACE THEN SPACE e2=expr RB			-> ^(IFTHEN $e1 $e2)
 	;
 
 // LEXER RULES //
