@@ -62,7 +62,7 @@ expr
 	;
 
 prefix_expr
-	:	LB pop LB expr RB RB						-> ^(PREF pop expr)
+	:	LB pop LB expr RB RB						-> ^(pop expr)
 	;
 
 pop	
