@@ -15,4 +15,4 @@ def runParser(fileName):
 	root = rule.tree
 	nodes = antlr3.tree.CommonTreeNodeStream(root)
 	nodes.setTokenStream(tokens)
-    return nodes
+	return nodes
