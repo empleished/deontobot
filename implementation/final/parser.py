@@ -14,12 +14,12 @@ def runParser(fileName):
 
 	root = rule.tree
 #	print "tree =", root.toStringTree()
-	nodes = antlr3.tree.CommonTreeNodeStream(root)
-	nodes.setTokenStream(tokens)
+#	nodes = antlr3.tree.CommonTreeNodeStream(root)
+#	nodes.setTokenStream(tokens)
 	
 	print_tree(root, 0)
 
-	return nodes
+	return root
 
 # n in node.getChildren()
 def print_tree(node, depth):
