@@ -91,17 +91,17 @@ OB	:	'OB';
 PRO	:	'PRO';
 PER	:	'PER';
 
-IF	    :	'if';
-IFF	    :	'iff';
+IF	:	'if';
+IFF	:	'iff';
 THEN	:	'then';
-NOT	    :	'not';
-AND	    :	'and';
-OR	    :	'or';
+NOT	:	'not';
+AND	:	'and';
+OR	:	'or';
 
-TERM    :   'term';
-GOAL    :   'goal';
-RULE    :   'rule';
-FACT    :   'fact';
+TERM    :	'term';
+GOAL    :	'goal';
+RULE    :	'rule';
+FACT    :	'fact';
 
 LB	:	'(';
 RB	:	')';
@@ -109,10 +109,10 @@ RB	:	')';
 ASSN	: 	': ';
 
 ATOM	:	'"' LETTER (LETTER | DIGIT | ' ')* '"';
-ID	    :	LETTER (LETTER | DIGIT | '_')*;
+ID	:	LETTER (LETTER | DIGIT | '_')*;
 
-fragment LETTER 	: 	'a'..'z' | 'A'..'Z';
-fragment DIGIT  	: 	'0'..'9';
+LETTER 	: 	'a'..'z' | 'A'..'Z';
+DIGIT  	: 	'0'..'9';
 
-EOL     :   '\r'? '\n';             
-SPACE   :   ('\t' | ' ')+;          
+EOL     :	'\r'? '\n';             
+SPACE   :	('\t' | ' ')+;          

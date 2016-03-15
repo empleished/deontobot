@@ -27,117 +27,141 @@ def negation(fact):
 
 	return negatedFact
 
+# checks whether node is a negation
 def isNegation(node): 
 	if node.getText() == "not":
 		return True
 	else: 
 		return False
 
+# checks whether two nodes are equal
+#TODO
+def isEqual(firstNode, secondNode): 
+	# for child in firstNode, child in secondNode
+	# if all the same then equal == true
+	return None
+
 def modusPonens(fact, node):
 # if P and P -> Q then Q
+	if node.getText() == "IFTHEN":
+		if node.getChild(0) == fact:
+			return node.getChild(2)
+		else: 
+			return None
+
+def tryModusPonens(facts, node): 
 	facts = []
 
-	if node.value == "IFTHEN":
-		if node.getChild(0) == fact:
-			facts = facts + node.getChild(2)
+	for fact in facts: 
+		facts = facts + modusPonens(fact, node)
 
 	return facts
 
 def modusTollens(fact, node):
 # if not Q and P -> Q then not P
-	facts = [] 
-
 	if isNegation(fact): 
 		if node.getText() == "IFTHEN": 
 			if node.getChild(2) == negation(fact): 
-				facts = facts + negation(node.getChild(0))
+				return negation(node.getChild(0))
+			else: 
+				return None
+
+def tryModusTollens(facts, nodes): 
+	facts = []
+
+	for fact in facts: 
+		facts = facts + modusTollens(fact, node)
 
 	return facts
 
 def disjunctiveSyllogism(fact, node):
 # if not P and (P or Q) then Q
+	if isNegation(fact): 
+		if node.getText() == "or": 
+			if node.getChild(0) == negation(fact): 
+				return node.getChild(2)
+			else: 
+				return None
+
+def tryDisjunctiveSyllogism(facts, node): 
 	facts = []
 
-	if isNegation(fact): 
-		if node.value == "or": 
-			if node.left == negation(fact): 
-				print fact
-				facts = facts + isAtom(node.right)
+	for fact in facts: 
+		facts = facts + disjunctiveSyllogism(fact, node)
 
 	return facts
 
-def deMorgansLaw(node):
+#TODO fix - keep as ast
+#def deMorgansLaw(node):
 # not (P or Q) is equivalent to not P and not Q
 # not (P and Q) is equivalent to not P or not Q
-	if node.left == "not": 
-		if node.right.value == "or":
-			newNode.value = "and"			
-			newNodeFirstChild = "PREF"
-			newNodeSecondChild = "PREF"
-			newNodeFirstChild.left = "not"
-			newNodeFirstChild.right = node.right.left
-			newNodeSecondChild.left = "not"
-			newNodeSecondChild.right = node.right.right
-			newNode.left = newNodeFirstChild
-			newNode.right = newNodeSecondChild
-		if node.right.value == "and":
-			newNode.value = "or"
-			newNodeFirstChild = "PREF"
-			newNodeSecondChild = "PREF"
-			newNodeFirstChild.left = "not"
-			newNodeFirstChild.right = node.right.left
-			newNodeSecondChild.left = "not"
-			newNodeSecondChild.right = node.right.right
-			newNode.left = newNodeFirstChild
-			newNode.right = newNodeSecondChild
+#	if node.left == "not": 
+#		if node.right.value == "or":
+#			newNode.value = "and"			
+#			newNodeFirstChild = "PREF"
+#			newNodeSecondChild = "PREF"
+#			newNodeFirstChild.left = "not"
+#			newNodeFirstChild.right = node.right.left
+#			newNodeSecondChild.left = "not"
+#			newNodeSecondChild.right = node.right.right
+#			newNode.left = newNodeFirstChild
+#			newNode.right = newNodeSecondChild
+#		if node.right.value == "and":
+#			newNode.value = "or"
+#			newNodeFirstChild = "PREF"
+#			newNodeSecondChild = "PREF"
+#			newNodeFirstChild.left = "not"
+#			newNodeFirstChild.right = node.right.left
+#			newNodeSecondChild.left = "not"
+#			newNodeSecondChild.right = node.right.right
+#			newNode.left = newNodeFirstChild
+#			newNode.right = newNodeSecondChild
+#
+#	return newNode
 
-	return newNode
-
-def ruleOfSyllogism(tree):
+# fix - keep as ast
+#def ruleOfSyllogism(tree):
 # if (P -> Q) and (Q -> R) then P -> R
-	nodes = Tree()
-	newNode.value = "IFTHEN"
-
-	for node in tree.getChildren(): 
-		if node.value == "IFTHEN":
-			p = node.left
-			q = node.right
-
-			for node in tree.getChildren(): 
-				if node.value == "IFTHEN": 
-					if node.left == q: 
-						r = node.right
-						newNode.left = p
-						newNode.right = r
-						nodes.add(newNode)
-
-	return nodes
+#	nodes = Tree()
+#	newNode.value = "IFTHEN"
+#
+#	for node in tree.getChildren(): 
+#		if node.value == "IFTHEN":
+#			p = node.left
+#			q = node.right
+#
+#			for node in tree.getChildren(): 
+#				if node.value == "IFTHEN": 
+#					if node.left == q: 
+#						r = node.right
+#						newNode.left = p
+#						newNode.right = r
+#						nodes.add(newNode)
+#
+#	return nodes
 
 def decomposingConjunction(node):
 # if (P and Q) then P, Q
 	facts = []
 
-	if node.value == "and":
-		print fact
-		facts = facts + isAtom(node.left) + isAtom(node.right)
+	if node.getText() == "and":
+		facts = facts + [node.getChild(0)] + [node.getChild(2)]
 
 	return facts
 
 # run logical rules on tree
 
-def isProven(facts, statement):
+def isProven(facts, goals):
 	proven = False
 
-	for fact in facts:
-		if fact == statement:
-			proven = True
+	for goal in goals: 
+		for fact in facts:
+			if fact == goal:
+				proven = True
+		if proven = False: 
+			return False
 
 	return proven
-
-#def try_modus_ponens ():
-#        for expr1, expr2 in facts:
-#                apply_modus_ponens(expr1, expr2)
-#                if proven return
 
 def proofStrategy(goals, facts, rules):
 	proven = False
@@ -145,15 +169,19 @@ def proofStrategy(goals, facts, rules):
 	progress = True
 	factSize = len(facts)
 
-	while (proven == False and progress == True): 
-		for fact in facts:
-			for rule in rules.body:
-				# try all combinations
-				print "bleh"
-			if len(facts) == factSize:
-				progress = False
+	while (isProven(facts, goals) == False and progress == True): 
+		for rule in rules:
+			# try all combinations
+			tryModusPonens(facts, rule)
+			tryModusTollens(facts, rule)
+			tryDisjunctiveSyllogism(facts, rule)
+#			deMorgansLaw(rule)
+#			ruleOfSyllogism(rule)
+			decomposingConjunction(rule)			
+		if len(facts) == factSize:
+			progress = False
 
-	return proven
+	return [proven] + steps
 
 #def yieldFactsFromRules(rules):
 #	facts = []
@@ -169,8 +197,8 @@ def getTerms(tree):
 
 	for node in tree.getChildren(): 
 		if node.getText() == "TERM": 
-			terms["symbol"] = node.getChildren(0)
-			terms["term"] = node.getChildren(2)
+			terms["symbol"] = node.getChild(0)
+			terms["term"] = node.getChild(2)
 			#node.getChildren(1) is ': '
 
 	return terms
@@ -180,8 +208,7 @@ def getRules(tree):
 
 	for node in tree.getChildren(): 
 		if node.getText() == "RULE": 
-			rules = rules + getChild(2)
-			#TODO fix - add node properly
+			rules = rules + [node.getChild(2)]
 
 	return rules
 
@@ -190,8 +217,7 @@ def getFacts(tree):
 
 	for node in tree.getChildren(): 
 		if node.getText() == "FACT": 
-			facts = facts + node.getChild(2)
-			#TODO fix - add node properly
+			facts = facts + [node.getChild(2)]
 
 	return facts
 
@@ -200,8 +226,7 @@ def getGoals(tree):
 
 	for node in tree.getChildren(): 
 		if node.getText() == "GOAL": 
-			goals = goals + node.getChild(2)
-			#TODO fix - add node properly
+			goals = goals + [node.getChild(2)]
 
 	return goals
 
@@ -216,6 +241,7 @@ def runProver(tree):
 
 	proverSteps = proofStrategy(goals, facts, rules)
 
+	print "proverSteps[0]: ", proverSteps[0]
 	if proverSteps[0] == False:
 		print "statement is incongruent with provided facts"
 	else:
@@ -224,7 +250,7 @@ def runProver(tree):
 	count = 1
 
 	#TODO modify to look up values of IDs in terms dictionary
-	while count < proverSteps.length: 
+	while count < len(proverSteps): 
 		print proverSteps[count][0] + ": " + proverSteps[count][1]
 		count += 1
 
