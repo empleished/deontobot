@@ -47,7 +47,7 @@ goal
 	;
 
 term
-	:	ID ASSN atom 							->^(TERM term)
+	:	ID ASSN atom 							-> ^(TERM atom)
 	;
 
 atom
@@ -111,8 +111,8 @@ ASSN	: 	': ';
 ATOM	:	'"' LETTER (LETTER | DIGIT | ' ')* '"';
 ID	:	LETTER (LETTER | DIGIT | '_')*;
 
-LETTER 	: 	'a'..'z' | 'A'..'Z';
-DIGIT  	: 	'0'..'9';
+fragment LETTER 	: 	'a'..'z' | 'A'..'Z';
+fragment DIGIT  	: 	'0'..'9';
 
 EOL     :	'\r'? '\n';             
 SPACE   :	('\t' | ' ')+;          
