@@ -28,7 +28,7 @@ prog
 	;
 
 decl
-	:	term EOL							
+	:	term EOL							-> ^(TERM term)
 	|	rule EOL							-> ^(RULE rule)
 	|	fact EOL							-> ^(FACT fact)
 	|	goal EOL    			  				-> ^(GOAL goal)    
@@ -47,7 +47,7 @@ goal
 	;
 
 term
-	:	ID ASSN atom 							-> ^(TERM atom)
+	:	ID ASSN atom 							
 	;
 
 atom
@@ -62,7 +62,7 @@ expr
 	;
 
 prefix_expr
-	:	LB pop LB expr RB RB						-> ^(pop expr)
+	:	pop LB expr RB						-> ^(pop expr)
 	;
 
 pop	
@@ -82,7 +82,7 @@ iop	:	AND
 	;
 
 ifthen_expr
-	:	LB IF SPACE e1=expr SPACE THEN SPACE e2=expr RB			-> ^(IFTHEN $e1 $e2)
+	:	IF SPACE e1=expr SPACE THEN SPACE e2=expr			-> ^(IFTHEN $e1 $e2)
 	;
 
 // LEXER RULES //
@@ -108,11 +108,13 @@ RB	:	')';
 
 ASSN	: 	': ';
 
-ATOM	:	'"' LETTER (LETTER | DIGIT | ' ')* '"';
+ATOM	:	'"' LETTER (LETTER | DIGIT | PUNCT)* '"';
 ID	:	LETTER (LETTER | DIGIT | '_')*;
 
 fragment LETTER 	: 	'a'..'z' | 'A'..'Z';
 fragment DIGIT  	: 	'0'..'9';
+
+fragment PUNCT		:	'\'' | ',' | ' ';
 
 EOL     :	'\r'? '\n';             
 SPACE   :	('\t' | ' ')+;          

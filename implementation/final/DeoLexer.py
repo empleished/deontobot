@@ -1,4 +1,4 @@
-# $ANTLR 3.1.2 Deo.g 2016-03-16 16:39:58
+# $ANTLR 3.1.2 Deo.g 2016-03-16 20:18:46
 
 import sys
 from antlr3 import *
@@ -36,6 +36,7 @@ OR=26
 IFTHEN=4
 LB=18
 DIGIT=31
+PUNCT=32
 FACT=14
 GOAL=7
 
@@ -474,24 +475,24 @@ class DeoLexer(Lexer):
             _type = ATOM
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:111:6: ( '\"' LETTER ( LETTER | DIGIT | ' ' )* '\"' )
-            # Deo.g:111:8: '\"' LETTER ( LETTER | DIGIT | ' ' )* '\"'
+            # Deo.g:111:6: ( '\"' LETTER ( LETTER | DIGIT | PUNCT )* '\"' )
+            # Deo.g:111:8: '\"' LETTER ( LETTER | DIGIT | PUNCT )* '\"'
             pass 
             self.match(34)
             self.mLETTER()
-            # Deo.g:111:19: ( LETTER | DIGIT | ' ' )*
+            # Deo.g:111:19: ( LETTER | DIGIT | PUNCT )*
             while True: #loop1
                 alt1 = 2
                 LA1_0 = self.input.LA(1)
 
-                if (LA1_0 == 32 or (48 <= LA1_0 <= 57) or (65 <= LA1_0 <= 90) or (97 <= LA1_0 <= 122)) :
+                if (LA1_0 == 32 or LA1_0 == 39 or LA1_0 == 44 or (48 <= LA1_0 <= 57) or (65 <= LA1_0 <= 90) or (97 <= LA1_0 <= 122)) :
                     alt1 = 1
 
 
                 if alt1 == 1:
                     # Deo.g:
                     pass 
-                    if self.input.LA(1) == 32 or (48 <= self.input.LA(1) <= 57) or (65 <= self.input.LA(1) <= 90) or (97 <= self.input.LA(1) <= 122):
+                    if self.input.LA(1) == 32 or self.input.LA(1) == 39 or self.input.LA(1) == 44 or (48 <= self.input.LA(1) <= 57) or (65 <= self.input.LA(1) <= 90) or (97 <= self.input.LA(1) <= 122):
                         self.input.consume()
                     else:
                         mse = MismatchedSetException(None, self.input)
@@ -615,6 +616,32 @@ class DeoLexer(Lexer):
 
 
 
+    # $ANTLR start "PUNCT"
+    def mPUNCT(self, ):
+
+        try:
+            # Deo.g:117:17: ( '\\'' | ',' | ' ' )
+            # Deo.g:
+            pass 
+            if self.input.LA(1) == 32 or self.input.LA(1) == 39 or self.input.LA(1) == 44:
+                self.input.consume()
+            else:
+                mse = MismatchedSetException(None, self.input)
+                self.recover(mse)
+                raise mse
+
+
+
+
+
+        finally:
+
+            pass
+
+    # $ANTLR end "PUNCT"
+
+
+
     # $ANTLR start "EOL"
     def mEOL(self, ):
 
@@ -622,17 +649,17 @@ class DeoLexer(Lexer):
             _type = EOL
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:117:9: ( ( '\\r' )? '\\n' )
-            # Deo.g:117:11: ( '\\r' )? '\\n'
+            # Deo.g:119:9: ( ( '\\r' )? '\\n' )
+            # Deo.g:119:11: ( '\\r' )? '\\n'
             pass 
-            # Deo.g:117:11: ( '\\r' )?
+            # Deo.g:119:11: ( '\\r' )?
             alt3 = 2
             LA3_0 = self.input.LA(1)
 
             if (LA3_0 == 13) :
                 alt3 = 1
             if alt3 == 1:
-                # Deo.g:117:11: '\\r'
+                # Deo.g:119:11: '\\r'
                 pass 
                 self.match(13)
 
@@ -660,10 +687,10 @@ class DeoLexer(Lexer):
             _type = SPACE
             _channel = DEFAULT_CHANNEL
 
-            # Deo.g:118:9: ( ( '\\t' | ' ' )+ )
-            # Deo.g:118:11: ( '\\t' | ' ' )+
+            # Deo.g:120:9: ( ( '\\t' | ' ' )+ )
+            # Deo.g:120:11: ( '\\t' | ' ' )+
             pass 
-            # Deo.g:118:11: ( '\\t' | ' ' )+
+            # Deo.g:120:11: ( '\\t' | ' ' )+
             cnt4 = 0
             while True: #loop4
                 alt4 = 2
