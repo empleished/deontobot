@@ -11,13 +11,14 @@ def runParser(fileName):
 	tokens = antlr3.CommonTokenStream(lexer)
 	parser = DeoParser(tokens)
 	rule = parser.prog()
-	print dir(rule.tree)
+#	print dir(rule.tree)
+#	print type(rule.tree)
 	root = rule.tree
 #	print "tree =", root.toStringTree()
 #	nodes = antlr3.tree.CommonTreeNodeStream(root)
 #	nodes.setTokenStream(tokens)
 	
-	print_tree(root, 0)
+#	print_tree(root, 0)
 
 	return root
 
@@ -31,3 +32,5 @@ def print_tree(node, depth):
 	for n in node.getChildren():
 		print TABS[:depth], "===", n.getText(), "==="
 		print_tree(n, depth + 1)
+
+runParser("tests/impl-success.deo")

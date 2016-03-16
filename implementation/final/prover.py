@@ -1,29 +1,21 @@
+import antlr3
+import antlr3.tree
 import ast
 import parser
 from tree import *
 
-# recursively checks if fact is an atom
-# returns the fact if it is
-# returns a list of decomposed atoms if not
-#def isAtom(fact): 
-#	atoms = []
-#	
-#	if fact.value == "ATOM":
-#		atoms = atoms + fact.left
-#	else fact.value == "and":
-#		atoms = atoms + decomposingConjunction(fact)
-#	else: 
-#		atoms = atoms + isAtom(fact.left)
-#		atoms = atoms + isAtom(fact.right)				
-#
-#	return atoms
-
 # returns the negation of a fact
-def negation(fact):
-	negatedFact = Tree("PREF")
-	negatedFact.add = "not"
-	negatedFact.add = fact
-	#TODO keep as ast, make new node and then setChildren(fact)
+#def negation(fact):
+#	negatedFact = Tree("PREF")
+#	negatedFact.add = "not"
+#	negatedFact.add = fact
+#
+#	return negatedFact
+
+#TODO keep as ast, make new node and then setChildren(fact)
+def negation(fact): 
+	negatedFact = antlr3.tree.CommonTree(fact)
+	negatedFact.setParent("not")
 
 	return negatedFact
 
@@ -35,61 +27,85 @@ def isNegation(node):
 		return False
 
 # checks whether two nodes are equal
-#TODO
 def isEqual(firstNode, secondNode): 
 	# for child in firstNode, child in secondNode
 	# if all the same then equal == true
-	return None
+	equal = True
+
+#	print firstNode
+#	print secondNode
+
+	if firstNode.getText() == secondNode.getText(): 
+		firstChildren = firstNode.getChildCount()
+		secondChildren = secondNode.getChildCount() 
+
+		if firstChildren == secondChildren: 
+			for i in range(firstChildren): 
+				equal = isEqual(firstNode.getChild(i), secondNode.getChild(i))
+		else: 
+			return False
+	else: 
+		return False	
+
+	return equal
 
 def modusPonens(fact, node):
 # if P and P -> Q then Q
+	print "modus"
 	if node.getText() == "IFTHEN":
-		if node.getChild(0) == fact:
+		if isEqual(node.getChild(0), fact):
 			return node.getChild(2)
 		else: 
 			return None
 
 def tryModusPonens(facts, node): 
-	facts = []
-
+	newFacts = []
+	print "try modus"
 	for fact in facts: 
-		facts = facts + modusPonens(fact, node)
+		print fact, "=fact"
+		newFact = modusPonens(fact, node)
+		if newFact != None: 
+			newFacts += newFact
 
-	return facts
+	return newFacts
 
 def modusTollens(fact, node):
 # if not Q and P -> Q then not P
 	if isNegation(fact): 
 		if node.getText() == "IFTHEN": 
-			if node.getChild(2) == negation(fact): 
+			if isEqual(node.getChild(2), negation(fact)): 
 				return negation(node.getChild(0))
 			else: 
 				return None
 
-def tryModusTollens(facts, nodes): 
-	facts = []
+def tryModusTollens(facts, node): 
+	newFacts = []
 
 	for fact in facts: 
-		facts = facts + modusTollens(fact, node)
+		newFact = modusTollens(fact, node)
+		if newFact != None: 
+			newFacts += newFact
 
-	return facts
+	return newFacts
 
 def disjunctiveSyllogism(fact, node):
 # if not P and (P or Q) then Q
 	if isNegation(fact): 
 		if node.getText() == "or": 
-			if node.getChild(0) == negation(fact): 
+			if isEqual(node.getChild(0), negation(fact)): 
 				return node.getChild(2)
 			else: 
 				return None
 
 def tryDisjunctiveSyllogism(facts, node): 
-	facts = []
+	newFacts = []
 
 	for fact in facts: 
-		facts = facts + disjunctiveSyllogism(fact, node)
+		newFact = disjunctiveSyllogism(fact, node)
+		if newFact != None: 
+			newFacts += newFact
 
-	return facts
+	return newFacts
 
 #TODO fix - keep as ast
 #def deMorgansLaw(node):
@@ -154,12 +170,20 @@ def decomposingConjunction(node):
 def isProven(facts, goals):
 	proven = False
 
+	for fact in facts: 
+		print fact, ", "
+	print "\n"
+
 	for goal in goals: 
 		for fact in facts:
-			if fact == goal:
+#			print fact.getChild(0), "=fact"
+#			print goal.getChild(0), "=goal"
+#			print isEqual(fact, goal)
+			if isEqual(fact, goal):
 				proven = True
+#				print proven, "=proven"
 		if proven == False: 
-			return False
+			return proven
 
 	return proven
 
@@ -169,28 +193,20 @@ def proofStrategy(goals, facts, rules):
 	progress = True
 	factSize = len(facts)
 
-	while (isProven(facts, goals) == False and progress == True): 
+	while (proven == False and progress == True): 
 		for rule in rules:
 			# try all combinations
-			tryModusPonens(facts, rule)
-			tryModusTollens(facts, rule)
-			tryDisjunctiveSyllogism(facts, rule)
-#			deMorgansLaw(rule)
-#			ruleOfSyllogism(rule)
-			decomposingConjunction(rule)			
+			facts = facts + tryModusPonens(facts, rule)
+			facts = facts + tryModusTollens(facts, rule)
+			facts = facts + tryDisjunctiveSyllogism(facts, rule)
+#			facts = facts + deMorgansLaw(rule)
+#			facts = facts + ruleOfSyllogism(rule)
+			facts = facts + decomposingConjunction(rule)			
 		if len(facts) == factSize:
 			progress = False
+		proven = isProven(facts, goals)
 
 	return [proven] + steps
-
-#def yieldFactsFromRules(rules):
-#	facts = []
-#
-#	for node in rules.body:
-#		print fact
-#		facts = facts + isAtom(node.left)
-#
-#	return facts
 
 def getTerms(tree): 
 	terms = {}
@@ -236,9 +252,6 @@ def runProver(tree):
 	facts = getFacts(tree)
 	goals = getGoals(tree)
 
-#	newFacts = yieldFactsFromRules(rules)
-#	facts = facts + newFacts
-
 	proverSteps = proofStrategy(goals, facts, rules)
 
 	print "proverSteps[0]: ", proverSteps[0]
@@ -254,5 +267,5 @@ def runProver(tree):
 		print proverSteps[count][0] + ": " + proverSteps[count][1]
 		count += 1
 
-tree = parser.runParser("tests/csEthics.deo")
+tree = parser.runParser("tests/impl-ob-success.deo")
 runProver(tree)
