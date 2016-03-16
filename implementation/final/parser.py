@@ -11,7 +11,7 @@ def runParser(fileName):
 	tokens = antlr3.CommonTokenStream(lexer)
 	parser = DeoParser(tokens)
 	rule = parser.prog()
-
+	print dir(rule.tree)
 	root = rule.tree
 #	print "tree =", root.toStringTree()
 #	nodes = antlr3.tree.CommonTreeNodeStream(root)

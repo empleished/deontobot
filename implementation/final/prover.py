@@ -158,7 +158,7 @@ def isProven(facts, goals):
 		for fact in facts:
 			if fact == goal:
 				proven = True
-		if proven = False: 
+		if proven == False: 
 			return False
 
 	return proven
