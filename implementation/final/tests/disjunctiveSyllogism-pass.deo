@@ -1,0 +1,3 @@
+fact: not(P)
+rule: P or Q
+goal: Q

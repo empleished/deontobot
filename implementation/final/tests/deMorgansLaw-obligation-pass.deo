@@ -1,0 +1,2 @@
+fact: not (OB(P) or OB(Q))
+goal: not(OB(P)) and not(OB(Q))

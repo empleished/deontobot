@@ -1,0 +1,3 @@
+rule: if P then Q
+rule: if Q then R
+goal: if P then R

@@ -1,0 +1,3 @@
+fact: not(OB(P))
+rule: OB(P) or OB(Q)
+goal: OB(Q)

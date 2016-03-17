@@ -1,0 +1,3 @@
+rule: if OB(P) then OB(Q)
+rule: if OB(Q) then OB(R)
+goal: if OB(P) then OB(R)

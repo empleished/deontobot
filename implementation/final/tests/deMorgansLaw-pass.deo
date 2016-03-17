@@ -1,0 +1,2 @@
+fact: not (P or Q)
+goal: not(P) and not(Q)

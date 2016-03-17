@@ -1,0 +1,5 @@
+P: "it's sunny in Glasgow"
+Q: "CS students work outside"
+fact: P
+rule: if P then Q
+goal: Q
