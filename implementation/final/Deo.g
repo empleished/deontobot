@@ -28,26 +28,26 @@ prog
 	;
 
 decl
-	:	term EOL							-> ^(TERM term)
-	|	rule EOL							-> ^(RULE rule)
-	|	fact EOL							-> ^(FACT fact)
-	|	goal EOL    			  				-> ^(GOAL goal)    
+	:	term EOL							-> ^(DECL term)
+	|	rule EOL							-> ^(DECL rule)
+	|	fact EOL							-> ^(DECL fact)
+	|	goal EOL    			  				-> ^(DECL goal)
 	;
 
 rule
-	:	RULE ASSN expr
+	:	RULE ASSN expr							-> ^(RULE expr)
 	;
 
 fact
-	:	FACT ASSN expr
+	:	FACT ASSN expr							-> ^(FACT expr)
 	;
 
 goal
-	:	GOAL ASSN expr						
+	:	GOAL ASSN expr							-> ^(GOAL expr)
 	;
 
 term
-	:	ID ASSN atom 							
+	:	ID ASSN atom 							-> ^(TERM ID atom)
 	;
 
 atom
@@ -55,10 +55,10 @@ atom
 	;
 
 expr
-	:	ID								-> ^(EXPR ID)
-	|	prefix_expr							-> ^(EXPR prefix_expr)
-	|	infix_expr							-> ^(EXPR infix_expr)
-	|	ifthen_expr							-> ^(EXPR ifthen_expr)
+	:	ID								-> ^(ID)
+	|	prefix_expr							-> ^(prefix_expr)
+	|	infix_expr							-> ^(infix_expr)
+	|	ifthen_expr							-> ^(ifthen_expr)
 	;
 
 prefix_expr
