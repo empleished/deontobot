@@ -1,4 +1,4 @@
-# $ANTLR 3.1.2 Deo.g 2016-03-17 12:07:07
+# $ANTLR 3.1.2 Deo.g 2016-03-17 12:11:23
 
 import sys
 from antlr3 import *
@@ -928,9 +928,17 @@ class DeoParser(Parser):
                 elif LA3 == OB or LA3 == PRO or LA3 == PER or LA3 == NOT:
                     alt3 = 2
                 elif LA3 == LB:
-                    alt3 = 3
-                elif LA3 == IF:
-                    alt3 = 4
+                    LA3_3 = self.input.LA(2)
+
+                    if (LA3_3 == IF) :
+                        alt3 = 4
+                    elif ((ID <= LA3_3 <= LB) or (OB <= LA3_3 <= NOT)) :
+                        alt3 = 3
+                    else:
+                        nvae = NoViableAltException("", 3, 3, self.input)
+
+                        raise nvae
+
                 else:
                     nvae = NoViableAltException("", 3, 0, self.input)
 
@@ -1471,7 +1479,7 @@ class DeoParser(Parser):
 
 
     # $ANTLR start "ifthen_expr"
-    # Deo.g:84:1: ifthen_expr : IF SPACE e1= expr SPACE THEN SPACE e2= expr -> ^( IFTHEN $e1 $e2) ;
+    # Deo.g:84:1: ifthen_expr : LB IF SPACE e1= expr SPACE THEN SPACE e2= expr RB -> ^( IFTHEN $e1 $e2) ;
     def ifthen_expr(self, ):
 
         retval = self.ifthen_expr_return()
@@ -1479,50 +1487,60 @@ class DeoParser(Parser):
 
         root_0 = None
 
-        IF39 = None
-        SPACE40 = None
+        LB39 = None
+        IF40 = None
         SPACE41 = None
-        THEN42 = None
-        SPACE43 = None
+        SPACE42 = None
+        THEN43 = None
+        SPACE44 = None
+        RB45 = None
         e1 = None
 
         e2 = None
 
 
-        IF39_tree = None
-        SPACE40_tree = None
+        LB39_tree = None
+        IF40_tree = None
         SPACE41_tree = None
-        THEN42_tree = None
-        SPACE43_tree = None
+        SPACE42_tree = None
+        THEN43_tree = None
+        SPACE44_tree = None
+        RB45_tree = None
+        stream_LB = RewriteRuleTokenStream(self._adaptor, "token LB")
         stream_THEN = RewriteRuleTokenStream(self._adaptor, "token THEN")
+        stream_RB = RewriteRuleTokenStream(self._adaptor, "token RB")
         stream_SPACE = RewriteRuleTokenStream(self._adaptor, "token SPACE")
         stream_IF = RewriteRuleTokenStream(self._adaptor, "token IF")
         stream_expr = RewriteRuleSubtreeStream(self._adaptor, "rule expr")
         try:
             try:
-                # Deo.g:85:2: ( IF SPACE e1= expr SPACE THEN SPACE e2= expr -> ^( IFTHEN $e1 $e2) )
-                # Deo.g:85:4: IF SPACE e1= expr SPACE THEN SPACE e2= expr
+                # Deo.g:85:2: ( LB IF SPACE e1= expr SPACE THEN SPACE e2= expr RB -> ^( IFTHEN $e1 $e2) )
+                # Deo.g:85:4: LB IF SPACE e1= expr SPACE THEN SPACE e2= expr RB
                 pass 
-                IF39=self.match(self.input, IF, self.FOLLOW_IF_in_ifthen_expr587) 
-                stream_IF.add(IF39)
-                SPACE40=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr589) 
-                stream_SPACE.add(SPACE40)
-                self._state.following.append(self.FOLLOW_expr_in_ifthen_expr593)
+                LB39=self.match(self.input, LB, self.FOLLOW_LB_in_ifthen_expr587) 
+                stream_LB.add(LB39)
+                IF40=self.match(self.input, IF, self.FOLLOW_IF_in_ifthen_expr589) 
+                stream_IF.add(IF40)
+                SPACE41=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr591) 
+                stream_SPACE.add(SPACE41)
+                self._state.following.append(self.FOLLOW_expr_in_ifthen_expr595)
                 e1 = self.expr()
 
                 self._state.following.pop()
                 stream_expr.add(e1.tree)
-                SPACE41=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr595) 
-                stream_SPACE.add(SPACE41)
-                THEN42=self.match(self.input, THEN, self.FOLLOW_THEN_in_ifthen_expr597) 
-                stream_THEN.add(THEN42)
-                SPACE43=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr599) 
-                stream_SPACE.add(SPACE43)
-                self._state.following.append(self.FOLLOW_expr_in_ifthen_expr603)
+                SPACE42=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr597) 
+                stream_SPACE.add(SPACE42)
+                THEN43=self.match(self.input, THEN, self.FOLLOW_THEN_in_ifthen_expr599) 
+                stream_THEN.add(THEN43)
+                SPACE44=self.match(self.input, SPACE, self.FOLLOW_SPACE_in_ifthen_expr601) 
+                stream_SPACE.add(SPACE44)
+                self._state.following.append(self.FOLLOW_expr_in_ifthen_expr605)
                 e2 = self.expr()
 
                 self._state.following.pop()
                 stream_expr.add(e2.tree)
+                RB45=self.match(self.input, RB, self.FOLLOW_RB_in_ifthen_expr607) 
+                stream_RB.add(RB45)
 
                 # AST Rewrite
                 # elements: e1, e2
@@ -1553,8 +1571,8 @@ class DeoParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 85:48: -> ^( IFTHEN $e1 $e2)
-                # Deo.g:85:51: ^( IFTHEN $e1 $e2)
+                # 85:54: -> ^( IFTHEN $e1 $e2)
+                # Deo.g:85:57: ^( IFTHEN $e1 $e2)
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(self._adaptor.createFromType(IFTHEN, "IFTHEN"), root_1)
 
@@ -1605,13 +1623,13 @@ class DeoParser(Parser):
     FOLLOW_goal_in_decl195 = frozenset([15])
     FOLLOW_EOL_in_decl197 = frozenset([1])
     FOLLOW_RULE_in_rule228 = frozenset([16])
-    FOLLOW_ASSN_in_rule230 = frozenset([17, 18, 20, 21, 22, 23, 28])
+    FOLLOW_ASSN_in_rule230 = frozenset([17, 18, 20, 21, 22, 23])
     FOLLOW_expr_in_rule232 = frozenset([1])
     FOLLOW_FACT_in_fact257 = frozenset([16])
-    FOLLOW_ASSN_in_fact259 = frozenset([17, 18, 20, 21, 22, 23, 28])
+    FOLLOW_ASSN_in_fact259 = frozenset([17, 18, 20, 21, 22, 23])
     FOLLOW_expr_in_fact261 = frozenset([1])
     FOLLOW_GOAL_in_goal286 = frozenset([16])
-    FOLLOW_ASSN_in_goal288 = frozenset([17, 18, 20, 21, 22, 23, 28])
+    FOLLOW_ASSN_in_goal288 = frozenset([17, 18, 20, 21, 22, 23])
     FOLLOW_expr_in_goal290 = frozenset([1])
     FOLLOW_ID_in_term315 = frozenset([16])
     FOLLOW_ASSN_in_term317 = frozenset([11])
@@ -1622,25 +1640,27 @@ class DeoParser(Parser):
     FOLLOW_infix_expr_in_expr401 = frozenset([1])
     FOLLOW_ifthen_expr_in_expr418 = frozenset([1])
     FOLLOW_pop_in_prefix_expr441 = frozenset([18])
-    FOLLOW_LB_in_prefix_expr443 = frozenset([17, 18, 20, 21, 22, 23, 28])
+    FOLLOW_LB_in_prefix_expr443 = frozenset([17, 18, 20, 21, 22, 23])
     FOLLOW_expr_in_prefix_expr445 = frozenset([19])
     FOLLOW_RB_in_prefix_expr447 = frozenset([1])
     FOLLOW_set_in_pop0 = frozenset([1])
-    FOLLOW_LB_in_infix_expr522 = frozenset([17, 18, 20, 21, 22, 23, 28])
+    FOLLOW_LB_in_infix_expr522 = frozenset([17, 18, 20, 21, 22, 23])
     FOLLOW_expr_in_infix_expr526 = frozenset([24])
     FOLLOW_SPACE_in_infix_expr528 = frozenset([25, 26, 27])
     FOLLOW_iop_in_infix_expr530 = frozenset([24])
-    FOLLOW_SPACE_in_infix_expr532 = frozenset([17, 18, 20, 21, 22, 23, 28])
+    FOLLOW_SPACE_in_infix_expr532 = frozenset([17, 18, 20, 21, 22, 23])
     FOLLOW_expr_in_infix_expr536 = frozenset([19])
     FOLLOW_RB_in_infix_expr538 = frozenset([1])
     FOLLOW_set_in_iop0 = frozenset([1])
-    FOLLOW_IF_in_ifthen_expr587 = frozenset([24])
-    FOLLOW_SPACE_in_ifthen_expr589 = frozenset([17, 18, 20, 21, 22, 23, 28])
-    FOLLOW_expr_in_ifthen_expr593 = frozenset([24])
-    FOLLOW_SPACE_in_ifthen_expr595 = frozenset([29])
-    FOLLOW_THEN_in_ifthen_expr597 = frozenset([24])
-    FOLLOW_SPACE_in_ifthen_expr599 = frozenset([17, 18, 20, 21, 22, 23, 28])
-    FOLLOW_expr_in_ifthen_expr603 = frozenset([1])
+    FOLLOW_LB_in_ifthen_expr587 = frozenset([28])
+    FOLLOW_IF_in_ifthen_expr589 = frozenset([24])
+    FOLLOW_SPACE_in_ifthen_expr591 = frozenset([17, 18, 20, 21, 22, 23])
+    FOLLOW_expr_in_ifthen_expr595 = frozenset([24])
+    FOLLOW_SPACE_in_ifthen_expr597 = frozenset([29])
+    FOLLOW_THEN_in_ifthen_expr599 = frozenset([24])
+    FOLLOW_SPACE_in_ifthen_expr601 = frozenset([17, 18, 20, 21, 22, 23])
+    FOLLOW_expr_in_ifthen_expr605 = frozenset([19])
+    FOLLOW_RB_in_ifthen_expr607 = frozenset([1])
 
 
 

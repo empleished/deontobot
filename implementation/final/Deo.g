@@ -82,7 +82,7 @@ iop	:	AND
 	;
 
 ifthen_expr
-	:	IF SPACE e1=expr SPACE THEN SPACE e2=expr			-> ^(IFTHEN $e1 $e2)
+	:	LB IF SPACE e1=expr SPACE THEN SPACE e2=expr RB			-> ^(IFTHEN $e1 $e2)
 	;
 
 // LEXER RULES //
