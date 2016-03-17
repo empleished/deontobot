@@ -1,21 +1,63 @@
 import antlr3
 import antlr3.tree
+import antlr3.tokens
 import ast
 import parser
-from tree import *
+import pprint
+
+# stores tokens in a dict
+def getAllTokens(): 
+	tokens = {}
+	t = open("Deo.tokens", "r")
+	line = t.readline()
+	
+	while line != "": 
+		line = line.split("=")
+		tokens["text"] = line[0]
+		tokens["id"] = line[1]
+		line = t.readline()
+
+	return tokens
+
+# creates a new node from token
+def createNode(tokenText): 
+	tokens = getAllTokens()
+	tokenID = tokens.get(tokenText)
+	nodeToken = antlr3.tokens.CommonToken(tokenID, tokenText)
+	nodeToken.type = tokenID
+	nodeToken.text = tokenText
+	node = antlr3.tree.CommonTree(nodeToken)
+	
+	return node
 
 # returns the negation of a fact
-#def negation(fact):
-#	negatedFact = Tree("PREF")
-#	negatedFact.add = "not"
-#	negatedFact.add = fact
-#
-#	return negatedFact
-
 #TODO keep as ast, make new node and then setChildren(fact)
 def negation(fact): 
 	negatedFact = antlr3.tree.CommonTree(fact)
-	negatedFact.setParent("not")
+#	print negatedFact, "=neg fact"
+#	print "fact"
+	parser.print_tree(fact, 0)
+#	print fact.getText(), "=fact text"
+#	print fact.getToken(), "=fact token"
+	if (isNegation(fact.getChild(0))): 
+		print "fact is negation"
+		print fact.getChild(0).getToken(), "=fact child token"
+		print type(fact.getChild(0).getChild(0)), "=type"
+		negatedFact.setChildIndex(0)
+		negatedFact.addChildren([fact.getChild(0).getChild(0)])
+	else: 
+		print "fact is not negation"
+		negNode = createNode("not")
+		negNode.addChildren([fact.getChild(0)])
+		negatedFact.addChildren([negNode])
+#		negatedFact.setChild(0, fact.getChild(0))
+		#negatedFact.getChild(0).setChild(fact.getChild(0))
+
+	print "negated fact:"
+	print negatedFact, "=neg fact"
+	print negatedFact.getChild(0)
+	parser.print_tree(negatedFact, 0)	
+	print "end"
 
 	return negatedFact
 
@@ -32,8 +74,11 @@ def isEqual(firstNode, secondNode):
 	# if all the same then equal == true
 	equal = True
 
-#	print firstNode
-#	print secondNode
+#	print firstNode, "=first"
+#	print secondNode, "=second"
+
+#	print "equality"
+#	print firstNode == secondNode
 
 	if firstNode.getText() == secondNode.getText(): 
 		firstChildren = firstNode.getChildCount()
@@ -51,9 +96,14 @@ def isEqual(firstNode, secondNode):
 
 def modusPonens(fact, node):
 # if P and P -> Q then Q
+#	print "modus"
 	if node.getText() == "IFTHEN":
-		if isEqual(node.getChild(0), fact):
-			return node.getChild(1)
+#		print fact, "=fact"
+#		print fact.getChild(0), node.getChild(0)
+		if isEqual(node.getChild(0), fact.getChild(0)):
+			new = createNode("fact")
+			new.addChildren([node.getChild(1)])
+			return new
 		else: 
 			return None
 
@@ -70,10 +120,28 @@ def tryModusPonens(facts, node):
 
 def modusTollens(fact, node):
 # if not Q and P -> Q then not P
-	if isNegation(fact): 
+	print "fact: "
+	parser.print_tree(fact, 0)
+	print "node: "
+	parser.print_tree(node, 0)
+	print fact, "=fact"
+	print node, "=node"
+	if isNegation(fact.getChild(0)): 
 		if node.getText() == "IFTHEN": 
-			if isEqual(node.getChild(1), negation(fact)): 
-				return negation(node.getChild(0))
+			print "it's a cond"
+			print node.getChild(1)
+			print fact
+			print fact.getChild(0).getChild(0)
+			print "????????"
+			neg = negation(fact)
+			print neg, "=neg"
+			print neg.getChild(0), "=neg child"
+			if isEqual(node.getChild(1), neg.getChild(0)): 
+				print "they're equal"
+				print node.getChild(0), "=P"
+				new = createNode("fact")
+				new.addChildren([node.getChild(0)])
+				return negation(new)
 			else: 
 				return None
 
@@ -83,7 +151,7 @@ def tryModusTollens(facts, node):
 	for fact in facts: 
 		newFact = modusTollens(fact, node.getChild(0))
 		if newFact != None: 
-			newFacts += newFact
+			newFacts += [newFact]
 
 	return newFacts
 
@@ -102,7 +170,7 @@ def tryDisjunctiveSyllogism(facts, node):
 	for fact in facts: 
 		newFact = disjunctiveSyllogism(fact, node)
 		if newFact != None: 
-			newFacts += newFact
+			newFacts += [newFact]
 
 	return newFacts
 
@@ -169,41 +237,59 @@ def decomposingConjunction(node):
 def isProven(facts, goals):
 	proven = False
 
-	for fact in facts: 
-		print fact.getChild(0), "=fact"
+#	for fact in facts: 
+#		print fact.getChild(0), "=fact"
 
 	for goal in goals: 
 		for fact in facts:
-			print fact.getChild(0), "=fact"
-			print goal.getChild(0), "=goal"
-			print isEqual(fact, goal)
-			if isEqual(fact, goal):
+#			print "IS PROVEN??"
+#			print fact.getChild(0), "=fact"
+#			print goal.getChild(0), "=goal"
+#			print isEqual(fact.getChild(0), goal.getChild(0))
+			if isEqual(fact.getChild(0), goal.getChild(0)):
 				proven = True
 		if proven == False: 
 			return proven
 
 	return proven
 
+def contains(i, l): 
+	for item in l: 
+		if isEqual(i, item): 
+			return True
+
+	return False
+
 def proofStrategy(goals, facts, rules):
 	proven = False
 	steps = []
 	progress = True
-	factSize = len(facts)
+	count = 0
 
 	proven = isProven(facts, goals)
 
 	while (proven == False and progress == True): 
+		factSize = len(facts)
 		for rule in rules:
+			count += 1
 			# try all combinations
-			facts = facts + tryModusPonens(facts, rule)
-			facts = facts + tryModusTollens(facts, rule)
-			facts = facts + tryDisjunctiveSyllogism(facts, rule)
-#			facts = facts + deMorgansLaw(rule)
-#			facts = facts + ruleOfSyllogism(rule)
-			facts = facts + decomposingConjunction(rule)			
+			newFacts = []
+			newFacts = newFacts + tryModusPonens(facts, rule)
+			newFacts = newFacts + tryModusTollens(facts, rule)
+			#newFacts = newFacts + tryDisjunctiveSyllogism(facts, rule)
+#			newFacts = newFacts + deMorgansLaw(rule)
+#			newFacts = newFacts + ruleOfSyllogism(rule)
+			#newFacts = newFacts + decomposingConjunction(rule)			
+			for f in newFacts: 
+				if contains(f, facts) == False: 
+					facts = facts + [f]
+
 		if len(facts) == factSize:
 			progress = False
+		
 		proven = isProven(facts, goals)
+#		print "SO IS IT??"
+#		print proven
 
 	return [proven] + steps
 
@@ -211,10 +297,10 @@ def getTerms(tree):
 	terms = {}
 
 	for node in tree.getChildren(): 
-		if node.getText() == "TERM": 
-			terms["symbol"] = node.getChild(0)
-			terms["term"] = node.getChild(2)
-			#node.getChildren(1) is ': '
+		print node.getChild(0), "=term node child"
+		if node.getChild(0).getText() == "TERM": 
+			terms["symbol"] = node.getChild(0).getChild(0).getText()
+			terms["term"] = node.getChild(0).getChild(1).getText()[1:-1]
 
 	return terms
 
@@ -222,8 +308,9 @@ def getRules(tree):
 	rules = []
 
 	for node in tree.getChildren(): 
-		if node.getText() == "RULE": 
-			rules = rules + [node.getChild(2)]
+		print node.getChild(0), "=node"
+		if node.getChild(0).getText() == "rule": 
+			rules = rules + [node.getChild(0)]
 
 	return rules
 
@@ -231,19 +318,22 @@ def getFacts(tree):
 	facts = []
 
 	for node in tree.getChildren(): 
-		if node.getText() == "FACT": 
-			facts = facts + [node.getChild(2)]
-
+		if node.getChild(0).getText() == "fact": 
+			facts = facts + [node.getChild(0)]
 	return facts
 
 def getGoals(tree): 
 	goals = []
 
 	for node in tree.getChildren(): 
-		if node.getText() == "GOAL": 
-			goals = goals + [node.getChild(2)]
+		if node.getChild(0).getText() == "goal": 
+			goals = goals + [node.getChild(0)]
 
 	return goals
+
+def printList(l): 
+	for m in l: 
+		parser.print_tree(m, 0)
 
 def runProver(tree):
 	terms = getTerms(tree)
@@ -251,6 +341,19 @@ def runProver(tree):
 	facts = getFacts(tree)
 	goals = getGoals(tree)
 
+	print "terms:"
+	pprint.pprint(terms, width=1)
+	print "rules:"
+	printList(rules)
+	print "facts:"
+	printList(facts)
+	print "goals:"
+	printList(goals)
+	'''
+	print "negation:"
+	newFact = negation(facts[0])
+	parser.print_tree(newFact, 0)
+	'''
 	proverSteps = proofStrategy(goals, facts, rules)
 
 	print "proverSteps[0]: ", proverSteps[0]
@@ -266,5 +369,7 @@ def runProver(tree):
 		print proverSteps[count][0] + ": " + proverSteps[count][1]
 		count += 1
 
-tree = parser.runParser("tests/implmpsuccess.deo")
+#fileName = raw_input("file:")
+
+tree = parser.runParser("tests/modusTollens-pass.deo")
 runProver(tree)
