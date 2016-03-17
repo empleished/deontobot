@@ -18,7 +18,7 @@ def runParser(fileName):
 #	nodes = antlr3.tree.CommonTreeNodeStream(root)
 #	nodes.setTokenStream(tokens)
 	
-#	print_tree(root, 0)
+	print_tree(root, 0)
 
 	return root
 

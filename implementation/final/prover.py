@@ -51,21 +51,20 @@ def isEqual(firstNode, secondNode):
 
 def modusPonens(fact, node):
 # if P and P -> Q then Q
-	print "modus"
 	if node.getText() == "IFTHEN":
 		if isEqual(node.getChild(0), fact):
-			return node.getChild(2)
+			return node.getChild(1)
 		else: 
 			return None
 
 def tryModusPonens(facts, node): 
 	newFacts = []
-	print "try modus"
+
 	for fact in facts: 
-		print fact, "=fact"
-		newFact = modusPonens(fact, node)
+		newFact = modusPonens(fact, node.getChild(0))
+		
 		if newFact != None: 
-			newFacts += newFact
+			newFacts += [newFact]
 
 	return newFacts
 
@@ -73,7 +72,7 @@ def modusTollens(fact, node):
 # if not Q and P -> Q then not P
 	if isNegation(fact): 
 		if node.getText() == "IFTHEN": 
-			if isEqual(node.getChild(2), negation(fact)): 
+			if isEqual(node.getChild(1), negation(fact)): 
 				return negation(node.getChild(0))
 			else: 
 				return None
@@ -82,7 +81,7 @@ def tryModusTollens(facts, node):
 	newFacts = []
 
 	for fact in facts: 
-		newFact = modusTollens(fact, node)
+		newFact = modusTollens(fact, node.getChild(0))
 		if newFact != None: 
 			newFacts += newFact
 
@@ -171,17 +170,15 @@ def isProven(facts, goals):
 	proven = False
 
 	for fact in facts: 
-		print fact, ", "
-	print "\n"
+		print fact.getChild(0), "=fact"
 
 	for goal in goals: 
 		for fact in facts:
-#			print fact.getChild(0), "=fact"
-#			print goal.getChild(0), "=goal"
-#			print isEqual(fact, goal)
+			print fact.getChild(0), "=fact"
+			print goal.getChild(0), "=goal"
+			print isEqual(fact, goal)
 			if isEqual(fact, goal):
 				proven = True
-#				print proven, "=proven"
 		if proven == False: 
 			return proven
 
@@ -192,6 +189,8 @@ def proofStrategy(goals, facts, rules):
 	steps = []
 	progress = True
 	factSize = len(facts)
+
+	proven = isProven(facts, goals)
 
 	while (proven == False and progress == True): 
 		for rule in rules:
@@ -267,5 +266,5 @@ def runProver(tree):
 		print proverSteps[count][0] + ": " + proverSteps[count][1]
 		count += 1
 
-tree = parser.runParser("tests/impl-ob-success.deo")
+tree = parser.runParser("tests/implmpsuccess.deo")
 runProver(tree)
