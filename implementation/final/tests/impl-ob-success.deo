@@ -1,5 +1,0 @@
-P: "CS student"
-Q: "be in constant pain"
-fact: P
-rule: if P then OB(Q)
-goal: OB(Q)
