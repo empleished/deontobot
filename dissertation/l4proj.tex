@@ -50,31 +50,45 @@
 \pagenumbering{arabic}
 
 \section{Background and Motivation}%Briefly explain what deontic logic is, why I'd want to do what I'm doing. 
-Deontic logic is a logic of duty, which formalises normative concepts of what should and should not be done. These conceptions can include obligations, prohibitions and permissions, as well as the Hohfeldian incidents\cite{Hohfeld} of claims, powers, immunities and liberties, though what is considered under the remit of deontic logic depends largely on what form of deontic logic is in use. For my purposes, I will largely be concerned with obligations, prohibitions and permissions, as I feel they are the most relevant to the project I am pursuing.
+\subsection{Background}
+Deontic logic is a logic of duty, which formalises normative concepts of what should and should not be done. These conceptions can include obligations, prohibitions and permissions, as well as the Hohfeldian incidents\cite{Hohfeld} of claims, powers, immunities and liberties, though what is considered under the remit of deontic logic depends largely on what form of deontic logic is in use and the context it is being employed within. 
 
-Concepts of obligation, prohibition and permission pervade everyday life, from legal proceedings to codes of ethics to database integrity. 
+This project will largely be concerned with obligations, prohibitions and permissions, as they are the most relevant to the project under pursuit. While there is some disagreement about the proper meaning and correct definition of these concepts, for convenience, this project will employ largely conventional understandings. 
 
-%duties are everywhere
-%vitally important that we get these things right
-%so automating such a process is of use
+\subsection{Motivation}
+Concepts of obligation, prohibition and permission pervade everyday life, from legal proceedings to codes of ethics to database integrity. The exact content and use of these concepts varies from context to context, but understood abstractly and generally, they can provide a deeper understanding of these specific contexts and the problems faced within them. 
+
+One area of particular interest is codes of ethics, for example as part of university project proceedings. These vary depending on the kind of project being undertaken and the subject or subjects it is undertaken in, but broadly they can be understood as specifying the correct conduct of the student who will carry out the project, and sometimes the body or bodies they will be reporting to over the course of it. This often includes, but is not limited to, the necessary procedures for dealing with human subjects, such as the provision of consent forms and the obligation to allow the removal of consent at any time. 
+
+This is a costly process for both the student, who must fill out multiple forms to prove that they have met the requirements of the code of ethics, as well as the assessment body, which must devote time and resources to individually assessing each ethics application. As with any manual process which takes up time and effort, there is merit to automating it. However, there are additional benefits such as the removal of human error, as well as insights from the automated program that a human might not have picked up on. 
+%CITATION NEEDED - paper that automatically parsed ethical situations and pulled out key terms
 
 \section{Objectives and Achievements} %What did I set out to achieve and what have I achieved. 
+\subsection{Objectives}
+This project aims to produce a deontic logic theorem prover. This involves, first, the design and implementation of a formalisation of deontic logic, limited to the abstract concepts of obligation, prohibition and permission, so the rules associated with specific systems can be stated in a semi-formal, semi-natural manner. Finally, this set of rules, as a deontic formalisation, must be able to be tested, first for internal consistency and then against specific real-world axioms, to determine whether they cohere with the with the set of rules. The case studies used will be from successful codes of ethics applications obtained from research projects submitted to the University of Glasgow for approval. Evaluation of the system will involve checking the results returned by the prover against the expected result and using the output to assess whether the applications should, indeed, have been successful. 
+
+The tasks required to achieve these aims are as follows. First, various versions of deontic logic must be identified and investigated in order to determine a specific version to be formalised. Next, a grammar to specify the expression of deontic statements must be designed in order to produce a parser for the rules of a system. Then, from a file set out in this way, an abstract syntax tree must be generated and stored. This tree must be simplified using standard logical proofs, and then checked for semantic entailment. Finally, a prover must be implemented that can be passed a specific logical axiom and then check that this axiom coheres with the specified rules of the system.
+
+\subsection{Achievements}
+This project has yielded a brute force deontic logic theorem prover, which works against unit tests and provides thoughtful output from the running of case studies specified in the deontic logic grammar. 
 
 \section{Structure}
-I will now set out the history of deontic logic, as well as current and potential applications of deontic logic, and then I will examine existing tool support for the issue I have presented. I will then explain the design and implementation of my software, broken down into the lexical specification of the flavour of deontic logic I am working with and the proof strategy for a given set of rules and facts. I will then evaluate the success of what I have achieved against what I initially set out to achieve. Once this is complete, I will present my conclusions about what the work I have done shows, and also suggest potential avenues of future work. 
+This dissertation will first set out the history of deontic logic, as well as current and potential applications of deontic logic, before examining existing tool support for the issue presented. It will then explain the design and implementation of the implemented program, broken down into the lexical specification of the chosen flavour of deontic logic and the proof strategy for a given set of rules, facts and goals. It will then assess the system against the codes of ethics applications used as case studies. Once this is complete, conclusions will be presented about what the work done in the project shows, and potential avenues of future work will be suggested. 
 
 \chapter{Literature Review}
 
 \section{Development of Deontic Logic}%talk about the development
-Deontic logic, as I have already explained, is a logic of duty. Duties can be understood in a Kantian sense, wherein the justification of maxims that are expected of agents is grounded in a respect for the laws which agents are bound to\cite{sep-kant-moral}. These laws can be anything from the moral law which can be said to govern all rational beings, to the legislation local to certain countries that applies only to their citizens, to the expected behaviour of an employee within a company under that company's code of ethics. 
+The development of deontic logic has been greatly influenced by alethic modal logic \cite{sep-logic-deontic}. Alethic modal logic is the logic of necessary truth, and its related operators are necessity, possibility, impossibility, non-necessity and contingency. Necessity is a basic operator; the other four operators can be defined in terms of it. What is necessary and contingent is possible, and what is contingent and impossible is non-necessary. Necessity maps loosely to obligation in deontic logic. 
 
-Deontic logic contains the usual formal logic operators, such as negations, biconditionals, conjunctions and disjunctions. It can then incorporate many concepts, but here I will focus on obligations, prohibitions and permissions. Obligations are those things which agents are required to do, prohibitions are those things which agents are forbidden from doing, and permissions are those things which agents are neither required to do nor forbidden from doing. In other words, obligations are things we should do, prohibitions are things we should not do and permissions are things we are allowed to do. 
+Deontic logic, as has been explained, is a logic of duty. Duties can be understood in a Kantian sense, wherein the justification of maxims that are expected of agents is grounded in a respect for the laws which agents are bound to\cite{sep-kant-moral}. These laws can be anything from the moral law which can be said to govern all rational beings, to the legislation local to certain countries that applies only to their citizens, to the expected behaviour of an employee within a company under that company's code of ethics. 
+
+Deontic logic contains the usual operators of formal logic, such as negations, biconditionals, conjunctions and disjunctions. It can then incorporate many concepts, but here the focus will be on obligations, prohibitions and permissions. Obligations are those things which agents are required to do, prohibitions are those things which agents are forbidden from doing, and permissions are those things which agents are neither required to do nor forbidden from doing. In other words, obligations are things people should do, prohibitions are things people should not do and permissions are things people are allowed to do. 
 
 Deontic logic says nothing about the content of these maxims, broadly speaking; where this comes from is determined by deontological theories, which can then be assessed for adequacy on their own terms. Indeed, in certain contexts, many deontological theories do not seem applicable. It makes no sense to talk of things like the rational will dictating the maxims to be accepted when these maxims concern database integrity, for example. However, there is a clearer story to be told when dealing with codes of ethics. Following Kant\cite{groundwork}: 
 
 \blockquote{It can lie nowhere else than in the principle of the will, regardless of the ends that can be effected by such action; for the will stands halfway between its a priori principle, which is formal, and its a posteriori incentive, which is material, as it were at a crossroads, and since it must after all be determined by something, it will have to be determined by the formal principle of willing as such when an action is done from duty, as every material principle has been taken away from it. The third proposition, as the conclusion from both previous ones, I would express as follows: duty is the necessity of an action from respect for the law. For the object as the effect of the action I have in mind I can indeed have inclination, but never respect, precisely because it is merely an effect and not activity of a will. Likewise, I cannot have respect for inclination as such, whether it is mine or that of another; I can at most in the first case approve of it, in the second at times love it myself, i.e. view it as favourable to my own advantage. Only what is connected with my will merely as ground, never as effect, what does not serve my inclination, but outweighs it, or at least excludes it entirely from calculations when we make a choice, hence the mere law by itself, can be an object of respect and thus a command.}
 
-This is often described as the autonomy formula of the categorical imperative. Simply put, it is that the rational will should determine universal law. From this, we can derive an approach to validating sets of deontic maxims, and thereby providing sets of laws. One convincing approach is ensuring that every maxim must be consistent with the rest of the set, and that the set must then form a coherent system of maxims\cite{Powers}. If there are inconsistent rules in the set, it is unreasonable to expect these maxims to be followed; it is impossible for $P$ and \( \neg \) $P$ to be true, so impossible for them to be justified coherently in a set. Powers derives two rules for this system: R-in and R-out. 
+This is often described as the autonomy formula of the categorical imperative. Simply put, it is that the rational will should determine universal law. From this, an approach to validating sets of deontic maxims can be derived, which can thereby provide sets of laws. One convincing approach is ensuring that every maxim must be consistent with the rest of the set, and that the set must then form a coherent system of maxims\cite{Powers}. If there are inconsistent rules in the set, it is unreasonable to expect these maxims to be followed; it is impossible for $P$ and \( \neg \) $P$ to be true, so impossible for them to be justified coherently in a set. Powers derives two rules for this system: R-in and R-out. 
 
 R-in states that a maxim, $m_i$ is allowed to be part of the set of acceptable maxims, $M$, if $m_i$ is consistent with the ethical 
 system, $G$. That is, $m_i \in M \iff G \vdash m_i $. 
@@ -89,7 +103,9 @@ R-out states that if a maxim, $m_i$, becomes inconsistent with the ethical syste
 \subsection{Standard Deontic Logic}
 Standard deontic logic is a monadic logic which extends propositional logic. If $O$ represents obligation, the concepts can be formalised as follows: if $A$ is some obligation, then $O(A)$; if $A$ is some prohibition, then $O$(\( \neg \)$A)$; if $A$ is some permission, then \( \neg \)$O(A)$ \& \( \neg \)$O$(\( \neg \)$A)$. For example, if there is a general prohibition on murder, and the action of murder is represented by $A$, this can be represented as $O$(\( \neg \)$A)$. Nothing more needs to be done to show that $O(A)$ holds once $A$ is proven to be true. 
 
-Standard deontic logic faces the contrary-to-duties problem. It is not implausible that it could be forbidden that $C$, but in the case of $C$, it could still be expected that $A$. The classic example is the gentle murderer; murder is forbidden, but if an agent is going to commit murder, they are obliged to do it in a way that causes the least amount of suffering. Standard deontic logic could represent these cases as follows: if there is a general prohibition on murder and the action of murder is represented by C, but if an agent is committing murder they are obliged to murder gently and this can be represented by $O(A)$, then this can be represented as $O$(\( \neg \)$C)$ \& $C$ \( \to \) $O(A)$. However, this is paradoxical, as $C$ and \( \neg \)$C$ cannot be true at the same time. There are ways to answer this objection within standard deontic logic, but it still does not give a satisfactory representation of what is happening with contrary-to-duties obligations. It seems like the case of a duty being violated is something stronger than a condition, and is an action in the same way that the ensuing obligation is. 
+Standard deontic logic faces the contrary-to-duties problem. It is not implausible that it could be forbidden that $C$, but in the case of $C$, it could still be expected that $A$. The classic example is the gentle murderer; murder is forbidden, but if an agent is going to commit murder, they are obliged to do it in a way that causes the least amount of suffering. Standard deontic logic could represent these cases as follows: if there is a general prohibition on murder and the action of murder is represented by C, but if an agent is committing murder they are obliged to murder gently and this can be represented by $O(A)$, then this can be represented as $O$(\( \neg \)$C)$ \& $C$ \( \to \) $O(A)$. 
+
+However, this is paradoxical, as $C$ and \( \neg \)$C$ cannot be true at the same time. There are ways to answer this objection within standard deontic logic, but it still does not give a satisfactory representation of what is happening with contrary-to-duties obligations. It seems like the case of a duty being violated is something stronger than a condition, and is an action in the same way that the ensuing obligation is. 
 
 \subsection{Non-Monotonic Deontic Logic}
 Non-monotonic deontic logic introduces consistency\cite{Powers}. This is useful both for dealing with conflicting obligations and for handling conditional obligations\cite{Horty}. Following Reiter's symbolisation of default logic\cite{Reiter}, if $A$ is an obligation, and $C$ is some condition that $A$ must be consistent with in order to hold, \( \frac{C : O(A)}{O(A)} \). This also neatly handles the contrary-to-duties problem; if there is a general prohibition on murder, and the action of murder is represented by C, but if in the context where an agent is committing murder they are obliged to kill gently and this can be represented by O(A), then \( \frac{C : O(A)}{O(A)} \). The justification is the same as the conclusion, and is true only in the case of there being no facts, or defeater conditions, which would make it false. This is what is known as defeasibility. 
@@ -101,7 +117,7 @@ However, despite effectively capturing an important aspect of reasoning, non-mon
 \subsection{Predicate Deontic Logic}
 Predicate logic\cite{predicate} introduces quantifiers, which allow for specification of what statements actually refer to. Statements can range over all members of a group, (at least) one member of a group, no members of a group or not all members of a group. If $x$ is some agent and $A$ is some obligation incumbent upon all of $x$, \( \forall{x(O(A))} \). For example, the general prohibition on murder, ($A$), which applies to all rational beings, ($x$), can be represented as \( \forall{x(O( \neg A))} \). To show the distinction, if all citizens ($x$) are obliged not to murder, but officers of the law ($y$) are permitted to murder in certain cases, this can be represented as \( \forall{x(O( \neg A))} \) \& \( \forall{y( \neg O( \neg A) \& \neg O(A)} \). These are not contradictory maxims in predicate logic, so it allows for much more complex sets of deontic rules. 
 
-However, this still faces problems. %predicate logic is a really weird way of doing deontic duties 
+%predicate logic is a really weird way of doing deontic duties 
 
 \section{Applications of Deontic Logic}
 Deontic logic lends itself well to applications within law, due to the aforementioned grounding in a respect for laws. One way to implement this is to characterise the law as a system of norms\cite{law-jonessergot}, which can then be represented with deontic expressions. 
@@ -121,61 +137,187 @@ One tool which has been explicitly developed to operationalise deontic logic is 
 
 %NHS Health Research Authority Decision Tool
 
-\chapter{Design}
+\chapter{Design and Implementation}
 %more high level than implementation
 %how could we do this
 %what considerations do we have
 
-\section{Lexical Specification}
+%IMPLEMENTATION:
+%what have i done
+%how did i take on design considerations
 
-As the finished product is not designed for any kind of specialist, it is important to take into consideration the needs of an average user. Most people will not be familiar with formal logic, particularly the frequently esoteric symbolism. 
+\section{Lexical Specification}
 
 %first order logic + notions of obligation
 %conditions
 %axioms
 %atoms
 
+\subsection{Design}
+As the finished product is not designed for any kind of specialist, it is important to take into consideration the needs of an average user. Most people will not be familiar with formal logic, particularly the frequently esoteric symbolism. 
+
+%potential diagram: workflow through the grammar
+
+\subsection{Implementation}
+A grammar was created to outline the specification of rules for a system. These rules extend first order logic with notions of obligation, prohibition and permission. The grammar consists of parser rules and lexer rules. 
+
+The lexer rules include 'OB', 'PRO' and 'PER' to represent obligation, prohibition and permission, as well as lexer rules for common first order logic operators including 'not', 'and', 'or', 'if' and 'then'. These are represented as words rather than symbols, particularly 'then' rather than the implication symbol '->' because it makes the code more readable for the person specifying the rules of the system. Assigning of atoms to symbols is done with ':', as this is more intuitive in context than a more traditional '='. 
+
+The parser rules start with the program, which is made up of declarations, which are split into declarations of facts, in the form of 'C: some statement', and declarations of rules, which are one of three kinds of expression. Expressions are split into prefix expressions, which have an operator before some kind of statement; infix expressions, which have an operator between two statements; and if...then expressions, which have an expression enclosed by the IF operator and the THEN operator, with a second expression following the THEN operator. 
+
+ANTLR is used to generate a lexer and parser for the grammar. Once rules have been specified in a program with this grammar, an ANTLR tree is generated of the various nodes of the program, which will then be used for the next stage of the process, the prover. 
+
+%potential diagram: example code tree
+
+\subsection{Problems}
+Designing and implementing the grammar took much longer than anticipated. Part of this is just uncertainty, from being unsure which rules are necessary and which are perhaps just potentially useful, but also because of the difficulty formalising what are rather intuitive concepts. Even as it is not straightforward to move from a natural language statement of obligation to a semi-formal logical representation of that statement, it is harder to still to move from that logical representation to a formal syntax. There has been lots written on the subject of deontic logic, and how it can be useful in various contexts, but there have been very few formalisations of it, so there was not a lot to draw upon. In particular, it has been difficult to formalise compound statements, and the various different ways these can be constructed and the meaning this then has for the rule as a whole.
+
+\subsection{Limitations}
+One limitation of the lexical specification is the reliance on brackets to disambiguate expressions, particularly to make clear which expression a term belongs to. Brackets enclose prefix expressions, infix expressions and if...then expressions, but not identifiers, which is fairly intuitive. Identifiers are single terms, and do not need to be disambiguated. However, expressions are complex, and involve at least one operator and at least one identifier, so it is vital that it is clarified where the expression ends. Nevertheless, this could lead to confusion, and requires some documentation to make it obvious in which cases brackets are required by the grammar in order for the specification to be correctly parsed into an ANTLR tree. 
+
 \section{Proof Strategy}
 
 %use generated tree to walk
 %brute force prover
 %simplify fact set using logic rules
 
-\chapter{Implementation}
-%what have i done
-%how did i take on design considerations
+\subsection{Design}
+The prover will use a brute force proof strategy to prove, given a set of facts and a goal, that these facts cohere with the defined set of rules to produce the desired goal, or not, as the case may be. 
 
-\section{Lexical Specification}
+The prover should make use of rules of inference and rules of replacement as part of its brute force proof strategy. These rules are listed in the below table\cite{infrules}. 
 
-I created an ANTLR grammar to outline the specification of rules for a system. These rules extended first order logic with notions of obligation, prohibition and permission. The grammar consists of parser rules and lexer rules. 
+\begin{tabular}{ l | r } 
+\hline modus ponens & ((p and (p implies q)) implies q \\
+\hline modus tollens & ((not q and (p implies q)) implies not p \\
+\hline associative & ((p or q) or r) implies (p or (q or r)) \\
+\hline commutative & (p and q) implies (q and p) \\
+\hline law of biconditional propositions & ((p implies q) and (q implies p)) implies (p <implies q) \\
+\hline exportation & ((p and q) implies r) implies (p implies (q implies r)) \\
+\hline transposition & (p implies q) implies (not q implies not p) \\
+\hline hypothetical syllogism & ((p implies q) and (q implies r)) implies (p implies r) \\
+\hline material implication & (p implies q) implies (not p or q) \\
+\hline distributive & ((p or q) and r) implies ((p and r) or (q and r)) \\
+\hline absorption & (p implies q) implies (p implies (p and q)) \\
+\hline disjunctive syllogism & ((p or q) and not p) implies q \\
+\hline addition & p implies (p or q) \\
+\hline simplification & (p and q) implies p \\
+\hline conjunction & ((p) and (q) implies (p and q) \\
+\hline double negation & p implies (not not p) \\
+\hline disjunctive simplification & (p or p) implies p \\
+\hline resolution & ((p or q) and (not p or r)) implies (q or r) \\
+\hline
+\end{tabular}
 
-The lexer rules include 'OB', 'PRO' and 'PER' to represent obligation, prohibition and permission, as well as lexer rules for common first order logic operators. I chose to represent these as words rather than symbols, particularly 'then' rather than '->' because it makes the code more readable for the person specifying the rules of the system. Assigning of atoms to symbols is done with ':', as this os more intuitive in context than a possibly more traditional '='. 
+Critical rules to implement are modus ponens and modus tollens. Modus ponens affirms the antecedent of an argument; true premises guarantee true conclusions, so affirming the antecedent proves that the consequent is true. Modus tollens denies the consequent of an argument; false conclusions cannot follow true premises, so denying the consequent proves that the antecedent is false. These are foundational logical principles, and any prover would be sorely lacking without an implementation of them. 
 
-The parser rules start with the program, which is made up of declarations, which are split into declarations of facts, in the form of 'C: some statement', and declarations of rules, which are one of three kinds of expression. Expressions are split into prefix expressions, which have an operator before some kind of statement; infix expressions, which have an operator between two statements; and if...then expressions, which have a statement enclosed by the IF operator and the THEN operator. 
+\subsection{Implementation}
+The prover first scans the generated ANTLR tree to yield the terms, facts, rules and goals specified by the system under review. The terms are stored in a dictionary, with the identifiers of the terms stored as keys and the content of the terms stored as values, so that the identifiers, used in the facts, rules and goals, can be later substituted for their actual content. The facts, rules and goals are each stored in separate lists, with each list storing the parent  of each relevant node of the tree. 
 
-ANTLR is used to generate a lexer and parser for the grammar. Once rules have been specified in a program with this grammar, a tree is generated of the various nodes of the program, which will then be used for the next stage of the process, the prover. 
+The prover implements various rules of inference and replacement, including modus ponens and modus tollens. For every rule in its data set, it checks every currently existing fact in its data set using the rules of inference and replacement in order to determine whether it can yield any more facts, in the hope of proving, or disproving, each goal in its data set. 
 
-\section{Proof Strategy}
+This process continues while each goal has not yet been found, and progress in the process has been made. The process terminates when progress has not been made, which is to say that the prover has not been able to yield any new facts from the rules. 
 
-The prover uses a brute force proof strategy to prove, given a set of facts, that these facts cohere with the defined set of rules, or not, as the case may be. 
+Once the process has terminated, the program returns to standard output the success of the prover. This output contains first an assertion as to whether the goals of the specified system have been made, which is to say whether the desired goals are validated by the specified rules of the system and the relevant specified facts about the world. If the assertion is true, that the case is successful in meeting its goals, then the output also contains a list of the steps required to prove that this is the case. These steps include the rule of inference or replacement that was used to generate a new fact and the original fact, specified in terms of its content rather than an identifier, that was part of generating this new fact. 
 
-%use generated tree to walk
-%brute force prover
-%simplify fact set using logic rules
+\subsection{Limitations}
+Any brute force prover will suffer from inefficiency. For each fact, many of the rules are run through unnecessarily. A more intelligent approach would analyse the fact set and the rules in order to determine which rules are beneficial to run for a given fact. 
 
 \chapter{Evaluation}
 
-\section{Lexical Specification}
+%test cases and what we can learn from them
 
-\section{Proof Strategy}
+\section{Case Studies}
+
+\section{Impacts of Climate Change, Variability and Agriculture Adaptation}
+
+\subsection{Introduction}
+
+This first case study is an ethics proposal submitted by a postgraduate student from the School of Geographical and Earth Sciences. The proposed research project involves investigating rural communities and climate change, and the impacts it has on agriculture. 
+
+\subsection{Specification}
+
+I specified this study as follows: 
+
+A: "study has physical effects on participants"
+
+B: "participant shows signs of distress during their interview"
+
+C: "stop interviewing participant"
+
+D: "study involves human participants"
+
+E: "study involves members of vulnerable groups"
+
+F: "explain the full nature of the research to the participants"
+
+G: "offer anonymity to the participants"
+
+H: "participants participate"
+
+I: "participants disengage from the study at any point"
+
+J: "participants respond/not respond to any question asked during the interview"
+
+K: "researcher will respect all wishes expressed by all participants"
+
+L: "interviews will be conducted in areas where participants feel comfortable"
+
+M: "study is approved"
+
+fact: not A
+
+rule: (if B then C)
+
+fact: D
+
+fact: not E
+
+fact: F
+
+fact: G
+
+fact: H
+
+fact: I
+
+fact: J 
+
+fact: K
+
+fact: L
+
+rule: (if D then (OB F and OB G and PER H and PER I and PER J and OB K and OB L))
+
+rule: (if (not D) then M)
+
+rule: (if (D and (F and G and K and L) then M)
+
+Identifiers for terms start at 'A' and continue sequentially through the alphabet. The content of the terms was derived from the text of the ethics proposal, as written by the student who submitted it, though modified slightly to fit the context of the prover. 
+
+\subsection{Results}
+
+The case study, as specified above, was run through the prover. The results obtained are as follows. 
 
 \chapter{Conclusions and Future Work}
 
 \section{Conclusions}
 
 \section{Future Work}
-%Hohfeldian incidents - formalise rights
-%parser - Stanford Tagger
+
+\subsection{Intuitive Interface}
+One strength of the prover is the more intuitive specification system, and the lack of esoteric symbolism, which makes the tool more accessible for the average user. 
+
+However, it does not go far enough. There are some quirks to the specification that, while exemplified in the examples providied for the smooth running of the prover, are not at all immediately obvious. This could be avoided with a more intuitive interface, one which does not rely on human input to specify a system in the deontic grammar. 
+
+One way of doing this would be to provide an additional graphical interface which allowed the user to enter the facts, rules and goals of a system in some kind of structured form, which was then processed to create the kind of file currently required of the user to produce by themselves. 
+
+This would greatly reduce the number of errors faced by the user when specifying the system, simply because they have not understood the exact specification of the deontic grammar. It would also reduce the amount of time and effort required to use the tool, a key concern for a project which aims to reduce human cost in this sense. 
+
+\subsection{Automatic Parsing}
+One area that has much to offer this tool is the field of automatic parsing of text. Its functionality would be greatly improved if extended in conjunction with a tool which could scan documents, such as codes of ethics and completed ethics applications for projects, for key terms and information, in order to automatically generate a set of facts, rules and goals for a system. 
+
+\subsection{Predicate Deontic Logic}
+Though too complex for the scope of this project, predicate deontic logic would be a deeply fascinating extension of its work. Particularly if the focus on codes of ethics is retained, being able to differentiate between the $x$ that designates the person who submitted the proposal for a research project, the $y$ who designates the person who is taking part in the research and the $z$ who designates the person who is responsible for granting approval or rejection of the proposal would be very beneficial. 
 
 %%%%%%%%%%%%%%%%
 %              %
