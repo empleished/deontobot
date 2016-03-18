@@ -1,6 +1,11 @@
 intro: 
 	brief discussion of deontic logic 
+	-what is it 
+	-what is it useful for 
+
+	what is my project doing
 
 running program: 
+	show the grammar and explain the implementation
 	show examples / unit tests 
 	show output from program
