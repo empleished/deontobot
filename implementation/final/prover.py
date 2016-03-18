@@ -40,24 +40,24 @@ def negation(fact):
 #	print fact.getText(), "=fact text"
 #	print fact.getToken(), "=fact token"
 	if (isNegation(fact.getChild(0))): 
-		print "fact is negation"
-		print fact.getChild(0).getToken(), "=fact child token"
-		print type(fact.getChild(0).getChild(0)), "=type"
+#		print "fact is negation"
+#		print fact.getChild(0).getToken(), "=fact child token"
+#		print type(fact.getChild(0).getChild(0)), "=type"
 		negatedFact.setChildIndex(0)
 		negatedFact.addChildren([fact.getChild(0).getChild(0)])
 	else: 
-		print "fact is not negation"
+#		print "fact is not negation"
 		negNode = createNode("not")
 		negNode.addChildren([fact.getChild(0)])
 		negatedFact.addChildren([negNode])
 #		negatedFact.setChild(0, fact.getChild(0))
 		#negatedFact.getChild(0).setChild(fact.getChild(0))
 
-	print "negated fact:"
-	print negatedFact, "=neg fact"
-	print negatedFact.getChild(0)
-	parser.print_tree(negatedFact, 0)	
-	print "end"
+#	print "negated fact:"
+#	print negatedFact, "=neg fact"
+#	print negatedFact.getChild(0)
+#	parser.print_tree(negatedFact, 0)	
+#	print "end"
 
 	return negatedFact
 
@@ -120,25 +120,25 @@ def tryModusPonens(facts, node):
 
 def modusTollens(fact, node):
 # if not Q and P -> Q then not P
-	print "fact: "
-	parser.print_tree(fact, 0)
-	print "node: "
-	parser.print_tree(node, 0)
-	print fact, "=fact"
-	print node, "=node"
+#	print "fact: "
+#	parser.print_tree(fact, 0)
+#	print "node: "
+#	parser.print_tree(node, 0)
+#	print fact, "=fact"
+#	print node, "=node"
 	if isNegation(fact.getChild(0)): 
 		if node.getText() == "IFTHEN": 
-			print "it's a cond"
-			print node.getChild(1)
-			print fact
-			print fact.getChild(0).getChild(0)
-			print "????????"
+#			print "it's a cond"
+#			print node.getChild(1)
+#			print fact
+#			print fact.getChild(0).getChild(0)
+#			print "????????"
 			neg = negation(fact)
-			print neg, "=neg"
-			print neg.getChild(0), "=neg child"
+#			print neg, "=neg"
+#			print neg.getChild(0), "=neg child"
 			if isEqual(node.getChild(1), neg.getChild(0)): 
-				print "they're equal"
-				print node.getChild(0), "=P"
+#				print "they're equal"
+#				print node.getChild(0), "=P"
 				new = createNode("fact")
 				new.addChildren([node.getChild(0)])
 				return negation(new)
@@ -297,7 +297,7 @@ def getTerms(tree):
 	terms = {}
 
 	for node in tree.getChildren(): 
-		print node.getChild(0), "=term node child"
+#		print node.getChild(0), "=term node child"
 		if node.getChild(0).getText() == "TERM": 
 			terms["symbol"] = node.getChild(0).getChild(0).getText()
 			terms["term"] = node.getChild(0).getChild(1).getText()[1:-1]
@@ -308,7 +308,7 @@ def getRules(tree):
 	rules = []
 
 	for node in tree.getChildren(): 
-		print node.getChild(0), "=node"
+#		print node.getChild(0), "=node"
 		if node.getChild(0).getText() == "rule": 
 			rules = rules + [node.getChild(0)]
 
@@ -341,14 +341,14 @@ def runProver(tree):
 	facts = getFacts(tree)
 	goals = getGoals(tree)
 
-	print "terms:"
-	pprint.pprint(terms, width=1)
-	print "rules:"
-	printList(rules)
-	print "facts:"
-	printList(facts)
-	print "goals:"
-	printList(goals)
+#	print "terms:"
+#	pprint.pprint(terms, width=1)
+#	print "rules:"
+#	printList(rules)
+#	print "facts:"
+#	printList(facts)
+#	print "goals:"
+#	printList(goals)
 	'''
 	print "negation:"
 	newFact = negation(facts[0])
@@ -356,20 +356,20 @@ def runProver(tree):
 	'''
 	proverSteps = proofStrategy(goals, facts, rules)
 
-	print "proverSteps[0]: ", proverSteps[0]
+#	print "proverSteps[0]: ", proverSteps[0]
 	if proverSteps[0] == False:
-		print "statement is incongruent with provided facts"
+		print "fail"
 	else:
-		print "statement is coherent with provided facts"
+		print "success"
 
 	count = 1
 
 	#TODO modify to look up values of IDs in terms dictionary
-	while count < len(proverSteps): 
-		print proverSteps[count][0] + ": " + proverSteps[count][1]
-		count += 1
+#	while count < len(proverSteps): 
+#		print proverSteps[count][0] + ": " + proverSteps[count][1]
+#		count += 1
 
 #fileName = raw_input("file:")
 
-tree = parser.runParser("tests/modusTollens-pass.deo")
+tree = parser.getTree()
 runProver(tree)

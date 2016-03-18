@@ -1,5 +1,5 @@
-P: "CS student"
-Q: "be in constant pain"
+P: "fourth year CS student"
+Q: "complete individual project"
 fact: P
-rule: if P then OB(Q)
-goal: OB(Q)
+rule: (if P then (OB Q))
+goal: (OB Q)

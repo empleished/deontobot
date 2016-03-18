@@ -3,6 +3,11 @@ import antlr3.tree
 from DeoLexer import DeoLexer
 from DeoParser import DeoParser
 
+def getTree(): 
+	fileName = raw_input("file:")
+	tree = runParser(fileName)
+	return tree
+
 def runParser(fileName): 
 	char_stream = antlr3.ANTLRFileStream(fileName)
 
@@ -15,7 +20,7 @@ def runParser(fileName):
 	print_tree(root, 0)
 
 	return root
-'''
+
 def print_tree(node, depth):
 	MAX = 10
 	TABS = "\t\t\t\t\t\t\t\t\t\t"
@@ -25,4 +30,5 @@ def print_tree(node, depth):
 	for n in node.getChildren():
 		print TABS[:depth], "===", n.getText(), "==="
 		print_tree(n, depth + 1)
-'''
+
+

@@ -1,5 +1,5 @@
 P: "it's sunny in Glasgow"
 Q: "CS students work outside"
-fact: not(Q)
-rule: if P then Q
-goal: not(P)
+fact: (not Q)
+rule: (if P then Q)
+goal: (not P)

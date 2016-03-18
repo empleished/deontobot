@@ -6,7 +6,9 @@ options {
 	ASTLabelType = CommonTree;
 }
 
-tokens {        //TODO special tokens for labeling AST nodes
+// LABELS FOR AST NODES // 
+
+tokens {        
 	IFTHEN;
 	EXPR;
 	PROG;
