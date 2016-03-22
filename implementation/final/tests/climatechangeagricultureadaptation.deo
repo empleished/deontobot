@@ -7,14 +7,14 @@ F: "explain the full nature of the research to the participants"
 G: "offer anonymity to the participants"
 H: "participants participate"
 I: "participants disengage from the study at any point"
-J: "participants respond/not respond to any question asked during the interview"
+J: "participants respond or not respond to any question asked during the interview"
 K: "researcher will respect all wishes expressed by all participants"
 L: "interviews will be conducted in areas where participants feel comfortable"
 M: "study is approved"
-fact: not A
+fact: (not A)
 rule: (if B then C)
 fact: D
-fact: not E
+fact: (not E)
 fact: F
 fact: G
 fact: H
@@ -22,6 +22,7 @@ fact: I
 fact: J 
 fact: K
 fact: L
-rule: if D then (OB F and OB G and PER H and PER I and PER J and OB K and OB L)
+rule: (if D then (((((((OB F and OB G) and PER H) and PER I) and PER J) and OB K) and OB L))
 rule: (if (not D) then M)
-rule: (if (D and (F and G and K and L) then M)
+rule: (if (D and (F and (G and (K and L))))) then M)
+goal: M

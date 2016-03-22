@@ -1,0 +1,11 @@
+P: "p"
+Q: "q"
+R: "r"
+S: "s"
+T: "t"
+U: "u"
+fact: S
+rule: (if (P or S) then ((OB (Q and T) and U))
+goal: (OB (Q and T))
+
+
