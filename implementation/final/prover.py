@@ -30,11 +30,14 @@ def createNode(tokenText):
 	
 	return node
 
+def createNodeWithChildren(tokenText, children): 
+	node = createNode(tokenText)
+	node.addChildren(children)
+
+	return node
+
 # returns the negation of a fact
-#TODO keep as ast, make new node and then setChildren(fact)
 def negation(fact): 
-	negatedFact = antlr3.tree.CommonTree(fact)
-#	print negatedFact, "=neg fact"
 #	print "fact"
 	parser.print_tree(fact, 0)
 #	print fact.getText(), "=fact text"
@@ -42,14 +45,14 @@ def negation(fact):
 	if (isNegation(fact.getChild(0))): 
 #		print "fact is negation"
 #		print fact.getChild(0).getToken(), "=fact child token"
-#		print type(fact.getChild(0).getChild(0)), "=type"
-		negatedFact.setChildIndex(0)
-		negatedFact.addChildren([fact.getChild(0).getChild(0)])
+#		print fact.getChild(0).getChild(0), "=fact grandchild"
+#		negatedFact.setChildIndex(0)
+		negatedFact = createNodeWithChildren("fact", [fact.getChild(0).getChild(0)])
+		parser.print_tree(negatedFact, 0)
 	else: 
 #		print "fact is not negation"
-		negNode = createNode("not")
-		negNode.addChildren([fact.getChild(0)])
-		negatedFact.addChildren([negNode])
+		negNode = createNodeWithChildren("not", [fact.getChild(0)])
+		negatedFact = createNodeWithChildren("fact", [negNode])
 #		negatedFact.setChild(0, fact.getChild(0))
 		#negatedFact.getChild(0).setChild(fact.getChild(0))
 
@@ -79,80 +82,237 @@ def isEqual(firstNode, secondNode):
 
 #	print "equality"
 #	print firstNode == secondNode
+	if firstNode is not None and secondNode is not None: 
+		if firstNode.getText() == secondNode.getText(): 
+			firstChildren = firstNode.getChildCount()
+			secondChildren = secondNode.getChildCount() 
 
-	if firstNode.getText() == secondNode.getText(): 
-		firstChildren = firstNode.getChildCount()
-		secondChildren = secondNode.getChildCount() 
-
-		if firstChildren == secondChildren: 
-			for i in range(firstChildren): 
-				equal = isEqual(firstNode.getChild(i), secondNode.getChild(i))
+			if firstChildren == secondChildren: 
+				for i in range(firstChildren): 
+					equal = isEqual(firstNode.getChild(i), secondNode.getChild(i))
+			else: 
+				return False
 		else: 
-			return False
-	else: 
-		return False	
+			return False	
 
 	return equal
 
-def modusPonens(fact, node):
-# if P and P -> Q then Q
-#	print "modus"
-	if node.getText() == "IFTHEN":
-#		print fact, "=fact"
-#		print fact.getChild(0), node.getChild(0)
-		if isEqual(node.getChild(0), fact.getChild(0)):
-			new = createNode("fact")
-			new.addChildren([node.getChild(1)])
-			return new
-		else: 
-			return None
+def isCond(node): 
+	if node.getText() == "IFTHEN": 
+		return True
+	else: 
+		return False
+
+def isAnd(node): 
+	if node.getText() == "and": 
+		return True
+	else: 
+		return False
+
+def isOr(node): 
+	if node.getText() == "or": 
+		return True
+	else: 
+		return False
+
+def isPOP(node):
+	if isOr(node) or isAnd(node): 
+		return False
+	else: 
+		return True
+
+def checkBothChildren(node, fact): 
+	if isEqual(node.getChild(0), fact):
+		return True
+	elif isEqual(node.getChild(1), fact):
+		return True
+	else:
+		return False
 
 def tryModusPonens(facts, node): 
 	newFacts = []
-
-	for fact in facts: 
-		newFact = modusPonens(fact, node.getChild(0))
-		
-		if newFact != None: 
-			newFacts += [newFact]
-
-	return newFacts
-
-def modusTollens(fact, node):
-# if not Q and P -> Q then not P
-#	print "fact: "
-#	parser.print_tree(fact, 0)
-#	print "node: "
+#	print "print node:"
 #	parser.print_tree(node, 0)
-#	print fact, "=fact"
-#	print node, "=node"
-	if isNegation(fact.getChild(0)): 
-		if node.getText() == "IFTHEN": 
-#			print "it's a cond"
-#			print node.getChild(1)
-#			print fact
-#			print fact.getChild(0).getChild(0)
-#			print "????????"
-			neg = negation(fact)
-#			print neg, "=neg"
-#			print neg.getChild(0), "=neg child"
-			if isEqual(node.getChild(1), neg.getChild(0)): 
-#				print "they're equal"
-#				print node.getChild(0), "=P"
-				new = createNode("fact")
-				new.addChildren([node.getChild(0)])
-				return negation(new)
+	count = 0
+
+#	print node.getChild(0), "=node child"
+#	print isCond(node.getChild(0)), "=node child is cond"
+#	print facts
+
+	if isCond(node.getChild(0)): 
+#		print "hi"	
+		for fact in facts: 
+#			print count
+#			print "print fact:"
+#			parser.print_tree(fact, 0)
+			# if fact and node.getChild(0) match
+			# create new fact node.getChild(1)
+#			print node.getChild(0).getChild(0), "=node grandchild"
+#			print fact.getChild(0), "=fact child"
+
+			if isEqual(node.getChild(0).getChild(0), fact.getChild(0)):
+				new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
+				newFacts += [new]
 			else: 
-				return None
+				tryModusPonens(facts, node.getChild(0))
+#			print "end cond"
+
+		if isAnd(node.getChild(0).getChild(0)): 
+#			print "is and"
+			match = False
+			i = 0
+
+			while i < len(facts) - 1: 
+				f1 = facts[i]
+
+				# check f1 matches either of nodes children
+				match = checkBothChildren(node.getChild(0).getChild(0), f1.getChild(0))
+
+				if match: 
+					j = i + 1 
+
+					while j < len(facts): 
+						f2 = facts[j]
+						# check f2 matches either of nodes children
+						match = checkBothChildren(node.getChild(0).getChild(0), f2.getChild(0))
+
+						if match: 
+							new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
+							newFacts += [new]
+						else: 
+							tryModusPonens(facts, node.getChild(0))
+						j += 1
+				i += 1
+
+		if isOr(node.getChild(0).getChild(0)): 
+#			print "is or"
+			match = False
+			for fact in facts: 
+				# check f1 matches either of nodes children
+#				print node.getChild(0).getChild(0).getChild(0), "=node great grandchild"
+#				print node.getChild(0).getChild(0).getChild(1), "=node great grandchild"
+#				print fact.getChild(0), "=fact child"
+				match = checkBothChildren(node.getChild(0).getChild(0), fact.getChild(0))
+
+				if match: 
+					new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
+					newFacts += [new]
+				else: 
+					tryModusPonens(facts, node.getChild(0))
+
+		elif isPOP(node.getChild(0).getChild(0)): 
+#			print "else"
+			for fact in facts: 
+				if isEqual(node.getChild(0).getChild(0).getChild(0), fact.getChild(0)):
+					new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
+					newFacts += [new]
+				else: 
+					tryModusPonens(facts, node.getChild(0))
+
+		count += 1
+#	print "print newfacts:"
+#	for f in newFacts: 
+#		parser.print_tree(f, 0)
+	return newFacts
 
 def tryModusTollens(facts, node): 
 	newFacts = []
+#	print "print node:"
+#	parser.print_tree(node, 0)
+	count = 0
 
-	for fact in facts: 
-		newFact = modusTollens(fact, node.getChild(0))
-		if newFact != None: 
-			newFacts += [newFact]
+#	print node.getChild(0), "=node child"
+#	print isCond(node.getChild(0)), "=node child is cond"
 
+	if isCond(node.getChild(0)): 
+		for fact in facts: 
+#			print "print fact:"
+#			parser.print_tree(fact, 0)
+
+			neg = negation(fact)
+
+#			print "print neg:"
+#			parser.print_tree(neg, 0)
+			# if neg and node.getChild(0) match
+			# create new fact node.getChild(1)
+#			print node.getChild(0).getChild(0), "=node grandchild"
+#			print neg.getChild(0), "=neg child"
+
+			if isEqual(node.getChild(0).getChild(1), neg.getChild(0)):
+				#new = createNode("fact")
+#				new.addChildren([node.getChild(0)])
+#				return negation(new)
+#				print "is equal ///"
+				negFact = createNodeWithChildren("not", [node.getChild(0).getChild(0)])
+				new = createNodeWithChildren("fact", [negFact])
+#				print "print new:"
+#				parser.print_tree(new, 0)
+				newFacts += [new]
+			else: 
+				tryModusTollens(facts, node.getChild(0))
+#			print "end cond"
+
+		if isAnd(node.getChild(0).getChild(0)): 
+#			print "is and"
+			match = False
+			i = 0
+
+			while i < len(facts) - 1: 
+				f1 = facts[i]
+
+				n1 = negation(f1)
+
+				# check f1 matches either of nodes children
+				match = checkBothChildren(node.getChild(0).getChild(0), f1.getChild(0))
+
+				if match: 
+					j = i + 1 
+
+					while j < len(facts): 
+						f2 = facts[j]
+						n2 = negation(f2)
+						# check f2 matches either of nodes children
+						match = checkBothChildren(node.getChild(0).getChild(0), n2.getChild(0))
+
+						if match: 
+							new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
+							newFacts += [new]
+						else: 
+							tryModusTollens(facts, node.getChild(0))
+						j += 1
+				i += 1
+
+		if isOr(node.getChild(0).getChild(0)): 
+#			print "is or"
+			match = False
+			for fact in facts: 
+				# check f1 matches either of nodes children
+#				print node.getChild(0).getChild(0).getChild(0), "=node great grandchild"
+#				print node.getChild(0).getChild(0).getChild(1), "=node great grandchild"
+#				print fact.getChild(0), "=fact child"
+				neg = negation(fact)
+				match = checkBothChildren(node.getChild(0).getChild(0), neg.getChild(0))
+
+				if match: 
+					new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
+					newFacts += [new]
+				else: 
+					tryModusTollens(facts, node.getChild(0))
+
+		elif isPOP(node.getChild(0).getChild(0)): 
+#			print "else"
+			for fact in facts: 
+				neg = negation(fact)
+				if isEqual(node.getChild(0).getChild(0).getChild(0), neg.getChild(0)):
+					new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
+					newFacts += [new]
+				else: 
+					tryModusTollens(facts, node.getChild(0))
+
+		count += 1
+#	print "print newfacts:"
+#	for f in newFacts: 
+#		parser.print_tree(f, 0)
 	return newFacts
 
 def disjunctiveSyllogism(fact, node):
@@ -174,61 +334,22 @@ def tryDisjunctiveSyllogism(facts, node):
 
 	return newFacts
 
-#TODO fix - keep as ast
-#def deMorgansLaw(node):
-# not (P or Q) is equivalent to not P and not Q
-# not (P and Q) is equivalent to not P or not Q
-#	if node.left == "not": 
-#		if node.right.value == "or":
-#			newNode.value = "and"			
-#			newNodeFirstChild = "PREF"
-#			newNodeSecondChild = "PREF"
-#			newNodeFirstChild.left = "not"
-#			newNodeFirstChild.right = node.right.left
-#			newNodeSecondChild.left = "not"
-#			newNodeSecondChild.right = node.right.right
-#			newNode.left = newNodeFirstChild
-#			newNode.right = newNodeSecondChild
-#		if node.right.value == "and":
-#			newNode.value = "or"
-#			newNodeFirstChild = "PREF"
-#			newNodeSecondChild = "PREF"
-#			newNodeFirstChild.left = "not"
-#			newNodeFirstChild.right = node.right.left
-#			newNodeSecondChild.left = "not"
-#			newNodeSecondChild.right = node.right.right
-#			newNode.left = newNodeFirstChild
-#			newNode.right = newNodeSecondChild
-#
-#	return newNode
-
-# fix - keep as ast
-#def ruleOfSyllogism(tree):
-# if (P -> Q) and (Q -> R) then P -> R
-#	nodes = Tree()
-#	newNode.value = "IFTHEN"
-#
-#	for node in tree.getChildren(): 
-#		if node.value == "IFTHEN":
-#			p = node.left
-#			q = node.right
-#
-#			for node in tree.getChildren(): 
-#				if node.value == "IFTHEN": 
-#					if node.left == q: 
-#						r = node.right
-#						newNode.left = p
-#						newNode.right = r
-#						nodes.add(newNode)
-#
-#	return nodes
-
 def decomposingConjunction(node):
 # if (P and Q) then P, Q
 	facts = []
+#	print node, "=node"
+#	print node.getChild(0), "=node child"
+	if node.getChild(0) is not None: 
+		if node.getChild(0).getText() == "and":
+			first = createNode(node.getText())
+			second = createNode(node.getText())
 
-	if node.getText() == "and":
-		facts = facts + [node.getChild(0)] + [node.getChild(2)]
+			first.addChildren([node.getChild(0).getChild(0)])
+			second.addChildren([node.getChild(0).getChild(1)])
+
+			facts = facts + [first] + [second]
+		elif node.getChild(0).getText() == "not" or node.getChild(0).getText() == "OB" or node.getChild(0).getText() == "PRO" or node.getChild(0).getText() == "PER": 
+			facts = facts + decomposingConjunction(node.getChild(0))
 
 	return facts
 
@@ -238,7 +359,11 @@ def isProven(facts, goals):
 	proven = False
 
 #	for fact in facts: 
-#		print fact.getChild(0), "=fact"
+#		print fact.getText(), "=fact"
+#		print fact.getChild(0), "=fact child"
+
+	for fact in facts:
+		facts = facts + decomposingConjunction(fact)
 
 	for goal in goals: 
 		for fact in facts:
@@ -277,9 +402,7 @@ def proofStrategy(goals, facts, rules):
 			newFacts = newFacts + tryModusPonens(facts, rule)
 			newFacts = newFacts + tryModusTollens(facts, rule)
 			#newFacts = newFacts + tryDisjunctiveSyllogism(facts, rule)
-#			newFacts = newFacts + deMorgansLaw(rule)
-#			newFacts = newFacts + ruleOfSyllogism(rule)
-			#newFacts = newFacts + decomposingConjunction(rule)			
+#			newFacts = newFacts + ruleOfSyllogism(rule)		
 			for f in newFacts: 
 				if contains(f, facts) == False: 
 					facts = facts + [f]
@@ -305,31 +428,27 @@ def getTerms(tree):
 	return terms
 
 def getRules(tree): 
-	rules = []
-
-	for node in tree.getChildren(): 
-#		print node.getChild(0), "=node"
-		if node.getChild(0).getText() == "rule": 
-			rules = rules + [node.getChild(0)]
-
-	return rules
+	return getEntities(tree, "rule")
 
 def getFacts(tree): 
-	facts = []
-
-	for node in tree.getChildren(): 
-		if node.getChild(0).getText() == "fact": 
-			facts = facts + [node.getChild(0)]
-	return facts
+	return getEntities(tree, "fact")
 
 def getGoals(tree): 
-	goals = []
+	return getEntities(tree, "goal")
+
+def getEntities(tree, entityType): 
+	entities = []
 
 	for node in tree.getChildren(): 
-		if node.getChild(0).getText() == "goal": 
-			goals = goals + [node.getChild(0)]
+#		print node, "=node"
+#		print node.getChild(0), "=node child"
+		if node.getChild(0).getText() == entityType: 
+			entities = entities + [node.getChild(0)]
 
-	return goals
+	for entity in entities: 
+		entities = entities + decomposingConjunction(entity.getChild(0))
+
+	return entities
 
 def printList(l): 
 	for m in l: 
