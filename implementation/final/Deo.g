@@ -80,7 +80,6 @@ infix_expr
 
 iop	:	AND 
 	| 	OR 
-	|	IFF
 	;
 
 ifthen_expr
