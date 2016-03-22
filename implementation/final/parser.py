@@ -4,18 +4,18 @@ from DeoLexer import DeoLexer
 from DeoParser import DeoParser
 
 def getTree(): 
-	fileName = raw_input("file:")
-	tree = runParser(fileName)
+#	fileName = raw_input("file:")
+	tree = runParser("tests/modusTollens-pass.deo")
 	return tree
 
 def runParser(fileName): 
 	char_stream = antlr3.ANTLRFileStream(fileName)
-
 	lexer = DeoLexer(char_stream)
 	tokens = antlr3.CommonTokenStream(lexer)
 	parser = DeoParser(tokens)
 	rule = parser.prog()
 	root = rule.tree
+	print dir(root)
 	
 	print_tree(root, 0)
 
