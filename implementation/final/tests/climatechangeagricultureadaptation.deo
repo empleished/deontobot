@@ -22,7 +22,7 @@ fact: I
 fact: J 
 fact: K
 fact: L
-rule: (if D then (((((((OB F and OB G) and PER H) and PER I) and PER J) and OB K) and OB L))
+rule: (if D then (((((((OB F) and (OB G)) and (PER H)) and (PER I)) and (PER J)) and (OB K)) and (OB L)))
 rule: (if (not D) then M)
 rule: (if (D and (F and (G and (K and L))))) then M)
 goal: M
