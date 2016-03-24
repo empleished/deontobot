@@ -7,7 +7,6 @@ import parser
 
 steps = []
 
-#initial, final, transform, rule
 def addSteps(oldFact, newFact, node, rule): 
 	global steps 
 	steps = steps + [[oldFact, newFact, node, rule]]
@@ -187,6 +186,15 @@ def isDecl(node):
 	else: 
 		return False
 
+def contains(i, l): 
+	for item in l: 
+		if isEqual(i, item): 
+			return True
+
+	return False
+
+''' RULES '''
+
 # returns the negation of a fact
 def negation(fact): 
 	if (isNegation(fact.getChild(0))): 
@@ -335,28 +343,6 @@ def tryModusTollens(facts, node):
 		count += 1
 	return newFacts
 
-'''
-def disjunctiveSyllogism(fact, node):
-# if not P and (P or Q) then Q
-	if isNegation(fact): 
-		if node.getText() == "or": 
-			if isEqual(node.getChild(0), negation(fact)): 
-				return node.getChild(2)
-			else: 
-				return None
-
-
-def tryDisjunctiveSyllogism(facts, node): 
-	newFacts = []
-
-	for fact in facts: 
-		newFact = disjunctiveSyllogism(fact, node)
-		if newFact != None: 
-			newFacts += [newFact]
-			addSteps(fact, new, node.getChild(0), "disjunctive syllogism")
-
-	return newFacts
-'''
 def decomposingConjunction(node):
 # if (P and Q) then P, Q
 	facts = []
@@ -377,6 +363,8 @@ def decomposingConjunction(node):
 
 	return facts
 
+''' PROOF STRATEGY '''
+
 # run logical rules on tree
 
 def isProven(facts, goals):
@@ -392,13 +380,6 @@ def isProven(facts, goals):
 			return proven
 
 	return proven
-
-def contains(i, l): 
-	for item in l: 
-		if isEqual(i, item): 
-			return True
-
-	return False
 
 def proofStrategy(goals, facts, rules):
 	global steps
@@ -432,6 +413,8 @@ def proofStrategy(goals, facts, rules):
 	proofSteps = stepsToString()
 
 	return [proven] + [proofSteps]
+
+''' GETTERS '''
 
 def getTerms(tree): 
 	terms = {}
