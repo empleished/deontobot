@@ -9,7 +9,7 @@ steps = []
 
 def addSteps(oldFact, newFact, node, rule): 
 	global steps 
-	steps = steps + [[oldFact, newFact, node, rule]]
+	steps.append([oldFact, newFact, node, rule])
 
 def processStepBit(bit): 
 	string = ""
@@ -69,23 +69,15 @@ def createNode(tokenText):
 	nodeToken.type = tokenID
 	nodeToken.text = tokenText
 	node = antlr3.tree.CommonTree(nodeToken)
-	
 	return node
 
+# calls createNode() then adds children to the new node
 def createNodeWithChildren(tokenText, children): 
 	node = createNode(tokenText)
 	node.addChildren(children)
-
 	return node
 
 ''' CHECKS '''
-
-# checks whether node is a negation
-def isNegation(node): 
-	if node.getText() == "not":
-		return True
-	else: 
-		return False
 
 # checks whether two nodes are equal
 def isEqual(firstNode, secondNode): 
@@ -95,8 +87,10 @@ def isEqual(firstNode, secondNode):
 		firstChildren = firstNode.getChildCount()
 		secondChildren = secondNode.getChildCount() 
 
+		# check nodes have the same number of children
 		if firstChildren == secondChildren: 
 			for i in range(firstChildren): 
+				# recursively check each node's children are equal
 				equal = isEqual(firstNode.getChild(i), secondNode.getChild(i))
 		else: 
 			return False
@@ -107,84 +101,52 @@ def isEqual(firstNode, secondNode):
 
 # checks whether either child of the first node equals the second
 def checkBothChildren(first, second): 
-	if isEqual(first.getChild(0), second):
-		return True
-	elif isEqual(first.getChild(1), second):
-		return True
-	else:
-		return False
-
-def isCond(node): 
-	if node.getText() == "IFTHEN": 
-		return True
-	else: 
-		return False
-
-def isAnd(node): 
-	if node.getText() == "and": 
-		return True
-	else: 
-		return False
-
-def isOr(node): 
-	if node.getText() == "or": 
-		return True
-	else: 
-		return False
-
-def isIOP(node):
-	if isOr(node) or isAnd(node): 
-		return True
-	else: 
-		return False
-
-def isOB(node): 
-	if node.getText() == "OB": 
-		return True
-	else: 
-		return False
-
-def isPRO(node): 
-	if node.getText() == "PRO": 
-		return True
-	else: 
-		return False
-
-def isPER(node): 
-	if node.getText() == "PER": 
-		return True
-	else: 
-		return False
-
-def isPOP(node): 
-	if isOB(node) or isPRO(node) or isPER(node) or isNegation(node): 
-		return True
-	else: 
-		return False
+	return isEqual(first.getChild(0), second) or isEqual(first.getChild(1), second)
 
 def isFact(node): 
-	if node.getText() == "fact": 
-		return True
-	else: 
-		return False
+	return node.getText() == "fact"
 
 def isRule(node): 
-	if node.getText() == "rule": 
-		return True
-	else: 
-		return False
+	return node.getText() == "rule"
 	
 def isGoal(node): 
-	if node.getText() == "goal": 
-		return True
-	else: 
-		return False
+	return node.getText() == "goal"
 
 def isDecl(node): 
-	if isFact(node) or isRule(node) or isGoal(node): 
-		return True
-	else: 
-		return False
+	return isFact(node) or isRule(node) or isGoal(node)
+
+def isCond(node): 
+	return node.getText() == "IFTHEN"
+
+def isAnd(node): 
+	return node.getText() == "and"
+
+def isOr(node): 
+	return node.getText() == "or"
+
+def isIOP(node):
+	return isOr(node) or isAnd(node)
+
+def isNegation(node): 
+	return node.getText() == "not"
+
+def isOB(node): 
+	return node.getText() == "OB"
+
+def isPRO(node): 
+	return node.getText() == "PRO"
+
+def isPER(node): 
+	return node.getText() == "PER"
+
+def isPOP(node): 
+	return isOB(node) or isPRO(node) or isPER(node) or isNegation(node)
+
+def isID(node):
+	return not(isCond(node) or isAnd(node) or isOr(node) or isIOP(node) or isOB(node) or isPRO(node) or isPER(node) or isPOP(node) or isFact(node) or isRule(node) or isGoal(node) or isDecl(node))
+
+def isSingleTerm(node): 
+	return isID(node) or isPOP(node) or isNegation(node)
 
 def contains(i, l): 
 	for item in l: 
@@ -199,178 +161,134 @@ def contains(i, l):
 def negation(fact): 
 	if (isNegation(fact.getChild(0))): 
 		negatedFact = createNodeWithChildren("fact", [fact.getChild(0).getChild(0)])
-		parser.print_tree(negatedFact, 0)
 	else: 
 		negNode = createNodeWithChildren("not", [fact.getChild(0)])
 		negatedFact = createNodeWithChildren("fact", [negNode])
 
 	return negatedFact
 
-def tryModusPonens(facts, node): 
-	newFacts = []
-	count = 0
+''' MODUS PONENS '''
 
-	if isCond(node.getChild(0)): 
+def checkModusPonensMatch(facts, node): 
+	if isCond(node): 
+		return checkModusPonensMatch(facts, node)
+	if isAnd(node):
+		return checkModusPonensMatch(facts, node.getChild(0)) and checkModusPonensMatch(facts, node.getChild(1))
+	if isOr(node): 
+		return checkModusPonensMatch(facts, node.getChild(0)) or checkModusPonensMatch(facts, node.getChild(1))
+	if isSingleTerm(node):
 		for fact in facts: 
-			if isEqual(node.getChild(0).getChild(0), fact.getChild(0)):
-				new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
-				newFacts += [new]
-				addSteps(fact, new, node.getChild(0), "modus ponens")
-			else: 
-				tryModusPonens(facts, node.getChild(0))
+			if isEqual(node, fact.getChild(0)):
+				return True
+		return False
 
-		if isAnd(node.getChild(0).getChild(0)): 
-			match = False
-			i = 0
+def modusPonens(facts, rule): 
+	steps = []
+	match = False
 
-			while i < len(facts) - 1: 
-				f1 = facts[i]
+	match = checkModusPonensMatch(facts, rule.getChild(0))
 
-				# check f1 matches either of nodes children
-				match = checkBothChildren(node.getChild(0).getChild(0), f1.getChild(0))
+	if match: 
+		new = createNodeWithChildren("fact", [rule.getChild(1)])
+		addSteps(rule.getChild(0), new, rule, "modus ponens")
+		return new
+	else: 
+		return None
 
-				if match: 
-					j = i + 1 
+def tryModusPonens(facts, rule): 
+	newFacts = []
 
-					while j < len(facts): 
-						f2 = facts[j]
-						# check f2 matches either of nodes children
-						match = checkBothChildren(node.getChild(0).getChild(0), f2.getChild(0))
-
-						if match: 
-							new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
-							newFacts += [new]
-							addSteps(fact, new, node.getChild(0), "modus ponens")
-						else: 
-							tryModusPonens(facts, node.getChild(0))
-						j += 1
-				i += 1
-
-		if isOr(node.getChild(0).getChild(0)): 
-			match = False
-			for fact in facts: 
-				match = checkBothChildren(node.getChild(0).getChild(0), fact.getChild(0))
-
-				if match: 
-					new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
-					newFacts += [new]
-					addSteps(fact, new, node.getChild(0), "modus ponens")
-				else: 
-					tryModusPonens(facts, node.getChild(0))
-
-		elif isIOP(node.getChild(0).getChild(0)): 
-			for fact in facts: 
-				if isEqual(node.getChild(0).getChild(0).getChild(0), fact.getChild(0)):
-					new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
-					newFacts += [new]
-					addSteps(fact, new, node.getChild(0), "modus ponens")
-				else: 
-					tryModusPonens(facts, node.getChild(0))
-
-		count += 1
+	if isCond(rule.getChild(0)): 
+		newFacts.append(modusPonens(facts, rule.getChild(0)))
 
 	return newFacts
 
-def tryModusTollens(facts, node): 
-	newFacts = []
-	count = 0
+''' MODUS TOLLENS '''
 
-	if isCond(node.getChild(0)): 
+def checkModusTollensMatch(facts, node): 
+	if isCond(node): 
+		return checkModusTollensMatch(facts, node)
+	if isAnd(node):
+		return checkModusTollensMatch(facts, node.getChild(0)) and checkModusTollensMatch(facts, node.getChild(1))
+	if isOr(node): 
+		return checkModusTollensMatch(facts, node.getChild(0)) or checkModusTollensMatch(facts, node.getChild(1))
+	if isSingleTerm(node):
 		for fact in facts: 
-			neg = negation(fact)
+			negFact = negation(fact)
 
-			if isEqual(node.getChild(0).getChild(1), neg.getChild(0)):
-				negFact = createNodeWithChildren("not", [node.getChild(0).getChild(0)])
-				new = createNodeWithChildren("fact", [negFact])
-				newFacts += [new]
-				addSteps(fact, new, node.getChild(0), "modus tollens")
-			else: 
-				tryModusTollens(facts, node.getChild(0))
+			if isEqual(node, negFact.getChild(0)):
+				return True
+		return False
 
-		if isAnd(node.getChild(0).getChild(0)): 
-			match = False
-			i = 0
+def modusTollens(facts, rule): 
+	steps = []
+	match = False
 
-			while i < len(facts) - 1: 
-				f1 = facts[i]
+	match = checkModusTollensMatch(facts, rule.getChild(1))
+	
+	if match: 
+		negFact = createNodeWithChildren("not", [rule.getChild(0)])
+		new = createNodeWithChildren("fact", [negFact])
+		addSteps(rule.getChild(0), new, rule, "modus tollens")
+		return new
+	else: 
+		return None	
 
-				n1 = negation(f1)
+def tryModusTollens(facts, rule): 
+# if not Q and (if P then Q) then not P
+	newFacts = []
 
-				# check f1 matches either of nodes children
-				match = checkBothChildren(node.getChild(0).getChild(0), f1.getChild(0))
+	if isCond(rule.getChild(0)): 
+		newFacts.append(modusTollens(facts, rule.getChild(0)))
 
-				if match: 
-					j = i + 1 
-
-					while j < len(facts): 
-						f2 = facts[j]
-						n2 = negation(f2)
-						# check f2 matches either of nodes children
-						match = checkBothChildren(node.getChild(0).getChild(0), n2.getChild(0))
-
-						if match: 
-							new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
-							newFacts += [new]
-							addSteps(fact, new, node.getChild(0), "modus tollens")
-						else: 
-							tryModusTollens(facts, node.getChild(0))
-						j += 1
-				i += 1
-
-		if isOr(node.getChild(0).getChild(0)): 
-			match = False
-			for fact in facts: 
-				neg = negation(fact)
-				match = checkBothChildren(node.getChild(0).getChild(0), neg.getChild(0))
-
-				if match: 
-					new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
-					newFacts += [new]
-					addSteps(fact, new, node.getChild(0), "modus tollens")
-				else: 
-					tryModusTollens(facts, node.getChild(0))
-
-		elif isIOP(node.getChild(0).getChild(0)): 
-			for fact in facts: 
-				neg = negation(fact)
-				if isEqual(node.getChild(0).getChild(0).getChild(0), neg.getChild(0)):
-					new = createNodeWithChildren("fact", [node.getChild(0).getChild(1)])
-					newFacts += [new]
-					addSteps(fact, new, node.getChild(0), "modus tollens")
-				else: 
-					tryModusTollens(facts, node.getChild(0))
-
-		count += 1
 	return newFacts
+	
+''' DECOMPOSING CONJUNCTION '''
 
-def decomposingConjunction(node):
-# if (P and Q) then P, Q
-	facts = []
-	if node.getChild(0) is not None: 
-		if isAnd(node.getChild(0)):
-			first = createNode(node.getText())
-			second = createNode(node.getText())
+def decomposeConjunction(node): 
+	if isAnd(node): 
+		return decomposeConjunction(node.getChild(0)), decomposeConjunction(node.getChild(1))
+	if isNegation(node) or isID(node): 
+		new = createNodeWithChildren("fact", [node])
+		return new
+	else: 
+		return None
 
-			first.addChildren([node.getChild(0).getChild(0)])
-			second.addChildren([node.getChild(0).getChild(1)])
+def processTuple(tuples, factList): 
+	for t in tuples: 
+		if type(t) is tuple: 
+			factList = processTuple(t, factList)
+		else: 
+			factList.append(t)
+	return factList
 
-			facts = facts + [first] + [second]
+def tryDecomposingConjunction(facts): 
+	newFacts = []
 
-			addSteps(node, first, node.getChild(0), "decomposing conjunction")
-			addSteps(node, second, node.getChild(0), "decomposing conjunction")
-		elif isPOP(node.getChild(0)): 
-			facts = facts + decomposingConjunction(node.getChild(0))
+	for fact in facts: 
+		new = decomposeConjunction(fact.getChild(0))
 
-	return facts
+		if type(new) is tuple: 
+			factList = []
+			factList = processTuple(new, factList)
+
+			for f in factList: 
+				if f is not None: 
+					if contains(f, facts) == False: 
+						newFacts.append(f)
+						addSteps(fact, f, fact, "decompose conjunction")
+
+	return newFacts
 
 ''' PROOF STRATEGY '''
 
-# run logical rules on tree
-
 def isProven(facts, goals):
 	proven = False
-	for fact in facts:
-		facts = facts + decomposingConjunction(fact)
+	newFacts = tryDecomposingConjunction(facts)
+
+	for new in newFacts: 
+		if new is not []: 
+			facts.append(new)
 
 	for goal in goals: 
 		for fact in facts:
@@ -396,13 +314,11 @@ def proofStrategy(goals, facts, rules):
 			newFacts = []
 			newFacts = newFacts + tryModusPonens(facts, rule)
 			newFacts = newFacts + tryModusTollens(facts, rule)
-			#newFacts = newFacts + tryDisjunctiveSyllogism(facts, rule)
-#			newFacts = newFacts + ruleOfSyllogism(rule)		
+
 			for f in newFacts: 
-				if contains(f, facts) == False: 
-					facts = facts + [f]
-				else: 
-					print "contains"
+				if f is not None:
+					if contains(f, facts) == False: 
+						facts.append(f)
 
 		if len(facts) == factSize:
 			progress = False
@@ -412,7 +328,7 @@ def proofStrategy(goals, facts, rules):
 	# convert steps list to a string
 	proofSteps = stepsToString()
 
-	return [proven] + [proofSteps]
+	return proven, proofSteps
 
 ''' GETTERS '''
 
@@ -442,10 +358,9 @@ def getEntities(tree, entityType):
 		if node.getChild(0).getText() == entityType: 
 			entities = entities + [node.getChild(0)]
 
-	for entity in entities: 
-		entities = entities + decomposingConjunction(entity.getChild(0))
-
 	return entities
+
+''' RUN PROVER '''
 
 def runProver(tree):
 	terms = getTerms(tree)
@@ -460,8 +375,6 @@ def runProver(tree):
 	else:
 		print proverSteps[1]
 		print "\nSTATUS: success"
-
-	count = 1
 
 tree = parser.getTree()
 runProver(tree)
