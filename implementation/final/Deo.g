@@ -26,7 +26,8 @@ tokens {
 // PARSER RULES //
 
 prog
-	:	decl+ EOF							-> ^(PROG decl+) 	;
+	:	decl+ EOF							-> ^(PROG decl+) 
+	;
 
 decl
 	:	term EOL							-> ^(DECL term)
@@ -35,43 +36,54 @@ decl
 	|	goal EOL    			  				-> ^(DECL goal)
 	;
 rule
-	:	RULE ASSN expr							-> ^(RULE expr)		;
+	:	RULE ASSN expr							-> ^(RULE expr)	
+	;
 
 fact
-	:	FACT ASSN expr							-> ^(FACT expr)		;
+	:	FACT ASSN expr							-> ^(FACT expr)	
+	;
 
 goal
-	:	GOAL ASSN expr							-> ^(GOAL expr)		;
+	:	GOAL ASSN expr							-> ^(GOAL expr)	
+	;
 
 term
-	:	ID ASSN atom 							-> ^(TERM ID atom)	;
+	:	ID ASSN atom 							-> ^(TERM ID atom)
+	;
 
 atom
-	:	ATOM											;
+	:	ATOM										
+	;
 
 expr
 	:	ID								-> ^(ID)
 	|	prefix_expr							-> ^(prefix_expr)
 	|	infix_expr							-> ^(infix_expr)
-	|	ifthen_expr							-> ^(ifthen_expr) 	;
+	|	ifthen_expr							-> ^(ifthen_expr) 
+	;
 
 prefix_expr
-	:	LB pop SPACE expr RB						-> ^(pop expr)		;
+	:	LB pop SPACE expr RB						-> ^(pop expr)	
+	;
 
 pop	
 	:	OB 								
 	| 	PRO 								
 	| 	PER	
-	| 	NOT 											;
+	| 	NOT 										
+	;
 
 infix_expr
-	:	LB e1=expr SPACE iop SPACE e2=expr RB				-> ^(iop $e1 $e2)	;
+	:	LB e1=expr SPACE iop SPACE e2=expr RB				-> ^(iop $e1 $e2)
+	;
 
 iop	:	AND 
-	| 	OR 											;
+	| 	OR 										
+	;
 
 ifthen_expr
-	:	LB IF SPACE e1=expr SPACE THEN SPACE e2=expr RB			-> ^(IFTHEN $e1 $e2) 	;
+	:	LB IF SPACE e1=expr SPACE THEN SPACE e2=expr RB			-> ^(IFTHEN $e1 $e2) 
+	;
 
 // LEXER RULES //
 

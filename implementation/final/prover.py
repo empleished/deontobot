@@ -12,8 +12,6 @@ def addSteps(oldFact, newFact, node, rule):
 	steps.append([oldFact, newFact, node, rule])
 
 def processStepBit(bit): 
-	string = ""
-
 	if bit is None:
 		return ""
 	if isDecl(bit): 
@@ -167,7 +165,7 @@ def negation(fact):
 
 	return negatedFact
 
-''' MODUS PONENS '''
+''' MODUS PONENS - if P and (if P then Q) then Q '''
 
 def checkModusPonensMatch(facts, node): 
 	if isCond(node): 
@@ -183,6 +181,7 @@ def checkModusPonensMatch(facts, node):
 		return False
 
 def modusPonens(facts, rule): 
+	print "trying modus ponens"
 	steps = []
 	match = False
 
@@ -201,9 +200,14 @@ def tryModusPonens(facts, rule):
 	if isCond(rule.getChild(0)): 
 		newFacts.append(modusPonens(facts, rule.getChild(0)))
 
-	return newFacts
+		for fact in newFacts: 
+			if fact is not None: 
+				if not(contains(fact, facts)): 
+					facts.append(fact)
 
-''' MODUS TOLLENS '''
+	return facts
+
+''' MODUS TOLLENS - if not Q and (if P then Q) then not P '''
 
 def checkModusTollensMatch(facts, node): 
 	if isCond(node): 
@@ -221,6 +225,7 @@ def checkModusTollensMatch(facts, node):
 		return False
 
 def modusTollens(facts, rule): 
+	print "trying modus tollens"
 	steps = []
 	match = False
 
@@ -235,17 +240,21 @@ def modusTollens(facts, rule):
 		return None	
 
 def tryModusTollens(facts, rule): 
-# if not Q and (if P then Q) then not P
 	newFacts = []
-
 	if isCond(rule.getChild(0)): 
 		newFacts.append(modusTollens(facts, rule.getChild(0)))
 
-	return newFacts
+		for fact in newFacts: 
+			if fact is not None: 
+				if not(contains(fact, facts)): 
+					facts.append(fact)
+
+	return facts
 	
-''' DECOMPOSING CONJUNCTION '''
+''' DECOMPOSING CONJUNCTION - if (P and Q) then P, Q '''
 
 def decomposeConjunction(node): 
+	print "trying decompose conjunction"
 	if isAnd(node): 
 		return decomposeConjunction(node.getChild(0)), decomposeConjunction(node.getChild(1))
 	if isNegation(node) or isID(node): 
@@ -263,8 +272,6 @@ def processTuple(tuples, factList):
 	return factList
 
 def tryDecomposingConjunction(facts): 
-	newFacts = []
-
 	for fact in facts: 
 		new = decomposeConjunction(fact.getChild(0))
 
@@ -275,20 +282,51 @@ def tryDecomposingConjunction(facts):
 			for f in factList: 
 				if f is not None: 
 					if contains(f, facts) == False: 
-						newFacts.append(f)
+						facts.append(f)
 						addSteps(fact, f, fact, "decompose conjunction")
 
-	return newFacts
+	return facts
+
+''' O-NECESSITY '''
+
+def tryONecessity(facts): 
+	print "trying o necessity"
+	for fact in facts: 
+		if isOB(fact.getChild(0)): 
+			ob = createNodeWithChildren("fact", [fact.getChild(0).getChild(0)])
+			newFact = ob
+			if contains(newFact, facts) == False: 
+				facts.append(newFact)
+				addSteps(fact, newFact, fact.getChild(0), "O necessity")
+		elif isPRO(fact.getChild(0)): 
+			neg =  createNodeWithChildren("not", [fact.getChild(0).getChild(0)])
+			pro = createNodeWithChildren("fact", [neg])
+			newFact = pro
+			if contains(newFact, facts) == False: 
+				facts.append(newFact)
+				addSteps(fact, newFact, fact.getChild(0), "O necessity")
+				
+	return facts
+
+''' SIMPLIFY FACT SET '''
+
+def simplifyFactSet(facts): 
+	progress = True
+
+	while progress: 
+		factSize = len(facts)
+		facts = tryDecomposingConjunction(facts)
+		facts = tryONecessity(facts)
+
+		if len(facts) == factSize:
+			progress = False
+
+	return facts
 
 ''' PROOF STRATEGY '''
 
 def isProven(facts, goals):
 	proven = False
-	newFacts = tryDecomposingConjunction(facts)
-
-	for new in newFacts: 
-		if new is not []: 
-			facts.append(new)
 
 	for goal in goals: 
 		for fact in facts:
@@ -311,14 +349,9 @@ def proofStrategy(goals, facts, rules):
 	while (proven == False and progress == True): 
 		factSize = len(facts)
 		for rule in rules:
-			newFacts = []
-			newFacts = newFacts + tryModusPonens(facts, rule)
-			newFacts = newFacts + tryModusTollens(facts, rule)
-
-			for f in newFacts: 
-				if f is not None:
-					if contains(f, facts) == False: 
-						facts.append(f)
+			facts = tryModusPonens(facts, rule)
+			facts = tryModusTollens(facts, rule)
+		facts = simplifyFactSet(facts)
 
 		if len(facts) == factSize:
 			progress = False
@@ -356,24 +389,26 @@ def getEntities(tree, entityType):
 
 	for node in tree.getChildren(): 
 		if node.getChild(0).getText() == entityType: 
-			entities = entities + [node.getChild(0)]
+			entities.append(node.getChild(0))
 
 	return entities
 
 ''' RUN PROVER '''
 
 def runProver(tree):
+	# set up terms, rules, facts, goals
 	terms = getTerms(tree)
 	rules = getRules(tree)
 	facts = getFacts(tree)
 	goals = getGoals(tree)
 
 	proverSteps = proofStrategy(goals, facts, rules)
+	print proverSteps[1] # print steps followed by the prover
 
+	# print out a statement of success
 	if proverSteps[0] == False:
 		print "STATUS: failure"
 	else:
-		print proverSteps[1]
 		print "\nSTATUS: success"
 
 tree = parser.getTree()
