@@ -189,21 +189,16 @@ def modusPonens(facts, rule):
 
 	if match: 
 		new = createNodeWithChildren("fact", [rule.getChild(1)])
-		addSteps(rule.getChild(0), new, rule, "modus ponens")
-		return new
-	else: 
-		return None
+
+		if not(contains(new, facts)): 
+			facts.append(new)
+			addSteps(rule.getChild(0), new, rule, "modus ponens")
+
+	return facts
 
 def tryModusPonens(facts, rule): 
-	newFacts = []
-
 	if isCond(rule.getChild(0)): 
-		newFacts.append(modusPonens(facts, rule.getChild(0)))
-
-		for fact in newFacts: 
-			if fact is not None: 
-				if not(contains(fact, facts)): 
-					facts.append(fact)
+		facts = modusPonens(facts, rule.getChild(0))
 
 	return facts
 
@@ -234,20 +229,15 @@ def modusTollens(facts, rule):
 	if match: 
 		negFact = createNodeWithChildren("not", [rule.getChild(0)])
 		new = createNodeWithChildren("fact", [negFact])
-		addSteps(rule.getChild(0), new, rule, "modus tollens")
-		return new
-	else: 
-		return None	
+
+		if not(contains(new, facts)): 
+			facts.append(new)
+			addSteps(rule.getChild(0), new, rule, "modus tollens")
+	return facts
 
 def tryModusTollens(facts, rule): 
-	newFacts = []
 	if isCond(rule.getChild(0)): 
-		newFacts.append(modusTollens(facts, rule.getChild(0)))
-
-		for fact in newFacts: 
-			if fact is not None: 
-				if not(contains(fact, facts)): 
-					facts.append(fact)
+		facts = modusTollens(facts, rule.getChild(0))
 
 	return facts
 	
@@ -337,7 +327,7 @@ def isProven(facts, goals):
 
 	return proven
 
-def proofStrategy(goals, facts, rules):
+def proofStrategy(goals, facts, rules, count):
 	global steps
 	proven = False
 	progress = True
@@ -349,6 +339,10 @@ def proofStrategy(goals, facts, rules):
 	while (proven == False and progress == True): 
 		factSize = len(facts)
 		for rule in rules:
+			print len(facts), "=len facts"
+			print count
+			print "rule:"
+			parser.print_tree(rule, 0)
 			facts = tryModusPonens(facts, rule)
 			facts = tryModusTollens(facts, rule)
 		facts = simplifyFactSet(facts)
@@ -357,9 +351,14 @@ def proofStrategy(goals, facts, rules):
 			progress = False
 		
 		proven = isProven(facts, goals)
+		count += 1
 
 	# convert steps list to a string
 	proofSteps = stepsToString()
+
+	print "facts:"
+	for fact in facts: 
+		parser.print_tree(fact, 0)
 
 	return proven, proofSteps
 
@@ -402,7 +401,8 @@ def runProver(tree):
 	facts = getFacts(tree)
 	goals = getGoals(tree)
 
-	proverSteps = proofStrategy(goals, facts, rules)
+	count = 0
+	proverSteps = proofStrategy(goals, facts, rules, count)
 	print proverSteps[1] # print steps followed by the prover
 
 	# print out a statement of success
