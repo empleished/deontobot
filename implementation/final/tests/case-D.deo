@@ -1,0 +1,7 @@
+P: "human participants in study" 
+Q: "seek consent of participants"
+R: "study approved"
+rule: (if P then Q)
+rule: (if (not Q) then (not R))
+fact: (PRO Q)
+goal: R
