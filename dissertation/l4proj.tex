@@ -4,6 +4,7 @@
 
 \usepackage[english]{babel}
 \usepackage{csquotes}
+\usepackage{pdfpages}
 
 \begin{document}
 \title{Deontic Logic Prover}
@@ -64,14 +65,14 @@
 Deontic logic is a logic of duty, which formalises normative concepts of what should and should not be done. These conceptions can include obligations, prohibitions and permissions, as well as the Hohfeldian incidents\cite{Hohfeld} of claims, powers, immunities and liberties, though what is considered under the remit of deontic logic depends largely on what form of deontic logic is in use and the context it is being employed within. This project will largely be concerned with obligations, prohibitions and permissions, as they are the most relevant to the project under pursuit. While there is some disagreement about the proper meaning and correct definition of these concepts, for convenience, this project will employ largely conventional understandings. 
 
 \subsection{Motivation}
-Concepts of obligation, prohibition and permission pervade everyday life, from legal proceedings to codes of ethics to database integrity. The exact content and use of these concepts varies from context to context, but understood abstractly and generally, they can provide a deeper understanding of these specific contexts and the problems faced within them. 
+Concepts of obligation, prohibition and permission pervade everyday life, from legal proceedings to codes of ethics to database integrity. The exact content and use of these concepts varies from context to context, but understood abstractly and generally, they can provide a deeper understanding of these specific contexts and the problems faced within them. One area of particular interest is computational ethics, and what is necessary to create an ethical machine. One route is deontic, to something like a Kantian machine\cite{Powers}. Showing that it is possible to operationalise the concepts in this way and get to some kind of automated reasoning would go some way towards showing that deontic computational ethics is at least possible. 
 
-One area of particular interest is codes of ethics, for example as part of university project proceedings. These vary depending on the kind of project being undertaken and the subject or subjects it is undertaken in, but broadly they can be understood as specifying the correct conduct of the student who will carry out the project, and sometimes the conduct of the body or bodies they will be reporting to over the course of it. This often includes, but is not limited to, the necessary procedures for dealing with human subjects, such as the provision of consent forms and the obligation to allow the removal of consent at any time. By very deliberately framing the content of the applications and their corresponding codes they must adhere to in deontic terms, much of the extraneous detail can be removed and the reasoning process that must be followed to determine acceptance of the application can be automated.
+An interesting case study is codes of ethics, for example as part of university project proceedings. These vary depending on the kind of project being undertaken and the subject or subjects it is undertaken in, but broadly they can be understood as specifying the correct conduct of the student who will carry out the project, and sometimes the conduct of the body or bodies they will be reporting to over the course of it. This often includes, but is not limited to, the necessary procedures for dealing with human subjects, such as the provision of consent forms and the obligation to allow the removal of consent at any time. By very deliberately framing the content of the applications and their corresponding codes they must adhere to in deontic terms, much of the extraneous detail can be removed and the reasoning process that must be followed to determine acceptance of the application can be automated.
 
 %AUTOMATED REASONING / AI 
 %http://www.cs.miami.edu/~tptp/OverviewOfATP.html
 %http://plato.stanford.edu/entries/reasoning-automated/#pagetopright
-%Automated reasoning is a deeply important area of computer science. 
+Automated reasoning is a deeply important area of computer science. 
 
 %This is a costly process for both the student, who must fill out multiple forms to prove that they have met the requirements of the code of ethics, as well as the assessment body, which must devote time and resources to individually assessing each ethics application. As with any manual process which takes up time and effort, there is merit to automating it. However, there are additional benefits such as the removal of human error, as well as insights from the automated program that a human might not have picked up on. 
 %CITATION NEEDED - paper that automatically parsed ethical situations and pulled out key terms
@@ -80,21 +81,21 @@ One area of particular interest is codes of ethics, for example as part of unive
 \subsection{Objectives}
 This project aims to produce a deontic logic theorem prover. This involves, first, the design and implementation of a formalisation of deontic logic, limited to the abstract concepts of obligation, prohibition and permission, so the facts and rules associated with a system can be specified in a manner which allows for the automatic processing of these facts and rules. The input, in its processed form, will be used by the prover, which will aim to show the success or failure of specified goals of the system. Finally, the prover must be able to be tested against specific case studies, in order to determine the success of its implementation. The case studies used will draw on codes of ethics applications obtained from research projects submitted to the University of Glasgow for approval. Evaluation of the system will involve checking the results returned by the prover against the expected results and using the output to further assess the success of the implementation. 
 
-The tasks required to achieve these aims are as follows. First, various versions of deontic logic must be identified and investigated in order to determine a specific version to be formalised. Next, a grammar to specify the expression of deontic statements must be designed in order to produce a parser for the rules of a system. Then, from a file set out in this way, an abstract syntax tree must be generated and stored. This tree must be simplified using standard logical proofs, and then checked for semantic entailment. Finally, a prover must be implemented that can be passed a specific logical axiom and then check that this axiom coheres with the specified rules of the system.
+The tasks required to achieve these aims are as follows. First, various versions of deontic logic must be identified and investigated in order to determine a specific version to be formalised. Next, a grammar to specify the expression of deontic statements must be designed in order to produce a parser for the rules of a system. Then, from a file set out in this way, an abstract syntax tree must be generated and stored. This tree must be simplified using standard logical proofs, and then checked for semantic entailment. Finally, a prover must be implemented that can be passed a specific logical axiom to then check whether this axiom coheres with the specified rules of the system.
 
 \subsection{Achievements}
 This project has yielded a deontic logic theorem prover, which works as expected with the test cases used for evaluation. 
 %automatic reasoning??
 
 \section{Structure}
-This dissertation will first set out the history of deontic logic, as well as current and potential applications of deontic logic, before examining existing tool support for the issue presented. It will then explain the design and implementation of the implemented program, broken down into the lexical specification of the chosen flavour of deontic logic and the proof strategy for a given set of rules, facts and goals. It will then assess the system against the codes of ethics applications used as case studies. Once this is complete, conclusions will be presented about what the work done in the project shows, and potential avenues of future work will be suggested. 
+This dissertation will first set out the history and development of deontic logic, including several of its various forms, as well as examining current and potential applications of deontic logic, before assessing any existing tool support for the issue presented. It will then explain the design and implementation of the implemented program, broken down into the lexical specification of the chosen form of deontic logic and the proof strategy for a given set of rules, facts and goals. It will then assess the system against several codes of ethics applications used as case studies. Once this is complete, conclusions will be presented about what the work done in the project shows, and potential avenues of future work will be suggested. 
 
 \chapter{Literature Review}
 
 \section{Development of Deontic Logic}%talk about the development
 The development of deontic logic has been greatly influenced by alethic modal logic \cite{sep-logic-deontic}. Alethic modal logic is the logic of necessary truth, and its related operators are necessity, possibility, impossibility, non-necessity and contingency. Necessity is a basic operator; the other four operators can be defined in terms of it. What is necessary and contingent is possible, and what is contingent and impossible is non-necessary. Necessity maps loosely to obligation in deontic logic, as both can be thought of in terms of requirement. 
 
-Deontic logic, as already explained, is a logic of duty. Duties can be understood in a Kantian sense, wherein the justification of maxims that are expected of agents is grounded in a respect for the laws which agents are bound to\cite{sep-kant-moral}. These laws can be anything from the moral law which can be said to govern all rational beings, to the legislation local to certain countries that applies only to their citizens, to the expected behaviour of an employee within a company under that company's code of ethics. 
+Deontic logic, as already explained, is a logic of duty. Duties can be understood in a Kantian sense, wherein the justification of maxims that are expected of agents is grounded in a respect for the laws which agents are bound to\cite{sep-kant-moral}. These laws can be anything from the moral law which can be said to govern all rational beings, to the legislation local to certain countries that applies only to their citizens, to the expected behaviour of an employee within a company under that company's code of ethics. In the chosen case study of this project, ethics applications, the maxims will be related to university codes of ethics, and more general expectations of good conduct from researchers. Relations between maxims, and how these should be formulated, will depend on the type of deontic logic in use. 
 
 Deontic logic contains the usual operators of formal logic, such as negations, biconditionals, conjunctions and disjunctions. It can then incorporate many concepts, but here the focus will be on obligations, prohibitions and permissions. Obligations are those things which agents are required to do, prohibitions are those things which agents are forbidden from doing, and permissions are those things which agents are neither required to do nor forbidden from doing. As with alethic modal logic and necessity, obligation is a basic operator for deontic logic. Prohibitions are things people are obliged not to do, and permissions are things people are neither obliged to do nor obliged not to do. In other words, obligations are things people should do, prohibitions are things people should not do and permissions are things people are allowed to do. 
 
@@ -105,8 +106,6 @@ Deontic logic says nothing about the content of deontic maxims, broadly speaking
 This is often described as the autonomy formula of the categorical imperative. Simply put, it is that the rational will should determine universal law. From this, an approach to validating sets of deontic maxims can be derived, which can thereby provide sets of laws. One convincing approach from machine ethics is ensuring that every maxim must be consistent with the rest of the set, and that the set must then form a coherent system of maxims\cite{Powers}. If there are inconsistent rules in the set, it is unreasonable to expect these maxims to be followed; it is impossible for $P$ and \( \neg \) $P$ to be true, so impossible for them to be justified coherently in a set. 
 
 Powers derives two rules for this system: R-in and R-out. R-in states that a maxim, $m_i$ is allowed to be part of the set of acceptable maxims, $M$, if $m_i$ is consistent with the ethical system, $G$. That is, $m_i \in M \iff G \vdash m_i $. R-out states that if a maxim, $m_i$, becomes inconsistent with the ethical system, $G$, $m_i$ is no longer allowed in the set of acceptable maxims, $M$. That is, $m_i \notin M \rightarrow \neg(G \vdash m_i)$. These rules would be difficult to operationalise, but a successful implementation would provide useful analysis of sets of rules formulated in a deontic way. 
-
-Outside of deontological ethics, the content of maxims can be derived from the specific contexts the maxims will be applying to. In the chosen case study of this project, ethics applications, the maxims will be related to university codes of ethics, and more general expectations of good conduct from researchers. Relations between maxims, and how these should be formulated, will depend on the type of deontic logic in use. 
 
 %-GENERALISM VS PARTICULARISM
 %--generalism + fregean concepts + algorithms
@@ -133,50 +132,57 @@ For example, the general prohibition on murder, ($A$), which applies to all rati
 A further benefit of predicate deontic logic is that it does not face the traditional problems levelled at deontic logic\cite{predicate}. However, since it brings in concepts from logic of action, it is outside of the scope of this project and will not be explored here. 
 
 \section{Applications of Deontic Logic}
-\subsection{Outside Computer Science}
-Deontic logic lends itself well to applications within law, due to the aforementioned grounding in a respect for laws. One way to implement this is to characterise the law as a system of norms\cite{law-jonessergot}, which can then be represented with deontic expressions. 
+Deontic logic lends itself well to applications within law, due to the aforementioned grounding in a respect for laws. One way to implement this is to characterise the law as a system of norms, as Jones and Sergot suggest\cite{law-jonessergot}, before going on to represent this system of norms using deontic expressions. They propose an important test to employ when assessing whether a deontic formulation of a state of affairs is appropriate. Firstly, there must be a sense in which it is possible that a prescription can be violated. Secondly, this violation must lead to a new state of affairs which needs an explicit representation in order to achieve the goals of the system. 
 
-\subsection{Within Computer Science}
-Applications within Computer Science can be categorised as follows\cite{meyer93applications}: fault-tolerant computer systems, normative user behaviour, policy specification, normative organisation behaviour and normative integrity constraints. %EXPAND THIS
+Applications within Computer Science have largely grown out of legal applications. Wieringa and Meyer categorise these as follows\cite{meyer93applications}: fault-tolerant computer systems, normative user behaviour, normative organisation behaviour and normative behaviour of the object system. Most of these applications use deontic logic to model some form of ideal behaviour, and what should be done in the case on non-ideal behaviour. Fault-tolerant computer systems can apply deontic concepts as a kind of exception handling process, by specifying what should happen when constraints on the expected behaviour of the system are violated. User behaviour is frequently non-ideal; ideal and actual user behaviour can be distinguished, simplifying the specification of such, and so normative user behaviour can also be considered an application of deontic logic in terms of exception handling. 
 
-One application within policy specification is system availability\cite{brunel04deontic}. After extending the logic with temporal operators, so it can be said that some obligation, A, needs to be done before a certain time, k, this obligation can be formally represented. From this, simple availability policies can be defined, and then checked for consistency. Violation of these policies is also easy to verify, as it can be checked whether the system is in accordance with all of the defined rules. %EXPAND
+Wieringa and Meyer split applications within organisations into policy specification and normative organisation behaviour. This behaviour is a similar application to the legal domain, as organisations are required to follow the law. Within policy specification, deontic concepts can be used to specify the behaviour of various components of an organisation, removing ambiguity from organisational policies and making clearer the consequences of violations of policy. As with normative organisation behaviour, policy specification is similar to legal applications in terms of its implementation; the only difference is that these policies are not legally binding. While deontic logic cannot be used within secure computer systems as these systems do not allow for the violation of security norms, it can be used to formalise security policies for the exploration of the consequences of such policies, as well as for a potential proof that the policy is actually implemented by a certain system. 
 
-Within integrity constraints, one application is the specification of information systems\cite{infosystems}, particularly with respect to soft constraints. Dyadic deontic logic, with its ideal and non-ideal worlds, can neatly describe what is going on when there is some constraint of a system that ideally should not be violated, and what should be done if it is. %EXPAND
+Finally, deontic logic can be applied to normative behaviour of the object system, which is some part of reality whose data can be represented. Wieringa and Meyer split this application further into the specification of law, simulating legal thinking, specifying integrity constraints and any other possible application outside of these. Within the specification of law, there are vast opportunities for deontic logic to be employed. A formalised system can be used either as a tool for students to learn about law, or as a kind of oracle for the legislative process or for the application of legislation, or even to issue authoritative commands. The simulation of legal thinking moves away from the formal specification of actual laws towards how the law is actually thought about by those who are to implement it. Instead of using deontic logic to constrain the behaviour of the system, it can be used to describe the kinds of behaviour that actually occur in the system. Specifying integrity constraints is a similar application to the specification of law, in terms of implementation; only the context in which the implementation occurs is different. In terms of other possible applications, one mentioned is scheduling problems. Deontic logic can be used to specify the allocation of resources within certain constraints, and what should happen in the case of a violation of a constraint. 
+
+Wieringa and Meyer raise several issues with the application of deontic logic in this context, namely the issues of possibility and authority. Computer Science frequently borrows concepts from other disciplines, only to recreate simplified versions of these concepts for its own purposes. With respect to the law, the version that appears in formalised specifications is frequently quite simplistic, and often reduces it to the application of rules to facts, as this is the way in which a computer can process something as complex as the law. It is important to consider the way in which humans practice and apply normative concepts differs to a computer's methodology. Both must interpret the available facts and apply rules within the area of the law in order to make a decision, but humans are able to provide more nuanced interpretations of a situation, while computers are bound only by the given facts and rules, forced into a veil of impartiality. 
+
+However, Wieringa and Meyer propose a set of conditions, which, should they be met, at least give conditions for the application of deontic logic within Computer Science to be practically feasible. These are as follows: the area of the law chosen for formalisation must be largely isolated from other areas of law, so as to keep the system at a manageable size; the application of the chosen area must not be very complicated, and must be largely basic common sense, since the representation of common sense reasoning in computer systems is deeply difficult; and the chosen area must not be subject to change, in order to avoid the incorporation of social learning into the system, as well as to avoid having to continually change the formalisation of the law. 
+
+A further problem with these kinds of applications is the issue of authority. If a deontic system is used to issue authoritative commands, a possibility suggested above, then it is important that the system has to authority to do so, or its commands will have no actual effective force. It is definitely possible for a computer system to have such an authorative force, but it will not be immediately obvious from its existence alone, as it is with a human authority figure. While human authority figures are also subject to legal obligations, prohibitions and permissions, computer systems do not bear responsibilities in this way. In order for its authority to be respected, the fact that it has authority must be made clear to all participants of the system, a feat which is hardly easy to achieve. 
+
+%One application within policy specification is system availability\cite{brunel04deontic}. After extending the logic with temporal operators, so it can be said that some obligation, A, needs to be done before a certain time, k, this obligation can be formally represented. From this, simple availability policies can be defined, and then checked for consistency. Violation of these policies is also easy to verify, as it can be checked whether the system is in accordance with all of the defined rules. %EXPAND
+
+%Within integrity constraints, one application is the specification of information systems\cite{infosystems}, particularly with respect to soft constraints. Dyadic deontic logic, with its ideal and non-ideal worlds, can neatly describe what is going on when there is some constraint of a system that ideally should not be violated, and what should be done if it is. %EXPAND
 
 \section{Existing Functionality}
-There has been relatively little work done in either the area of deontic theorem proving. One tool which has been explicitly developed to operationalise deontic logic is KED\cite{KED}, a deontic theorem prover implemented in Haskell. It builds on work done in KEM\cite{KEM}, which is a modal theorem prover implemented in Prolog. 
+In the area of research applications and codes of ethics, one existing tool is the NHS Health Research Authority Decision Tool\cite{NHS}. This includes a set of toolkits and linked decision tools. The set of toolkits includes a clinical trials toolkit, which guides the user through the requirements for testing medicine; a data and tissues toolkit, which guides the user through  the requirements for using human data or human tissue in research; an experimental medicine toolkit, which guides the user through the requirements for interventional research; and a UK stem cell toolkit, which guides the user through the requirements for the research and manufacture of stem cells. The decision tools allow the user to check whether some project the user is pursuing should be categorised as research, or whether the project will require approval from an NHS research ethics committee. The focus of the set of toolkits is largely on making the user aware of their obligations as a health researcher, which is relevant to the concerns of the project, but less relevant to the end goal of a theorem prover. 
 
-%extends KEM
-%more detail on how it works 
-%potential problems/areas for improvement
+More relevant to the overall project is the decision tools, which follow some kind of verification process, given some facts from the user, to make a decision for the user as to either the status of their project as research, or whether their project will require approval. It is not, however, implemented in a deontic way, even if its aims can be framed and understood as such, so its considerations will be slightly different from the considerations of this project. 
 
-KED works with standard deontic logic, and its proof strategy follows these steps: define the labels which represent the worlds and paths, unify the labels for the relevant worlds, use the properties of transitivity and symmetry to reduce the set of labels, generally unify the set of labels, and finally make use of rules of inference, such as modus ponens, to prove by contradiction that the theorem is correct. 
+%what can we take from this through to the project??
 
-%lead into this better - not quite what i'm doing, but related to operationalising deontic concepts
+\subsection{KED}
+There has been relatively little work done in the area of deontic theorem proving. One tool which has been explicitly developed to operationalise deontic logic is KED\cite{KED}, a deontic theorem prover implemented in Prolog. It builds on work done to create KEM\cite{KEM}, which is a modal theorem prover implemented in Prolog. It works with standard deontic logic, making use of modal logic and its possible worlds semantics\cite{sep-possible-worlds}. The prover itself works by constructing a proof by contradiction, by first assuming that the formula to be proven is false and then exploring all the possible alternatives in an attempt to find formulae which contradict this assumption, closing off every created branch until it can be shown that the formula to be proven is, in fact, true. The proof strategy consists of α-rules, which borrow the tableau method of proof's linear branch-expansion rules, as well as β-rules, which are rules of inference such as modus ponens and modus tollens. Together, these rules should provide a complete prover for this context. 
 
-ESPLEX formalises legislation in a deontic way in the field of agricultural tenancies\cite{ESPLEX}, and is implemented in Prolog. It first produces a normalised version of a legal text, splitting the sentences into a series of conditions (IF statements) and consequences (THEN statements). From this, it produces a reduced, normalised version, which produces prescriptions of obligations, prohibitions and permissions, procedural rules for these prescriptions, and conditions for the prescriptions being held. These are then translated into rules to be stored in the Prolog knowledge base. The knowledge base can be searched either by searching the rules or by searching the network. 
+Importantly, KED is based on Mondadori's classical proof system \cite{Mondadori}, which itself is based on the tableau method but is much more concise and efficient. KED's proof strategy avoids the traditional redundancy involved with the tableau method by restricting the use of rules to only unfulfilled subformulae in the current branch, thereby limiting the size of the search space. Two key theorems for KED are proposed. The first is that a canonical KED tree always terminates, because of the fact that at every step of the process, there are a finite number of new, less complex formulae created, and as well as the fact that the number of possible labels in the tree for a formula to be proven is limited by the number of modal operators of the formula. The second theorem is that a KED tree for a formula to be proven is closed if and only if the canonical KED tree for that formula is closed, because a KED tree explores all the possible alternatives that can lead to closure of the constructed tableau. A further benefit is that there is no preprocessing of input formulae required. KED works using labels, so it lends itself to more natural proofs with simple implementations. While its implementation was limited to standard deontic logic, the implementation is flexible and generic enough that it can easily be extended to cover more, non-classical logical systems, such as multi-modal logic. 
 
-TAXMAN models concepts within the legal area that applies to corporate reorganisation\cite{TAXMAN}, and is implemented primarily in Micro-PLANNER, which is a subset of PLANNER. It stores the facts of such a reorganisation and uses formalised definitions of the legislation to determine whether or not it can be considered a tax-free transaction. 
-%point of the paper - "introduces a new approach to some of the classical problems of legal reasoning: What is the structure of a legal concept? What is the process by which legal concepts are transformed and modified? What are the arguments that lawyers characteristically make with respect to legal concepts?"
-%TAXMAN itself - very rudimentary legal reasoning - "Given a "description" of the "facts" of a corporate reorganization case, it can develop an "analysis" of these facts in terms of several legal "concepts.""
-%"I will describe in considerable detail how this program operates, what its limitations are, and how it might be revised and rewritten to achieve a somewhat higher level of sophistication.3 By looking carefully at both the adequacies and inadequacies of a particular formal model of a particular area of the law, I hope eventually to provide some insights into the structure and dynamics of legal concepts generally"
-%"For an area of the law to be a suitable subject for a project like TAXMAN, it should possess both simplicity and complexity. The basic facts and concepts in the area should be simple enough for the application of the existing techniques of semantic information processing, allowing us to develop a working computer model in a reasonable amount of time. But at least some of these concepts should exhibit a richness and depth that cannot be captured in a trivial way, allowing us to push the current paradigm to its limits. The taxation of corporate reorganizations is suitable in both respects." 
-%"To understand what the TAXMAN system can and cannot accomplish, and why, we need to understand some of the existing techniques of semantic information processing." - "We must express certain fundamental propositions about corporations: that a particular corporation exists; that it has issued certain classes of stock; that certain individuals or other corporations own various shares of that stock; that the ownership of these shares of stock has been transferred from time to time. Propositions of this sort function as the relatively concrete, relatively primitive facts upon which reorganization law is constructed. We must also express a range of concepts which function within reorganization law at a much higher level of abstraction: "stock distribution," for example, or the concept of "control," or the legal concept of a "tax-free reorganization" itself. In fact, a major portion of the task here is the representation of these various levels of conceptual abstraction and the connection of one such level to another." 
-%""Phellis owns Ioo shares of common stock issued by New Jersey." In the present formalism this factual cluster could be stored as: (CORPORATION NEW-JERSEY) (ISSUE NEW-JERSEY Si) (STOCK Si) (COMMON Si) (PIECE-OF Pi Si) (NSHARES Pi ioo) (OWN PHELLIS Pi)"
-%"The system can therefore be thought of as maintaining in its data base a "model" of the known "world" of corporations, stocks, stockholders, etc."
-%"Let us now define some of the fundamental operations that the TAXMAN system ought to perform on the lists and networks in its data base in order to manipulate its "world model." I have already mentioned the simplest of these operations: at a minimum, we must be able to store a given list in memory, retrieve it from memory, and then, under some circumstances, delete it from memory again. The storage and deletion operations will be accomplished by the commands ASSERT and ERASE.57 The command (ASSERT (CORPORATION NEW-JERSEY)) will call up a special program that stores and indexes the list (CORPORATION NEW-JERSEY), thus making it readily available for subsequent retrieval, or "true" in the "world" described by the data base. Similarly, the command (ERASE (CORPORATION NEW-JERSEY)) will remove the list (CORPORATION NEW-JERSEY) from memory, thus making it no longer available for retrieval, or "false" in that "world.""
-%"To retrieve a proposition from memory, a slightly more complicated GOAL command will be used." - "I have also introduced implicitly the idea of pattern-matching: a major feature of the GOAL commands was their ability to match a partially specified pattern in the GOAL statement against the fully specified patterns stored in the data base." - "What is needed, therefore, is a command to search for all four of these related propositions in succession. Since this command will have some of the characteristics of an ordinary sequential computer program, it will be given the name PROG and required to have the following form: (PROG <list of variables> <sequence of operations >)."
-%"Perhaps even more interesting is the possibility of expanding the conceptual hierarchy downwards below the level of the concepts that have so far been treated as primitive. For example, the STOCK predicate has been used in this discussion as a basic, unanalyzed term, but it could itself be represented as an abstraction built up from a description of the rules governing the relationship between a STOCKHOLDER and a CORPORATION. A basic philosophy of the TAXMAN system is to treat concepts as primitives only provisionally, and only for certain purposes, and to retain the option of expanding them further in other contexts. In the current version of TAXMAN, however, STOCK is treated throughout as primitive."
-%"since the procedures in TAXMAN for the manipulation of these concepts have the flexibility of a general programming language, they are much more powerful than the proof procedures of symbolic logic. A programming language can express heuristic rules to guide the search for relevant theorems and propositions,67 for example, or it can simulate in a natural way a dynamic change in the data base.68 More important, it can function efficiently in an environment of structured complexity"
-%case study: United States v. Phellis - "Some of these facts could not be represented at all in the current TAXMAN system." - "the operative facts of the case could indeed be represented in TAXMAN, using the basic description mechanisms we have examined so far." - "This example illustrates the fact that the various reorganization patterns can be matched up to a case description network in multiple ways.'02 The existence of these partial matches and multiple matches suggests some of the ways in which the concepts of corporate reorganization law can be manipulated in the planning of a corporate transaction, and some of the ways in which ambiguities can arise in the analysis of a corporate reorganization case. It is potentially a very powerful feature of the TAXMAN system that it can identify and display these partial and multiple matches automatically."
-%PROBLEMS: "The coverage of the system is much too limited, and even with a broader coverage of the tax law, the necessity of writing state descriptions and event descriptions in sequential order, and doing so in an obscure programming language, would render the system inaccessible to most potential users."
+%what can we take from this through to the project??
 
-In the area of research applications and codes of ethics, one existing tool is the NHS Health Research Authority Decision Tool\cite{NHS}. This includes a set of toolkits and linked decision tools. The set of toolkits includes a clinical trials toolkit, which guides the user through the requirements for testing medicine; a data and tissues toolkit, which guides the user through  the requirements for using human data or human tissue in research; an experimental medicine toolkit, which guides the user through the requirements for interventional research; and a UK stem cell toolkit, which guides the user through the requirements for the research and manufacture of stem cells. The decision tools allow the user to check whether some project the user is pursuing should be categorised as research, or whether the project will require approval from an NHS research ethics committee. 
+\subsection{ESPLEX}
+A further tool is ESPLEX, which, while not explicitly a deontic theorem prover, formalises legislation in a deontic way in the field of agricultural tenancies\cite{ESPLEX}. It aims to calculate the normative consequences of a case by providing possible configurations of the various deontic prescriptions. Like KED, it is implemented in Prolog, and aims to reproduce the language of legislative texts as closely as possible. The formalised language is required to be rich enough to convey the various levels of meaning within the texts, well defined on both a syntactic and semantic level, diverse enough to represent various different characteristics and aims, and flexible in its ability to allow the knowledge base to be continually updated. As a logical programming language, Prolog is well suited to meet these aims; its proof strategy is very similar to the activities involved with the manual processing of legislation. However, it is important to note that ESPLEX does not deal with the limitations of logical programming, or with the problem with negation as failure; this is dealt with at the meta level, by making a distinction between the two types of negation. 
 
-The focus of the set of toolkits is largely on making the user aware of their obligations as a health researcher, which is relevant to the concerns of the project, but less relevant to the end goal of a theorem prover. More relevant to the overall project is the decision tools, which follow some kind of verification process, given some facts from the user, to make a decision for the user as to either the status of their project as research, or whether their project will require approval. It is not, however, implemented in a deontic way, even if its aims can be framed and understood as such, so its considerations will be slightly different from the considerations of this project. 
+A key distinction is made between explicit and implicit knowledge, and how these two different kinds of knowledge are formalised within the tool. Explicit knowledge is represented through logical rules, while implicit knowledge is represented within the semantic network. The logical rules can represent five different types of sentence: goal, which is a statement of what is obligatory, forbidden or permitted; fact, which is a statement of some fact of the system; cond, which is a statement of some condition of the system; def, which defines some legal status; and proc, which defines some legal procedure. As for the semantic network, these are binary relations on elements of the knowledge. These relations are 'is a', 'part of', 'attribute', 'value', 'event', and 'equal to'. 
 
-%\section{Automated Theorem Proving}
-%???????????
+ESPLEX's knowledge base can be accessed in a number of ways. Firstly, the rule set can be searched by selecting some goals, along with a calculation of the normative consequences of these goals. It can then provide the justification for its reasoning, or examine a normalised version of the steps followed to reach this justification, or evaluate the consequences in deontic terms, or analyse the action, parties or objects involved in the search for a solution. Secondly, the system can search the network for a desired entity by either identifying the entity to the user, visualising the properties of the entity, or determining the values of the properties of the entity. The final result is an outline which consists of both definitional and normative content, and is organised according to the jurisprudence on the elements of the case. Thirdly, the system can analyse characteristics of a legislative text. It can then visualisethe definitions contained therein, and compare the procedural rules applied as well as the prescribed actions, evaluating these in deontic terms. 
+
+While ESPLEX's existing functionality is incredibly useful, there are multiple possible extensions of the system. Some points of particular interest are checking the normative coherence and completeness of a piece of legislation and processing the relations between general and special rules. %why?
+
+%what can we take from this through to the project??
+
+\subsection{TAXMAN}
+TAXMAN models concepts within the legal area that applies to corporate reorganisation\cite{TAXMAN}, and is implemented primarily in Micro-PLANNER, which is a subset of PLANNER. It stores the facts of such a reorganisation and uses formalised definitions of the legislation to determine whether or not it can be considered a tax-free transaction. It considers some classical problems in legal reasoning with regards to legal concepts, such as their structure, the process by which they are transformed and modified, and the arguments usually made with respect to them. TAXMAN's own reasoning is fairly simple; it is able to analyse the facts of a corporate reorganisation case in terms of legal concepts. As with ESPLEX, TAXMAN considers it important for the area of law it is concerned with to be sufficiently complex, but also simple enough that a model of the system can be generated in a reasonable amount of time. 
+
+An important first step for TAXMAN is completing the task of semantic information processing. In order to model corporate reorganisations, it needs to be able to express fundamental propositions about corporations, as well as more abstract concepts regarding reorganisation law, such as stock distribution. It must maintain a model of the corporate world in its knowledge base, which contains such entities as corporations and stocks. It also needs some fundamental operations that it must perform in order to manipulate this model of the world. This includes storing a list in its memory, retrieving a list from its memory, and deleting a list from its memory when necessary. Storage and deletion is done using, respectively, the commands ASSERT, which stores and indexes a list for future retrieval and makes it true in the world of the model, and ERASE, which removes the list from memory and makes it false in the world of the model. For memory retrieval, the GOAL command is used, which uses pattern matching for its search process. Importantly, the procedures defined in TAXMAN's system are as flexible as a programming language, so they are much more powerful than they would be as defined within symbolic logic. It has all the benefits of a programming language, such as dealing appropriately with updates to the knowledge base, as well as being able to deal with a structured, complex environment, and deal with it efficiently. 
+
+One case study implemented in TAXMAN is United States v. Phellis, some of the facts of which could not be represented in the system as it stands. The case study is important in showing that it is possible to match reorganisation patterns to the network of a case description. It highlights multiple matches, including partial matches, which shows there are many ways to manipulate the concepts of corporate reorganisation law, as well as illuminating the potential for ambiguity in analysis of this area of law. This is a key benefit of the system, and it could be extremely powerful if it could overcome its limitations. TAXMAN, as it stands, does not have a particularly extensive coverage within law, and were it to be extended, the nature of the input required to the system means it is not very accessible to the users who would be most likely to use it. 
+
+%what can we take from this through to the project??
 
 \chapter{Design and Implementation}
 %more high level than implementation
@@ -199,7 +205,7 @@ As the finished product is not designed for any kind of specialist, it is import
 
 Consequently, it will be desirable for this aspect of the program to be at least vaguely informal, so that it is accessible and not intimidating, and the tool will actually be used. Equally, however, it is important that the specification be set out in a way such that it is easy to parse and transform into a form that can be automatically reasoned with within the prover. 
 
-A compromise can be found here with semi-structured input. 
+A compromise can be found with semi-structured input. 
 
 %semi structured input 
 %want it to be vaguely informal so it's not intimidating and people will actually use the tool
@@ -230,32 +236,39 @@ One limitation of the lexical specification is the reliance on brackets to disam
 %brute force prover 
 %simplify fact set using logic rules
 
+%RECURSIVELY CHECK TREE NODES
+
 \subsection{Design}
 The prover will use a brute force proof strategy to prove, given a set of facts and a goal, that these facts cohere with the defined set of rules to produce the desired goal, or not, as the case may be. The prover should make use of rules of inference and rules of replacement as part of its strategy. These rules are listed in the below table\cite{infrules}. 
 
+\begin{center}
 \begin{tabular}{| l | r |} 
-\hline modus ponens & ((p and (p implies q)) implies q \\
-\hline modus tollens & ((not q and (p implies q)) implies not p \\
-\hline associative & ((p or q) or r) implies (p or (q or r)) \\
-\hline commutative & (p and q) implies (q and p) \\
-\hline law of biconditional propositions & ((p implies q) and (q implies p)) implies (p implies q) \\
-\hline exportation & ((p and q) implies r) implies (p implies (q implies r)) \\
-\hline transposition & (p implies q) implies (not q implies not p) \\
-\hline hypothetical syllogism & ((p implies q) and (q implies r)) implies (p implies r) \\
-\hline material implication & (p implies q) implies (not p or q) \\
-\hline distributive & ((p or q) and r) implies ((p and r) or (q and r)) \\
-\hline absorption & (p implies q) implies (p implies (p and q)) \\
-\hline disjunctive syllogism & ((p or q) and not p) implies q \\
-\hline addition & p implies (p or q) \\
-\hline simplification & (p and q) implies p \\
-\hline conjunction & ((p) and (q) implies (p and q) \\
-\hline double negation & p implies (not not p) \\
-\hline disjunctive simplification & (p or p) implies p \\
-\hline resolution & ((p or q) and (not p or r)) implies (q or r) \\
+\hline modus ponens & \(((p \land (p \rightarrow q)) \rightarrow q\) \\
+\hline modus tollens & \(((\neg q \land (p \rightarrow q)) \rightarrow \neg p\) \\
+\hline associative & \(((p \lor q) \lor r) \rightarrow (p \lor (q \lor r))\) \\
+\hline commutative & \((p \land q) \rightarrow (q \land p)\) \\
+\hline law of biconditional propositions & \(((p \rightarrow q) \land (q \rightarrow p)) \rightarrow (p \rightarrow q)\) \\
+\hline exportation & \(((p \land q) \rightarrow r) \rightarrow (p \rightarrow (q \rightarrow r))\) \\
+\hline transposition & \((p \rightarrow q) \rightarrow (\neg q \rightarrow \neg p)\) \\
+\hline hypothetical syllogism & \(((p \rightarrow q) \land (q \rightarrow r)) \rightarrow (p \rightarrow r)\) \\
+\hline material implication & \((p \rightarrow q) \rightarrow (\neg p \lor q)\) \\
+\hline distributive & \(((p \lor q) \land r) \rightarrow ((p \land r) \lor (q \land r))\) \\
+\hline absorption & \((p \rightarrow q) \rightarrow (p \rightarrow (p \land q))\) \\
+\hline disjunctive syllogism & \(((p \lor q) \land \neg p) \rightarrow q\) \\
+\hline addition & \(p \rightarrow (p \lor q)\) \\
+\hline simplification & \((p \land q) \rightarrow p\) \\
+\hline conjunction & \(((p) \land (q) \rightarrow (p \land q)\) \\
+\hline double negation & \(p \rightarrow (\neg \neg p)\) \\
+\hline disjunctive simplification & \((p \lor q) \rightarrow p\) \\
+\hline resolution & \(((p \lor q) \land (\neg p \lor r)) \rightarrow (q or r)\) \\
 \hline
 \end{tabular}
+\end{center}
 
 Critical rules to implement are modus ponens and modus tollens. Modus ponens affirms the antecedent of an argument; true premises guarantee true conclusions, so affirming the antecedent proves that the consequent is true. Modus tollens denies the consequent of an argument; false conclusions cannot follow true premises, so denying the consequent proves that the antecedent is false. These are foundational logical principles, and any prover would be sorely lacking without an implementation of them. 
+%crucial for extracting new facts - if you know something on one side you can get something on the other side 
+
+%TALK MORE ABOUT GENERAL PROOF STRATEGY STUFF - HOW DO PROVERS WORK
 
 \subsection{Implementation}
 The prover first scans the generated ANTLR tree to yield the terms, facts, rules and goals specified by the system under review. The terms are stored in a dictionary, with the identifiers of the terms stored as keys and the content of the terms stored as values, so that the identifiers, used in the facts, rules and goals, can be later substituted for their actual content. The facts, rules and goals are each stored in separate lists, with each list storing the parent of each relevant node of the tree. 
@@ -288,8 +301,6 @@ The evaluation is carried out using four case studies. Case studies A, B and C a
 The final case study, D, is not adapted from this set of applications. Rather, it is a fictitious case specifically designed to produce certain output from the prover. As all of the applications obtained from the University of Glasgow were from projects that were approved by the committee, case studies A, B and C are expected to yield success when tested against the prover, while case study D is designed to yield failure. 
 
 Another aspect of this evaluation is the examination of the steps followed by the prover in its attempt to attain the goals of each case study. This examination cannot be validated by actual, external results, since all that is known of the case studies is that they were successful in achieving approval from the committee, and not why. However, the examination can suggest further points of consideration regarding the performance of the prover, in more depth than a simple validation of success. Potential points of consideration include the efficiency of the proof strategy. 
-
-%test cases and what we can learn from them
 
 \section{Case Study A: Impacts of Climate Change, Variability and Agriculture Adaptation}
 
@@ -353,38 +364,243 @@ STATUS: success
 
 As expected, this application was successful in meeting the requirements to proceed with the desired research. 
 
-\section{Case Study B: }
+\section{Case Study B: Digigraff}
 \subsection{Introduction}
+The second case study is an ethics proposal submitted by a student in the School of Computing Science. The proposed research project aims to investigate the role of location in the creation of social media content, and to encourage users to be more thoughtful about location in their use of social media. These aims are met through an evaluation of DigiGraff, which allows users to create digital annotations that can be projected onto physical surfaces and then stored, along with the location of the user in their physical environment. The project is carried out remotely in three phases, with experimenter contact only in the first and third phase. The first phase involves the provision of information about the project to participants and the gathering of consent. The second phase involves actual use of DigiGraff for the period of a week. The third phase involves interviewing the participants about their experience using DigiGraff. 
+
+The student anticipates minimal physical effect on the participants of the research project. Any effects concern the comfort, safety and privacy of the participants, all of which they are made aware of the protection of before the project begins. All of the usual ethical guidelines are followed, and no members of vulnerable groups will be recruited for the project. 
+
 \subsection{Specification}
 I specified this case study as follows: 
 \begin{verbatim}
-
+P: "involve participation of other people"
+Q: "involve data relating to other people"
+R: "complete ethics checklist form"
+S: "apply for ethical approval"
+T: "comply with points on ethics checklist form"
+U: "use introduction and debriefing scripts"
+V: "include introduction and debriefing scripts with signed ethics checklist form as part of report"
+W: "study approved"
+rule: (if (P or Q) then R)
+rule: (if (((P or Q) and R) and (not T)) then (OB ((S and U) and V)))
+rule: (if (T or (S and (U and V)) then W)
+fact: P
+fact: Q
+fact: (not T)
+goal: W
 \end{verbatim}
 
 \subsection{Results}
 The results of this case study is as follows: 
 \begin{verbatim}
+Step 1: 
+INITIAL: (P or Q)
+FINAL: R
+TRANSFORM: (if (P or Q) then R)
+RULE: modus ponens
 
+Step 2: 
+INITIAL: (((P or Q) and R) and (not T))
+FINAL: (OB ((S and U) and V))
+TRANSFORM: (if (((P or Q) and R) and (not T)) then (OB ((S and U) and V)))
+RULE: modus ponens
+
+Step 3: 
+INITIAL: (OB ((S and U) and V))
+FINAL: ((S and U) and V)
+TRANSFORM: (OB ((S and U) and V))
+RULE: O necessity
+
+Step 4: 
+INITIAL: ((S and U) and V)
+FINAL: S
+TRANSFORM: ((S and U) and V)
+RULE: decompose conjunction
+
+Step 5: 
+INITIAL: ((S and U) and V)
+FINAL: U
+TRANSFORM: ((S and U) and V)
+RULE: decompose conjunction
+
+Step 6: 
+INITIAL: ((S and U) and V)
+FINAL: V
+TRANSFORM: ((S and U) and V)
+RULE: decompose conjunction
+
+Step 7: 
+INITIAL: (P or Q)
+FINAL: R
+TRANSFORM: (if (P or Q) then R)
+RULE: modus ponens
+
+Step 8: 
+INITIAL: (((P or Q) and R) and (not T))
+FINAL: (OB ((S and U) and V))
+TRANSFORM: (if (((P or Q) and R) and (not T)) then (OB ((S and U) and V)))
+RULE: modus ponens
+
+Step 9: 
+INITIAL: (T or (S and (U and V)))
+FINAL: W
+TRANSFORM: (if (T or (S and (U and V))) then W)
+RULE: modus ponens
+
+STATUS: success
 \end{verbatim}
 As expected, this application was successful in meeting the requirements to proceed with the desired research. 
 
-\section{Case Study C: }
+\section{Case Study C: High Places, Unique Spaces}
+
 \subsection{Introduction}
+The third case study is an ethics proposal submitted by a student in the School of Geographical and Earth Sciences. The proposed research project aims to investigate relationships created while trekking and mountaineering in the Himalayas, and involves engaging with the international trekking and mountaineering community and the differences between these groups. The project involves conducting semi-structured interviews with the Himalayan mountaineering community, where key information about the participants and physical reactions will be recorded as well as audio of the interviews. It also involves carrying out ethnographic research, which entails the student participation themselves in mountaineering activities, and conducting discourse analysis of policy documents in the public domain. 
+
+The student does not anticipate any negative effects on the participants, though the project is quite intensive and may trigger emotional responses in the participants, who will be made aware that they can withdraw their consent to participate or simply choose not to answer the question. Efforts will be made to minimise any disruption to the participants' lives and continual operation of their occupations. A further source of ethical considerations is the cultural context and inherent power relations between researcher and participant, due to the Western/Eastern divide. Efforts will be made to adhere to cultural norms. Finally, no members of vulnerable groups will be participants in the study. Some participants may be illiterate, and in this case, an oral explanation of the terms of participation will be delivered and verbal consent will be sought. 
 
 \subsection{Specification}
 I specified this case study as follows: 
 \begin{verbatim}
-
+A: "cultural power relations exist"
+B: "be culturally sensitive"
+C: "observe cultural norms"
+D: "language and culture barriers exist"
+E: "ask for clarification"
+F: "conduct interviews a the end of each stay"
+G: "photography and video is taken"
+H: "permission of individuals involved is sought"
+I: "document exists in the public domain"
+J: "document is used in research"
+K: "participant participates"
+L: "participant withdraws at any time"
+M: "participants are anonymised"
+N: "paricipants answer interview questions"
+O: "participants are members of vulnerable groups"
+P: "participants are illiterate"
+Q: "verbal consent sought"
+R: "study is approved"
+fact: A
+fact: D
+fact: G
+fact: G
+fact: P
+fact: (PER K)
+fact: (not O)
+rule: (if A then (OB (B and C)))
+rule: (if D then (OB (E and F)))
+rule: (if G then (OB H))
+rule: (if I then (PER J))
+rule: (if K then (PER ((L and M) and N)))
+rule: (if P then Q)
+rule: (if (((((((((A and B) and C) and D) and E) and F) and G) and H) and P) and Q) then R)
+goal: R
 \end{verbatim}
 \subsection{Results}
 The results of this case study is as follows: 
 \begin{verbatim}
+Step 1: 
+INITIAL: A
+FINAL: (OB (B and C))
+TRANSFORM: (if A then (OB (B and C)))
+RULE: modus ponens
 
+Step 2: 
+INITIAL: D
+FINAL: (OB (E and F))
+TRANSFORM: (if D then (OB (E and F)))
+RULE: modus ponens
+
+Step 3: 
+INITIAL: G
+FINAL: (OB H)
+TRANSFORM: (if G then (OB H))
+RULE: modus ponens
+
+Step 4: 
+INITIAL: P
+FINAL: Q
+TRANSFORM: (if P then Q)
+RULE: modus ponens
+
+Step 5: 
+INITIAL: (OB (B and C))
+FINAL: (B and C)
+TRANSFORM: (OB (B and C))
+RULE: O necessity
+
+Step 6: 
+INITIAL: (OB (E and F))
+FINAL: (E and F)
+TRANSFORM: (OB (E and F))
+RULE: O necessity
+
+Step 7: 
+INITIAL: (OB H)
+FINAL: H
+TRANSFORM: (OB H)
+RULE: O necessity
+
+Step 8: 
+INITIAL: (B and C)
+FINAL: B
+TRANSFORM: (B and C)
+RULE: decompose conjunction
+
+Step 9: 
+INITIAL: (B and C)
+FINAL: C
+TRANSFORM: (B and C)
+RULE: decompose conjunction
+
+Step 10: 
+INITIAL: (E and F)
+FINAL: E
+TRANSFORM: (E and F)
+RULE: decompose conjunction
+
+Step 11: 
+INITIAL: (E and F)
+FINAL: F
+TRANSFORM: (E and F)
+RULE: decompose conjunction
+
+Step 12: 
+INITIAL: A
+FINAL: (OB (B and C))
+TRANSFORM: (if A then (OB (B and C)))
+RULE: modus ponens
+
+Step 13: 
+INITIAL: D
+FINAL: (OB (E and F))
+TRANSFORM: (if D then (OB (E and F)))
+RULE: modus ponens
+
+Step 14: 
+INITIAL: G
+FINAL: (OB H)
+TRANSFORM: (if G then (OB H))
+RULE: modus ponens
+
+Step 15: 
+INITIAL: P
+FINAL: Q
+TRANSFORM: (if P then Q)
+RULE: modus ponens
+
+Step 16: 
+INITIAL: (((((((((A and B) and C) and D) and E) and F) and G) and H) and P) and Q)
+FINAL: R
+TRANSFORM: (if (((((((((A and B) and C) and D) and E) and F) and G) and H) and P) and Q) then R)
+RULE: modus ponens
+
+STATUS: success
 \end{verbatim}
 As expected, this application was successful in meeting the requirements to proceed with the desired research. 
 
 \section{Case Study D: }
 \subsection{Introduction}
+The final case study is an ethics application for a fictional research project. 
 
 \subsection{Specification}
 I specified this case study as follows: 
@@ -411,7 +627,7 @@ However, it does not go far enough. There are some quirks to the specification t
 
 One way of doing this would be to provide an additional graphical interface which allowed the user to enter the facts, rules and goals of a system in some kind of structured form, which was then processed to create the kind of file currently required of the user to produce by themselves. 
 
-This would greatly reduce the number of errors faced by the user when specifying the system, simply because they have not understood the exact specification of the deontic grammar. It would also reduce the amount of time and effort required to use the tool, a key concern for a project which aims to reduce human cost in this sense. 
+This would greatly reduce the number of errors faced by the user when specifying the system, simply because they have not understood the exact specification of the deontic grammar. It would also reduce the amount of time and effort required to use the tool, a key concern for its usability and potential benefit. 
 
 \subsection{Automatic Parsing}
 One area that has much to offer this tool is the field of automatic parsing of text. Its functionality would be greatly improved if extended in conjunction with a tool which could scan documents, such as codes of ethics and completed ethics applications for projects, for key terms and information, in order to automatically generate a set of facts, rules and goals for a system. 
@@ -429,17 +645,21 @@ Though too complex for the scope of this project, predicate deontic logic would 
 %  APPENDICES  %
 %              %
 %%%%%%%%%%%%%%%%
-%\begin{appendices}
-%\chapter{Running the Programs}
-%An example of running from the command line is as follows:
-%\begin{verbatim}
-%\end{verbatim}
+\begin{appendices}
+\chapter{Running the Programs}
+An example of running from the command line is as follows:
+\begin{verbatim}
+\end{verbatim}
 
-%\chapter{Case Studies}
-%\chapter{Test Data}
-%include tests used
+\chapter{Case Studies}
+\section{Case Study A}
+\includepdf[pages={1-8}]{ethicsapps/Appendix_A.pdf}
+\section{Case Study B}
+\includepdf[pages={50-55}]{ethicsapps/Appendix_B.pdf}
+\section{Case Study C}
+\includepdf[pages={34-41}]{ethicsapps/Appendix_E.pdf}
 
-%\end{appendices}
+\end{appendices}
 
 %%%%%%%%%%%%%%%%%%%%
 %   BIBLIOGRAPHY   %
@@ -449,4 +669,3 @@ Though too complex for the scope of this project, predicate deontic logic would 
 \bibliography{bib}
 
 \end{document}
-
