@@ -1,0 +1,15 @@
+P: "involve participation of other people"
+Q: "involve data relating to other people"
+R: "complete ethics checklist form"
+S: "apply for ethical approval"
+T: "comply with points on ethics checklist form"
+U: "use introduction and debriefing scripts"
+V: "include introduction and debriefing scripts with signed ethics checklist form as part of report"
+W: "study approved"
+rule: (if (P or Q) then R)
+rule: (if (((P or Q) and R) and (not T)) then (OB ((S and U) and V)))
+rule: (if (T or (S and (U and V)) then W)
+fact: P
+fact: Q
+fact: (not T)
+goal: W

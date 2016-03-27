@@ -1,0 +1,33 @@
+A: "cultural power relations exist"
+B: "be culturally sensitive"
+C: "observe cultural norms"
+D: "language and culture barriers exist"
+E: "ask for clarification"
+F: "conduct interviews a the end of each stay"
+G: "photography and video is taken"
+H: "permission of individuals involved is sought"
+I: "document exists in the public domain"
+J: "document is used in research"
+K: "participant participates"
+L: "participant withdraws at any time"
+M: "participants are anonymised"
+N: "paricipants answer interview questions"
+O: "participants are members of vulnerable groups"
+P: "participants are illiterate"
+Q: "verbal consent sought"
+R: "study is approved"
+fact: A
+fact: D
+fact: G
+fact: G
+fact: P
+fact: (PER K)
+fact: (not O)
+rule: (if A then (OB (B and C)))
+rule: (if D then (OB (E and F)))
+rule: (if G then (OB H))
+rule: (if I then (PER J))
+rule: (if K then (PER ((L and M) and N)))
+rule: (if P then Q)
+rule: (if (((((((((A and B) and C) and D) and E) and F) and G) and H) and P) and Q) then R)
+goal: R
