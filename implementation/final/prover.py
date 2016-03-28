@@ -330,13 +330,12 @@ def proofStrategy(goals, facts, rules):
 
 	# go through every rule and try and extract more facts
 	while (not(proven) and progress): 
+		facts = simplifyFactSet(facts)
 		factSize = len(facts)
 
 		for rule in rules:
 			facts = tryModusPonens(facts, rule)
 			facts = tryModusTollens(facts, rule)
-
-		facts = simplifyFactSet(facts)
 
 		if len(facts) == factSize: # no new facts found
 			progress = False
