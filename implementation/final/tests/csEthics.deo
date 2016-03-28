@@ -7,8 +7,9 @@ U: "use introduction and debriefing scripts"
 V: "include introduction and debriefing scripts with signed ethics checklist form as part of report"
 W: "study approved"
 rule: (if P then R)
-rule: (if ((P and R) and T) then S)
-rule: (if ((P and R) and (not T)) then (OB S))
+rule: (if ((P and R) and (not T)) then (OB ((S and U) and V)))
+rule: (if (T or (S and (U and V)) then W)
 fact: P
 fact: Q
-
+fact: (S and (U and V))
+goal: W

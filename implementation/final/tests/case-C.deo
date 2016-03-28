@@ -20,6 +20,7 @@ fact: A
 fact: D
 fact: G
 fact: G
+fact: (if A then D)
 fact: P
 fact: (PER K)
 fact: (not O)
