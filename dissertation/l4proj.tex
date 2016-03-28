@@ -14,17 +14,7 @@
 \maketitle
 
 \begin{abstract}
-%https://users.ece.cmu.edu/~koopman/essays/abstract.html
-%Motivation:
-%Why do we care about the problem and the results? If the problem isn't obviously "interesting" it might be better to put motivation first; but if your work is incremental progress on a problem that is widely recognized as important, then it is probably better to put the problem statement first to indicate which piece of the larger problem you are breaking off to work on. This section should include the importance of your work, the difficulty of the area, and the impact it might have if successful.
-%Problem statement:
-%What problem are you trying to solve? What is the scope of your work (a generalized approach, or for a specific situation)? Be careful not to use too much jargon. In some cases it is appropriate to put the problem statement before the motivation, but usually this only works if most readers already understand why the problem is important.
-%Approach:
-%How did you go about solving or making progress on the problem? Did you use simulation, analytic models, prototype construction, or analysis of field data for an actual product? What was the extent of your work (did you look at one application program or a hundred programs in twenty different programming languages?) What important variables did you control, ignore, or measure?
-%Results:
-%What's the answer? Specifically, most good computer architecture papers conclude that something is so many percent faster, cheaper, smaller, or otherwise better than something else. Put the result there, in numbers. Avoid vague, hand-waving results such as "very", "small", or "significant." If you must be vague, you are only given license to do so when you can talk about orders-of-magnitude improvement. There is a tension here in that you should not provide numbers that can be easily misinterpreted, but on the other hand you don't have room for all the caveats.
-%Conclusions:
-%What are the implications of your answer? Is it going to change the world (unlikely), be a significant "win", be a nice hack, or simply serve as a road sign indicating that this path is a waste of time (all of the previous results are useful). Are your results general, potentially generalizable, or specific to a particular case?
+Deontic logic, with its formalisation of concepts of obligation and prohibition, has many applications within and without Computer Science. This project proposes a formal specification and proof strategy for deontic theorems, with ethics applications as case studies. The final tool comprises a grammar for semi-structured input and a brute force prover utility. It offers a user-friendly syntax and exhaustive proof strategy, including modus ponens, modus tollens and O-necessitation. It succeeds against implemented case studies, and provides thoughtful results for evaluation of ethics applications and deontic concepts, with scope for expansion over more complex case studies and various other areas of implementation. 
 \end{abstract}
 
 \educationalconsent
@@ -81,7 +71,7 @@ This project aims to produce a deontic logic theorem prover. This involves, firs
 The tasks required to achieve these objectives are as follows. First, various versions of deontic logic must be identified and investigated in order to determine a specific version to be formalised. Next, a grammar to specify the expression of deontic statements must be designed in order to produce a parser for the rules of a system. Then, from a file set out in this way, an abstract syntax tree must be generated and stored. This tree must be simplified using standard logical proofs, and then checked for semantic entailment. Finally, a prover must be implemented that can be passed a specific logical axiom to then check whether this axiom coheres with the specified rules of the system.
 
 The main objectives have been achieved. This project has yielded a formalised specification of deontic logic and a deontic theorem prover, which works as expected with the test cases and provides thoughtful results for evaluation. More complex testing and extension of the functionality is necessary to determine the true scope of the tool that has been produced, 
-but it seems to have gone some way towards showing that automating deontic reasoning about ethics is possible. 
+but it has gone some way towards showing that automating deontic reasoning about ethics is possible. 
 
 \section{Structure}
 This dissertation will first set out the history and development of deontic logic, including several of its various forms, as well as examining current and potential applications of deontic logic, before assessing any existing tool support for the issue presented. It will then explain the design and implementation of the implemented program, broken down into the lexical specification of the chosen form of deontic logic and the proof strategy for a given set of rules, facts and goals. It will then assess the system against several codes of ethics applications used as case studies. Once this is complete, conclusions will be presented about what the work done in the project shows, and potential avenues of future work will be suggested. 
@@ -91,7 +81,7 @@ This dissertation will first set out the history and development of deontic logi
 \section{Development of Deontic Logic}%talk about the development
 The development of deontic logic has been greatly influenced by alethic modal logic \cite{sep-logic-deontic}. Alethic modal logic is the logic of necessary truth, and its related operators are necessity, possibility, impossibility, non-necessity and contingency. Necessity is a basic operator; the other four operators can be defined in terms of it. What is necessary and contingent is possible, and what is contingent and impossible is non-necessary. Necessity maps loosely to obligation in deontic logic, as both can be thought of in terms of requirement. 
 
-Deontic logic, as already explained, is a logic of duty. Duties can be understood in a Kantian sense, wherein the justification of maxims that are expected of agents is grounded in a respect for the laws which agents are bound to\cite{sep-kant-moral}. These laws can be anything from the moral law which can be said to govern all rational beings, to the legislation local to certain countries that applies only to their citizens, to the expected behaviour of an employee within a company under that company's code of ethics. In the chosen case study of this project, ethics applications, the maxims will be related to university codes of ethics, and more general expectations of good conduct from researchers. Relations between maxims, and how these should be formulated, will depend on the type of deontic logic in use. 
+Deontic logic, as already explained, is a logic of duty. Duties can be understood in a Kantian sense, wherein the justification of maxims that are expected of agents is grounded in a respect for the laws which agents are bound to\cite{sep-kant-moral}. These laws can be anything from the moral law which can be said to govern all rational beings, to the legislation local to certain countries that applies only to their citizens, to the expected behaviour of an employee within a company under that company's code of ethics. In the chosen case study of this project, the maxims will be related to university codes of ethics, and more general expectations of good conduct from researchers. Relations between maxims, and how these should be formulated, will depend on the type of deontic logic in use. 
 
 Deontic logic contains the usual operators of formal logic, such as negations, biconditionals, conjunctions and disjunctions. It can then incorporate many concepts, but here the focus will be on obligations, prohibitions and permissions. Obligations are those things which agents are required to do, prohibitions are those things which agents are forbidden from doing, and permissions are those things which agents are neither required to do nor forbidden from doing. As with alethic modal logic and necessity, obligation is a basic operator for deontic logic. Prohibitions are things people are obliged not to do, and permissions are things people are neither obliged to do nor obliged not to do. In other words, obligations are things people should do, prohibitions are things people should not do and permissions are things people are allowed to do. 
 
@@ -99,7 +89,7 @@ Deontic logic says nothing about the content of deontic maxims, broadly speaking
 
 \blockquote{It can lie nowhere else than in the principle of the will, regardless of the ends that can be effected by such action; for the will stands halfway between its a priori principle, which is formal, and its a posteriori incentive, which is material, as it were at a crossroads, and since it must after all be determined by something, it will have to be determined by the formal principle of willing as such when an action is done from duty, as every material principle has been taken away from it. The third proposition, as the conclusion from both previous ones, I would express as follows: duty is the necessity of an action from respect for the law. For the object as the effect of the action I have in mind I can indeed have inclination, but never respect, precisely because it is merely an effect and not activity of a will. Likewise, I cannot have respect for inclination as such, whether it is mine or that of another; I can at most in the first case approve of it, in the second at times love it myself, i.e. view it as favourable to my own advantage. Only what is connected with my will merely as ground, never as effect, what does not serve my inclination, but outweighs it, or at least excludes it entirely from calculations when we make a choice, hence the mere law by itself, can be an object of respect and thus a command.}
 
-This is often described as the autonomy formula of the categorical imperative. Simply put, it is that the rational will should determine universal law. From this, an approach to validating sets of deontic maxims can be derived, which can thereby provide sets of laws. One convincing approach from machine ethics is ensuring that every maxim must be consistent with the rest of the set, and that the set must then form a coherent system of maxims\cite{Powers}. If there are inconsistent rules in the set, it is unreasonable to expect these maxims to be followed; it is impossible for $P$ and \( \neg \) $P$ to be true, so impossible for them to be justified coherently in a set. 
+This is often described as the autonomy formula of the categorical imperative. Simply put, the principle is that the rational will should determine universal law. From this, an approach to validating sets of deontic maxims can be derived, which can thereby provide sets of laws. One convincing approach from machine ethics is ensuring that every maxim must be consistent with the rest of the set, and that the set must then form a coherent system of maxims\cite{Powers}. If there are inconsistent rules in the set, it is unreasonable to expect these maxims to be followed; it is impossible for $P$ and \( \neg \) $P$ to be true, so impossible for them to be justified coherently in a set. 
 
 Powers derives two rules for this system: R-in and R-out. R-in states that a maxim, $m_i$ is allowed to be part of the set of acceptable maxims, $M$, if $m_i$ is consistent with the ethical system, $G$. That is, $m_i \in M \iff G \vdash m_i $. R-out states that if a maxim, $m_i$, becomes inconsistent with the ethical system, $G$, $m_i$ is no longer allowed in the set of acceptable maxims, $M$. That is, $m_i \notin M \rightarrow \neg(G \vdash m_i)$. These rules would be difficult to operationalise, but a successful implementation would provide useful analysis of sets of rules formulated in a deontic way. 
 
@@ -111,7 +101,7 @@ Powers derives two rules for this system: R-in and R-out. R-in states that a max
 \subsection{Standard Deontic Logic}
 Standard deontic logic is a monadic logic which extends propositional logic. If $O$ represents obligation, the concepts can be formalised as follows: if $A$ is some obligation, then $O(A)$; if $A$ is some prohibition, then $O$(\( \neg \)$A)$; if $A$ is some permission, then \( \neg \)$O(A)$ \& \( \neg \)$O$(\( \neg \)$A)$. For example, if there is a prohibition on murder, and the action of murder is represented by $A$, this can be represented as $O$(\( \neg \)$A)$. Nothing more needs to be done to show that $O(A)$ holds once $A$ is proven to be true. 
 
-Standard deontic logic faces the contrary-to-duties problem. It is not implausible that it could be forbidden that $C$, but in the case of $C$, it could still be expected that $A$. The classic example is of the gentle murderer; murder is forbidden, but if an agent is going to commit murder, they are obliged to do it in a way that causes the least amount of suffering. Standard deontic logic could represent these cases as follows: if there is a general prohibition on murder and the action of murder is represented by C, but if an agent is committing murder they are obliged to murder gently and this can be represented by $O(A)$, then this can be represented as $O$(\( \neg \)$C)$ \& $C$ \( \to \) $O(A)$. This is paradoxical, as $C$ and \( \neg \)$C$ cannot be true at the same time. 
+Standard deontic logic faces the contrary-to-duties problem. It is not implausible that it could be forbidden that $C$, but in the case of $C$, it could still be expected that $A$. The classic example is of the gentle murderer; murder is forbidden, but if an agent is going to commit murder, they are obliged to do it in a way that causes the least amount of suffering. Standard deontic logic could represent these cases as follows: a general prohibition on murder and the action of murder is represented by C. If an agent is committing murder (C) they are obliged to murder gently (A). This contrary-to-duty obligation can be represented by $O(A)$. Taken together, these two obligations can be represented as $O$(\( \neg \)$C)$ \& $C$ \( \to \) $O(A)$. However, there is no way that $C$ and \( \neg \)$C$ can both be true; if C is true, it necessitates the falsehood of $\neg C$. 
 
 \subsection{Non-Monotonic Deontic Logic}
 Non-monotonic deontic logic introduces consistency\cite{Powers}. This is useful both for dealing with the kind of conflicting obligations detailed above and for handling conditional obligations\cite{Horty}. Following Reiter's symbolisation of default logic\cite{Reiter}, if $A$ is an obligation, and $C$ is some condition that $A$ must be consistent with in order to hold, \( \frac{C : O(A)}{O(A)} \). This also neatly handles the contrary-to-duties problem; if there is a general prohibition on murder, and the action of murder is represented by C, but if in the context where an agent is committing murder they are obliged to kill gently and this can be represented by O(A), then \( \frac{C : O(A)}{O(A)} \). The justification is the same as the conclusion, and is true only in the case of there being no facts, or defeater conditions, which would make it false. 
@@ -140,7 +130,9 @@ Finally, deontic logic can be applied to normative behaviour of the object syste
 
 A further application in this area is the specification of information systems\cite{infosystems}, particularly with respect to soft constraints. Dyadic deontic logic, with its ideal and non-ideal worlds, can neatly describe what is going on when there is some constraint of a system that ideally should not be violated, and what should be done if it is. %EXPAND
 
-Wieringa and Meyer raise several issues with the application of deontic logic in this context, namely the issues of possibility and authority. Computer Science frequently borrows concepts from other disciplines, only to recreate simplified versions of these concepts for its own purposes. With respect to the law, the version that appears in formalised specifications is frequently quite simplistic, and often reduces it to the application of rules to facts, as this is the way in which a computer can process something as complex as the law. It is important to consider the way in which humans practice and apply normative concepts differs to a computer's methodology. Both must interpret the available facts and apply rules within the area of the law in order to make a decision, but humans are able to provide more nuanced interpretations of a situation, while computers are bound only by the given facts and rules, forced into a veil of impartiality. 
+An additional application to those mentioned above is responsibility modelling. %EXPAND
+
+Wieringa and Meyer raise several issues with the application of deontic logic, namely the issues of possibility and authority. Computer Science frequently borrows concepts from other disciplines, only to recreate simplified versions of these concepts for its own purposes. With respect to the law, the version that appears in formalised specifications is frequently quite simplistic, and often reduces it to the application of rules to facts, as this is the way in which a computer can process something as complex as the law. It is important to consider the way in which humans practice and apply normative concepts differs to a computer's methodology. Both must interpret the available facts and apply rules within the area of the law in order to make a decision, but humans are able to provide more nuanced interpretations of a situation, while computers are bound only by the given facts and rules, forced into a veil of impartiality. 
 
 However, Wieringa and Meyer propose a set of conditions, which, should they be met, at least give conditions for the application of deontic logic within Computer Science to be practically feasible. These are as follows: the area of the law chosen for formalisation must be largely isolated from other areas of law, so as to keep the system at a manageable size; the application of the chosen area must not be very complicated, and must be largely basic common sense, since the representation of common sense reasoning in computer systems is deeply difficult; and the chosen area must not be subject to change, in order to avoid the incorporation of social learning into the system, as well as to avoid having to continually change the formalisation of the law. 
 
@@ -154,7 +146,7 @@ More relevant to the overall project is the decision tools, which follow some ki
 %what can we take from this through to the project??
 
 \subsection{KED}
-There has been relatively little work done in the area of deontic theorem proving. One tool which has been explicitly developed to operationalise deontic logic is KED\cite{KED}, a deontic theorem prover implemented in Prolog. It builds on work done to create KEM\cite{KEM}, which is a modal theorem prover implemented in Prolog. It works with standard deontic logic, making use of modal logic and its possible worlds semantics\cite{sep-possible-worlds}. The prover itself works by constructing a proof by contradiction, by first assuming that the formula to be proven is false and then exploring all the possible alternatives in an attempt to find formulae which contradict this assumption, closing off every created branch until it can be shown that the formula to be proven is, in fact, true. The proof strategy consists of α-rules, which borrow the tableau method of proof's linear branch-expansion rules, as well as β-rules, which are rules of inference such as modus ponens and modus tollens. Together, these rules should provide a complete prover for this context. 
+There has been relatively little work done in the area of deontic theorem proving. One tool which has been explicitly developed to operationalise deontic logic is KED\cite{KED}, a deontic theorem prover implemented in Prolog. It builds on work done to create KEM\cite{KEM}, which is a modal theorem prover implemented in Prolog. It works with standard deontic logic, making use of modal logic and its possible worlds semantics\cite{sep-possible-worlds}. The prover itself works by constructing a proof by contradiction, by first assuming that the formula to be proven is false and then exploring all the possible alternatives in an attempt to find formulae which contradict this assumption, closing off every created branch until it can be shown that the formula to be proven is, in fact, true. The proof strategy consists of $\alpha$ rules, which borrow the tableau method of proof's linear branch-expansion rules, as well as $\beta$ rules, which are rules of inference such as modus ponens and modus tollens. Together, these rules should provide a complete prover for this context. 
 
 Importantly, KED is based on Mondadori's classical proof system \cite{Mondadori}, which itself is based on the tableau method but is much more concise and efficient. KED's proof strategy avoids the traditional redundancy involved with the tableau method by restricting the use of rules to only unfulfilled subformulae in the current branch, thereby limiting the size of the search space. Two key theorems for KED are proposed. The first is that a canonical KED tree always terminates, because of the fact that at every step of the process, there are a finite number of new, less complex formulae created, and as well as the fact that the number of possible labels in the tree for a formula to be proven is limited by the number of modal operators of the formula. The second theorem is that a KED tree for a formula to be proven is closed if and only if the canonical KED tree for that formula is closed, because a KED tree explores all the possible alternatives that can lead to closure of the constructed tableau. A further benefit is that there is no preprocessing of input formulae required. KED works using labels, so it lends itself to more natural proofs with simple implementations. While its implementation was limited to standard deontic logic, the implementation is flexible and generic enough that it can easily be extended to cover more, non-classical logical systems, such as multi-modal logic. 
 
@@ -163,9 +155,9 @@ Importantly, KED is based on Mondadori's classical proof system \cite{Mondadori}
 \subsection{ESPLEX}
 A further tool is ESPLEX, which, while not explicitly a deontic theorem prover, formalises legislation in a deontic way in the field of agricultural tenancies\cite{ESPLEX}. It aims to calculate the normative consequences of a case by providing possible configurations of the various deontic prescriptions. Like KED, it is implemented in Prolog, and aims to reproduce the language of legislative texts as closely as possible. The formalised language is required to be rich enough to convey the various levels of meaning within the texts, well defined on both a syntactic and semantic level, diverse enough to represent various different characteristics and aims, and flexible in its ability to allow the knowledge base to be continually updated. As a logical programming language, Prolog is well suited to meet these aims; its proof strategy is very similar to the activities involved with the manual processing of legislation. However, it is important to note that ESPLEX does not deal with the limitations of logical programming, or with the problem with negation as failure; this is dealt with at the meta level, by making a distinction between the two types of negation. 
 
-A key distinction is made between explicit and implicit knowledge, and how these two different kinds of knowledge are formalised within the tool. Explicit knowledge is represented through logical rules, while implicit knowledge is represented within the semantic network. The logical rules can represent five different types of sentence: goal, which is a statement of what is obligatory, forbidden or permitted; fact, which is a statement of some fact of the system; cond, which is a statement of some condition of the system; def, which defines some legal status; and proc, which defines some legal procedure. As for the semantic network, these are binary relations on elements of the knowledge. These relations are 'is a', 'part of', 'attribute', 'value', 'event', and 'equal to'. 
+A key distinction is made between explicit and implicit knowledge, and how these two different kinds of knowledge are formalised within the tool. Explicit knowledge is represented through logical rules, while implicit knowledge is represented within the semantic network. The logical rules can represent five different types of sentence: goal, which is a statement of what is obligatory, forbidden or permitted; fact, which is a statement of some fact of the system; cond, which is a statement of some condition of the system; def, which defines some legal status; and proc, which defines some legal procedure. As for the semantic network, these are binary relations on elements of the knowledge. These relations are `is a', `part of', `attribute', `value', `event', and `equal to'. 
 
-ESPLEX's knowledge base can be accessed in a number of ways. Firstly, the rule set can be searched by selecting some goals, along with a calculation of the normative consequences of these goals. It can then provide the justification for its reasoning, or examine a normalised version of the steps followed to reach this justification, or evaluate the consequences in deontic terms, or analyse the action, parties or objects involved in the search for a solution. Secondly, the system can search the network for a desired entity by either identifying the entity to the user, visualising the properties of the entity, or determining the values of the properties of the entity. The final result is an outline which consists of both definitional and normative content, and is organised according to the jurisprudence on the elements of the case. Thirdly, the system can analyse characteristics of a legislative text. It can then visualisethe definitions contained therein, and compare the procedural rules applied as well as the prescribed actions, evaluating these in deontic terms. 
+ESPLEX's knowledge base can be accessed in a number of ways. Firstly, the rule set can be searched by selecting some goals, along with a calculation of the normative consequences of these goals. It can then provide the justification for its reasoning, or examine a normalised version of the steps followed to reach this justification, or evaluate the consequences in deontic terms, or analyse the action, parties or objects involved in the search for a solution. Secondly, the system can search the network for a desired entity by either identifying the entity to the user, visualising the properties of the entity, or determining the values of the properties of the entity. The final result is an outline which consists of both definitional and normative content, and is organised according to the jurisprudence on the elements of the case. Thirdly, the system can analyse characteristics of a legislative text. It can then visualise the definitions contained therein, and compare the procedural rules applied as well as the prescribed actions, evaluating these in deontic terms. 
 
 While ESPLEX's existing functionality is incredibly useful, there are multiple possible extensions of the system. Some points of particular interest are checking the normative coherence and completeness of a piece of legislation and processing the relations between general and special rules. %why?
 
@@ -310,7 +302,7 @@ G: "offer anonymity to the participants"
 H: "participants participate"
 I: "participants disengage from the study at any point"
 J: "participants respond or not respond to any question asked during 
-   the interview"
+    the interview"
 K: "researcher will respect all wishes expressed by all participants"
 L: "interviews will be conducted in areas where participants feel 
     comfortable"
@@ -327,7 +319,7 @@ fact: J
 fact: K
 fact: L
 rule: (if D then (((((((OB F) and (OB G)) and (PER H)) and (PER I)) and 
-      (PER J)) and (OB K)) and (OB L)))
+       (PER J)) and (OB K)) and (OB L)))
 rule: (if (not D) then M)
 rule: (if (D and (F and (G and (K and L))))) then M)
 goal: M
@@ -338,7 +330,7 @@ The results of this case study are as follows:
 Step 1: 
 INITIAL: D
 FINAL: (((((((OB F) and (OB G)) and (PER H)) and (PER I)) and (PER J)) and
-       (OB K)) and (OB L))
+        (OB K)) and (OB L))
 TRANSFORM: (if D then (((((((OB F) and (OB G)) and (PER H)) and (PER I)) 
             and (PER J)) and (OB K)) and (OB L)))
 RULE: modus ponens
@@ -349,6 +341,7 @@ FINAL: M
 TRANSFORM: (if (D and (F and (G and (K and L)))) then M)
 RULE: modus ponens
 
+
 STATUS: success
 \end{verbatim}
 
@@ -356,7 +349,7 @@ As expected, this application was successful in meeting the requirements to proc
 
 This is a direct application of the fact set to a rule, and takes only one step. However, the prover took two steps to establish the success of the case study. The first step applied the rule of modus ponens to the case study rule (if D then (((((((OB F) and (OB G)) and (PER H)) and (PER I)) and (PER J)) and (OB K)) and (OB L))), and used the fact D to extract as a new fact (((((((OB F) and (OB G)) and (PER H)) and (PER I)) and (PER J)) and (OB K)) and (OB L))). This step, however, yielded no new useful facts for the fact set. Permissions can be discarded as they are neither true nor false, and the facts tied to the obligations which are validated as true already exist in the fact set. 
 
-This redundancy is characteristic of brute force proof strategies, where rules are exhaustively applied in search of new facts, and could be addressed by a more intelligent analysis of the fact set before the application of rules. 
+%This redundancy is characteristic of brute force proof strategies, where rules are exhaustively applied in search of new facts, and could be addressed by a more intelligent analysis of the fact set before the application of rules. 
 
 \section{Case Study B: Digigraff}
 The second case study is an ethics proposal submitted by a student in the School of Computing Science [Appendix \ref{casestudyB}]. The proposed research project aims to investigate the role of location in the creation of social media content, and to encourage users to be more thoughtful about location in their use of social media. These aims are met through an evaluation of DigiGraff, which allows users to create digital annotations that can be projected onto physical surfaces and then stored, along with the location of the user in their physical environment. The project is carried out remotely in three phases, with experimenter contact only in the first and third phase. The first phase involves the provision of information about the project to participants and the gathering of consent. The second phase involves actual use of DigiGraff for the period of a week. The third phase involves interviewing the participants about their experience using DigiGraff. 
@@ -371,7 +364,8 @@ R: "complete ethics checklist form"
 S: "apply for ethical approval"
 T: "comply with points on ethics checklist form"
 U: "use introduction and debriefing scripts"
-V: "include introduction and debriefing scripts with signed ethics checklist form as part of report"
+V: "include introduction and debriefing scripts with signed ethics checklist 
+    form as part of report"
 W: "study approved"
 rule: (if (P or Q) then R)
 rule: (if (((P or Q) and R) and (not T)) then (OB ((S and U) and V)))
@@ -403,15 +397,15 @@ TRANSFORM: (OB ((S and U) and V))
 RULE: O necessity
 
 Step 4: 
-INITIAL: ((S and U) and V)
+INITIAL: (S and U)
 FINAL: S
-TRANSFORM: ((S and U) and V)
+TRANSFORM: (S and U)
 RULE: decompose conjunction
 
 Step 5: 
-INITIAL: ((S and U) and V)
+INITIAL: (S and U)
 FINAL: U
-TRANSFORM: ((S and U) and V)
+TRANSFORM: (S and U)
 RULE: decompose conjunction
 
 Step 6: 
@@ -421,26 +415,18 @@ TRANSFORM: ((S and U) and V)
 RULE: decompose conjunction
 
 Step 7: 
-INITIAL: (P or Q)
-FINAL: R
-TRANSFORM: (if (P or Q) then R)
-RULE: modus ponens
-
-Step 8: 
-INITIAL: (((P or Q) and R) and (not T))
-FINAL: (OB ((S and U) and V))
-TRANSFORM: (if (((P or Q) and R) and (not T)) then (OB ((S and U) and V)))
-RULE: modus ponens
-
-Step 9: 
 INITIAL: (T or (S and (U and V)))
 FINAL: W
 TRANSFORM: (if (T or (S and (U and V))) then W)
 RULE: modus ponens
 
+
 STATUS: success
+
 \end{verbatim}
-As expected, this application was successful in meeting the requirements to proceed with the desired research. 
+As expected, this application was successful in meeting the requirements to proceed with the desired research. There are several steps necessary to reach this proof. Firstly, the existence of the facts P and Q is used to yield the fact R from the case study rule if (P or Q). Secondly, the existence of the facts P, Q and not T, as well as the newly extracted rule, R, is used to yield the fact (OB ((S and U) and V)) from the case study rule (if (((P or Q) and R) and (not T)) then (OB ((S and U) and V). Thirdly, the rule of O necessitation is used to extract the facts S, U and V, decomposed from their original conjunction. Finally, these extracted facts are used to yield the fact W, which is the goal of this case study, from the case study rule (if (T or (S and (U and V)) then W). 
+
+Unlike with Case Study A, the prover followed exactly this number of steps in order to achieve the case study's stated goal. All the case study rules create new facts for the fact set. There are no irrelevant case study rules; every rule advances the prover further along its route to a proof. The proof strategy works optimally with this kind of case study, but it is hardly a typical or even likely case. Particularly with ethics applications, it may not be clear what information is relevant, or what rules are likely to lead to the creation of new facts when the fact set is applied. Regardless, it is the responsibility of the prover to determine which facts and rules are relevant to the pursuit of the goals, not the specifier of the facts, rules and goals. 
 
 \section{Case Study C: High Places, Unique Spaces}
 The third case study is an ethics proposal submitted by a student in the School of Geographical and Earth Sciences [\ref{casestudyC}]. The proposed research project aims to investigate relationships created while trekking and mountaineering in the Himalayas, and involves engaging with the international trekking and mountaineering community and the differences between these groups. The project involves conducting semi-structured interviews with the Himalayan mountaineering community, where key information about the participants and physical reactions will be recorded as well as audio of the interviews. It also involves carrying out ethnographic research, which entails the student participation themselves in mountaineering activities, and conducting discourse analysis of policy documents in the public domain. 
@@ -470,9 +456,10 @@ R: "study is approved"
 fact: A
 fact: D
 fact: G
-fact: G
+fact: I
+fact: K
+fact: (if A then D)
 fact: P
-fact: (PER K)
 fact: (not O)
 rule: (if A then (OB (B and C)))
 rule: (if D then (OB (E and F)))
@@ -480,11 +467,12 @@ rule: (if G then (OB H))
 rule: (if I then (PER J))
 rule: (if K then (PER ((L and M) and N)))
 rule: (if P then Q)
-rule: (if (((((((((A and B) and C) and D) and E) and F) and G) and H) and P) and Q) then R)
+rule: (if (((((((((A and B) and C) and D) and E) and F) and G) and H) and 
+       P) and Q) then R)
 goal: R
 \end{verbatim}
 
-The results of this case study is as follows: 
+The results of this case study are as follows: 
 \begin{verbatim}
 Step 1: 
 INITIAL: A
@@ -505,86 +493,77 @@ TRANSFORM: (if G then (OB H))
 RULE: modus ponens
 
 Step 4: 
+INITIAL: I
+FINAL: (PER J)
+TRANSFORM: (if I then (PER J))
+RULE: modus ponens
+
+Step 5: 
+INITIAL: K
+FINAL: (PER ((L and M) and N))
+TRANSFORM: (if K then (PER ((L and M) and N)))
+RULE: modus ponens
+
+Step 6: 
 INITIAL: P
 FINAL: Q
 TRANSFORM: (if P then Q)
 RULE: modus ponens
 
-Step 5: 
+Step 7: 
 INITIAL: (OB (B and C))
 FINAL: (B and C)
 TRANSFORM: (OB (B and C))
 RULE: O necessity
 
-Step 6: 
+Step 8: 
 INITIAL: (OB (E and F))
 FINAL: (E and F)
 TRANSFORM: (OB (E and F))
 RULE: O necessity
 
-Step 7: 
+Step 9: 
 INITIAL: (OB H)
 FINAL: H
 TRANSFORM: (OB H)
 RULE: O necessity
 
-Step 8: 
+Step 10: 
 INITIAL: (B and C)
 FINAL: B
 TRANSFORM: (B and C)
 RULE: decompose conjunction
 
-Step 9: 
+Step 11: 
 INITIAL: (B and C)
 FINAL: C
 TRANSFORM: (B and C)
 RULE: decompose conjunction
 
-Step 10: 
+Step 12: 
 INITIAL: (E and F)
 FINAL: E
 TRANSFORM: (E and F)
 RULE: decompose conjunction
 
-Step 11: 
+Step 13: 
 INITIAL: (E and F)
 FINAL: F
 TRANSFORM: (E and F)
 RULE: decompose conjunction
 
-Step 12: 
-INITIAL: A
-FINAL: (OB (B and C))
-TRANSFORM: (if A then (OB (B and C)))
-RULE: modus ponens
-
-Step 13: 
-INITIAL: D
-FINAL: (OB (E and F))
-TRANSFORM: (if D then (OB (E and F)))
-RULE: modus ponens
-
 Step 14: 
-INITIAL: G
-FINAL: (OB H)
-TRANSFORM: (if G then (OB H))
-RULE: modus ponens
-
-Step 15: 
-INITIAL: P
-FINAL: Q
-TRANSFORM: (if P then Q)
-RULE: modus ponens
-
-Step 16: 
 INITIAL: (((((((((A and B) and C) and D) and E) and F) and G) and H) and P) and Q)
 FINAL: R
 TRANSFORM: (if (((((((((A and B) and C) and D) and E) and F) and G) and H) and P) and Q) then R)
 RULE: modus ponens
 
+
 STATUS: success
 \end{verbatim}
-As expected, this application was successful in meeting the requirements to proceed with the desired research. 
+As expected, this application was successful in meeting the requirements to proceed with the proposed research. There are several steps necessary to reach this goal. Firstly, the existence of the fact A is used to yield the fact OB(B and C) from the case study rule (if A then (OB (B and C))). After applying the O necessitation rule and decomposing the conjunction, the facts B and C are extracted. Simarly, D is used to yield the fact OB(E and F) from the case study rule (if D then (OB (E and F))), and then the facts E and F are extracted. G is used to yield the fact OB H from the case study rule (if G then (OB H)), and then the fact H is extracted. Finally, P is used to yield Q from the case study rule (if P then Q). All the facts needed to affirm the antecedent of the case study rule (if (((((((((A and B) and C) and D) and E) and F) and G) and H) and P) and Q) then R) now exist in the fact set, so the goal of the case study, R, can be extracted. 
+
+As with Case Study A, the prover took more steps than were strictly required. This is a bit more complicated as an example, and it is even less obvious which rules are relevant to the prover's goals, at least without manually executing the process. However, it is interesting to note that, again, it is the rules involving permissions, which yield no new facts for the fact set when there are no permissions involved in the route to the goal, that are uselessly applied. 
 
 \section{Case Study D: Lack of Participant Consent}
 The final case study is an ethics application for a fictional research project. This case study is designed to fail, so it includes human participants and also a prohibition on seeking consent of participants, where the rules of the code of ethics are that if there are human participants in a study, the researcher must seek the consent of the participants of the study, and if consent is not sought, then approval of the study is not granted. 
@@ -619,25 +598,32 @@ INITIAL: (not Q)
 FINAL: (not R)
 TRANSFORM: (if (not Q) then (not R))
 RULE: modus ponens
+
+
 STATUS: failure
 \end{verbatim}
-The result of failure is as expected; the case study was designed so that, were it real, it should have failed. 
+The result of failure is as expected; the case study was designed so that, were it real, it should have been approved by the committee. The proof strategy is as follows: derive the fact not Q from the fact PRO Q using the O necessitation rule, derive the fact not R from the case study rule (if (not Q) then (not R)) using the fact not Q, then stop checking the rules as no new facts have been created. Since, at this point, the goal R does not exist in the fact set, the prover returns failure as the status of the case study. 
+
+However, more important for the disproof of the goal than there being no new facts able to be generated is that the negation of the goal, not R, has been proved, rendering a proof of R either impossible or completely incoherent. The prover is unable to return this as a result; it can only fail to provide a proof for the goal, not disprove it. 
+
 \chapter{Conclusions and Future Work}
 
 \section{Conclusions}
-%PROOF OF CONCEPT 
-%CAN USE DEONTIC LOGIC TO MODEL SYSTEMS, SET UP DEONTIC THEOREMS AND PROVE DESIRED FACTS
+Through continual assessment of the tool and the formal evaluation of case studies, it is clear that there are several limitations to the tool created here. 
+%restate limitations from design&impl
+%discuss things from evaluation
+
+Despite these limitations, the tool has met its stated objectives. 
+%restate objectives and how these have been achieved
+
+With some extension, it will prove highly useful as a tool for using deontic logic to model systems, set up deontic theorems to reason against, and to prove desired facts in a deontic manner. 
 
 \section{Future Work}
 
 \subsection{Intuitive Interface}
-One strength of the prover is the more intuitive specification system, and the lack of esoteric symbolism, which makes the tool more accessible for the average user. 
+One key strength of the prover is the more intuitive specification system, and the lack of esoteric symbolism, which makes the tool more accessible for the average user. However, it does not go far enough. There are some quirks to the specification that, while exemplified in the examples providied for the smooth running of the prover, are not at all immediately obvious. This could be avoided with a more intuitive interface, one which does not rely on human input to specify a system in the deontic grammar. 
 
-However, it does not go far enough. There are some quirks to the specification that, while exemplified in the examples providied for the smooth running of the prover, are not at all immediately obvious. This could be avoided with a more intuitive interface, one which does not rely on human input to specify a system in the deontic grammar. 
-
-One way of doing this would be to provide an additional graphical interface which allowed the user to enter the facts, rules and goals of a system in some kind of structured form, which was then processed to create the kind of file currently required of the user to produce by themselves. 
-
-This would greatly reduce the number of errors faced by the user when specifying the system, simply because they have not understood the exact specification of the deontic grammar. It would also reduce the amount of time and effort required to use the tool, a key concern for its usability and potential benefit. 
+One way of doing this would be to provide an additional graphical interface which allowed the user to enter the facts, rules and goals of a system in some kind of structured form, which was then processed to create the kind of file currently required of the user to produce by themselves. This would greatly reduce the number of errors faced by the user when specifying the system, simply because they have not understood the exact specification of the deontic grammar. It would also reduce the amount of time and effort required to use the tool, a key concern for its usability and potential benefit. 
 
 \subsection{Automatic Parsing}
 One area that has much to offer this tool is the field of automatic parsing of text. Its functionality would be greatly improved if extended in conjunction with a tool which could scan documents, such as codes of ethics and completed ethics applications for projects, for key terms and information, in order to automatically generate a set of facts, rules and goals for a system. 
@@ -646,8 +632,12 @@ One area that has much to offer this tool is the field of automatic parsing of t
 Though too complex for the scope of this project, predicate deontic logic would be a deeply fascinating extension of its work. Particularly if the focus on codes of ethics is retained, being able to differentiate between the $x$ that designates the person who submitted the proposal for a research project, the $y$ who designates the person who is taking part in the research and the $z$ who designates the person who is responsible for granting approval or rejection of the proposal would be very beneficial. 
 
 \subsection{Other Contexts}
-%BPS
-%Responsibility Modelling
+The tool has much to offer any context that is concerned with ethics, and it would be beneficial to extend its application to more complex case studies, such as the British Psychological Society code of ethics\cite{bps_2016}. 
+%complex document 
+%lots of rules and guidelines
+%challenging formalisation but could have unexpected results
+
+Perhaps with some modification, the focus could be extended outside of the scope of ethics. Responsibility modelling is one such area where the tool could be very useful. Formalising responsibilities as obligations and prohibitions is already a possibility within the tool; this aspect could be coupled with a wider responsibility modelling framework in order to supplement its functionality. 
 
 %%%%%%%%%%%%%%%%
 %              %
@@ -656,6 +646,42 @@ Though too complex for the scope of this project, predicate deontic logic would 
 %%%%%%%%%%%%%%%%
 \begin{appendices}
 \chapter{Running the Programs}
+README.txt contains instructions as to how to run the code. On a Linux machine, these are as follows. 
+
+To install dependencies: 
+\begin{verbatim}
+pip install http://www.antlr3.org/download/Python/antlr_python_runtime-3.1.2.tar.gz
+\end{verbatim}
+To recompile the lexer and parser for the grammar: 
+\begin{verbatim}
+wget http://www.antlr3.org/download/antlr-3.1.2.jar
+java -classpath "antlr-3.1.2.jar" org.antlr.Tool Deo.g
+\end{verbatim}
+To run the main component of the program (prover.py): 
+\begin{verbatim}
+python prover.py
+\end{verbatim}
+
+On a Windows machine, the commands are as follows. 
+
+To install dependencies: 
+\begin{verbatim}
+curl https://bootstrap.pypa.io/ez_setup.py | python
+curl https://bootstrap.pypa.io/get-pip.py | python
+pip install http://www.antlr3.org/download/Python/antlr_python_runtime-3.1.2.tar.gz
+\end{verbatim}
+
+To recompile the lexer and parser for the grammar: 
+\begin{verbatim}
+curl http://www.antlr3.org/download/antlr-3.1.2.jar
+java -classpath "antlr-3.1.2.jar" org.antlr.Tool Deo.g
+\end{verbatim}
+
+To run the main component of the program (prover.py): 
+\begin{verbatim}
+	python prover.py
+\end{verbatim}
+
 An example of running the prover from the command line is as follows:
 \begin{verbatim}
 pip install http://www.antlr3.org/download/Python/antlr_python_runtime-3.1.2.tar.gz
@@ -691,11 +717,6 @@ RULE: modus ponens
 
 STATUS: success
 \end{verbatim}
-Recompiling the lexer and parser for the grammar is carried out as follows: 
-\begin{verbatim}
-wget http://www.antlr3.org/download/antlr-3.1.2.jar
-java -classpath "antlr-3.1.2.jar" org.antlr.Tool Deo.g
-\end{verbatim}
 
 \chapter{Case Studies}
 \section{Case Study A}
@@ -714,7 +735,7 @@ java -classpath "antlr-3.1.2.jar" org.antlr.Tool Deo.g
 %   BIBLIOGRAPHY   %
 %%%%%%%%%%%%%%%%%%%%
 
-\bibliographystyle{plain}
-\bibliography{bib}
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,bib}
 
 \end{document}
