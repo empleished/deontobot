@@ -1,5 +1,5 @@
 P: "CS student"
-Q: "be in constant pain"
+Q: "be in the lab"
 fact: (not (OB Q))
 rule: (if P then (OB Q))
 goal: P
