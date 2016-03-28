@@ -8,19 +8,16 @@ options {
 
 // LABELS FOR AST NODES // 
 
-tokens {        
-	IFTHEN;
-	EXPR;
-	PROG;
-	GOAL;
+tokens {      
+	PROG;  
 	DECL;
-	INF;
-	PREF;
-	IFTHEN;
-	ATOM;
-	TERM;
 	RULE;
 	FACT;
+	GOAL;
+	TERM;
+	IFTHEN;
+	EXPR;
+	IFTHEN;
 }
 
 // PARSER RULES //
@@ -56,10 +53,10 @@ atom
 	;
 
 expr
-	:	ID								-> ^(ID)
-	|	prefix_expr							-> ^(prefix_expr)
-	|	infix_expr							-> ^(infix_expr)
-	|	ifthen_expr							-> ^(ifthen_expr) 
+	:	ID								
+	|	prefix_expr							
+	|	infix_expr							
+	|	ifthen_expr							
 	;
 
 prefix_expr
@@ -92,7 +89,6 @@ PRO	:	'PRO';
 PER	:	'PER';
 
 IF	:	'if';
-IFF	:	'iff';
 THEN	:	'then';
 NOT	:	'not';
 AND	:	'and';
@@ -111,10 +107,13 @@ ASSN	: 	': ';
 ATOM	:	'"' LETTER (LETTER | DIGIT | PUNCT)* '"';
 ID	:	LETTER (LETTER | DIGIT | '_')*;
 
-fragment LETTER 	: 	'a'..'z' | 'A'..'Z';
-fragment DIGIT  	: 	'0'..'9';
+fragment LETTER 	
+	: 	'a'..'z' | 'A'..'Z';
+fragment DIGIT  	
+	: 	'0'..'9';
 
-fragment PUNCT		:	'\'' | ',' | ' ';
+fragment PUNCT		
+	:	'\'' | ',' | ' ';
 
-EOL     :	'\r'? '\n';             
-SPACE   :	('\t' | ' ')+;          
+EOL     :	'\r'? '\n';          
+SPACE   :	('\t' | ' ')+;
