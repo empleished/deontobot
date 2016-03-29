@@ -157,6 +157,8 @@ def isSingleTerm(node):
 
 ''' RULES '''
 
+''' NEGATION - if P then not P '''
+
 # returns the negation of a fact
 def negation(fact): 
 	if (isNegation(fact.getChild(0))): # create new fact without existing negation node
